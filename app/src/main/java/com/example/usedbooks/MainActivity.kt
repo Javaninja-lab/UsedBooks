@@ -10,5 +10,7 @@ class MainActivity : AppCompatActivity() {
         //test
         val x=0
         val y=0
+        //test2
+        val z=0
     }
 }
