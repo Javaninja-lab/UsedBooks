@@ -7,6 +7,6 @@ I libri sono legati ad un insieme di posizioni abituali su una mappa in modo da 
 I risultati non vengono filtrati per distanza ma per ogni annuncio è possibile visualizzare la sua posizione sulla mappa, nel punto dove poter reperire il materiale.
 
 Punti chiave:
-GPS
-GUI
-Database Condiviso
+* GPS
+* GUI
+* Database Condiviso
