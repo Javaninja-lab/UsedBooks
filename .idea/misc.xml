@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/bordi.xml" value="0.1" />
-        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_logic.xml" value="0.33" />
+        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/edittext_background.xml" value="0.2055" />
+        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/ic__lock.xml" value="0.389" />
+        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/ic_person.xml" value="0.389" />
+        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_logic.xml" value="0.25" />
       </map>
     </option>
   </component>

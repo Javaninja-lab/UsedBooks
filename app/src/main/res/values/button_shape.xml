@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
     <style name="ButtonSignIn">
-        <item name="strokeColor">@color/green</item>
-        <item name="strokeWidth">5dp</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">100%</item>
     </style>
 </resources>
