@@ -13,6 +13,7 @@
         android:layout_marginTop="120dp"
         android:padding="8dp"
         android:text="login"
+        app:shapeAppearanceOverlay="@style/ButtonSignIn"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
@@ -63,7 +64,10 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
         android:text="Sign in"
+
         android:textColor="#000000"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/green"
         app:layout_constraintEnd_toEndOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button"
