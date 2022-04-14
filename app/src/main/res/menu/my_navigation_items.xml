@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+        android:title="Prova1"/>
+        <!--android:icon=""-->
+    <item android:id="@+id/action_settings"
+        android:title="Prova2"/>
+    <!--android:icon=""-->
+    <item android:id="@+id/action_navigation"
+        android:title="Prova3"/>
+    <!--android:icon=""-->
+</menu>
