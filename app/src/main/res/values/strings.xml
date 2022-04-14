@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name">UsedBooks</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name" translatable="false">UsedBooks</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_in">Sing in</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="university">University</string>
+    <string name="create_account">Create your account</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
