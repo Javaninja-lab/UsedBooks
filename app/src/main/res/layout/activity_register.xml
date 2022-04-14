@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="@+id/PasswordRegister"
+        app:layout_constraintStart_toStartOf="@+id/PasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordRegister" />
+
+    <EditText
+        android:id="@+id/NameRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/edittext_background"/>
+
+    <EditText
+        android:id="@+id/SurnameRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Surname"
+        app:layout_constraintEnd_toEndOf="@+id/NameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/NameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/NameRegister"
+        android:background="@drawable/edittext_background"/>
+
+    <EditText
+        android:id="@+id/FacoltàRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Facoltà"
+        app:layout_constraintEnd_toEndOf="@+id/SurnameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/SurnameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/SurnameRegister"
+        android:background="@drawable/edittext_background"/>
+
+    <EditText
+        android:id="@+id/UsernameRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Username"
+        app:layout_constraintEnd_toEndOf="@+id/FacoltàRegister"
+        app:layout_constraintStart_toStartOf="@+id/FacoltàRegister"
+        app:layout_constraintTop_toBottomOf="@+id/FacoltàRegister"
+        android:background="@drawable/edittext_background"/>
+
+    <EditText
+        android:id="@+id/PasswordRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Password"
+        app:layout_constraintEnd_toEndOf="@+id/UsernameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/UsernameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/UsernameRegister"
+        android:background="@drawable/edittext_background"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Create your account"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
