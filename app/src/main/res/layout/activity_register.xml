@@ -69,15 +69,18 @@
         />
 
     <EditText
-        android:id="@+id/et_Username"
+        android:id="@+id/et_email"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
 
-        android:inputType="textPersonName"
-        android:hint="@string/username"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="8dp"
+
+        android:inputType="textEmailAddress"
+        android:hint="@string/email_address"
 
         app:layout_constraintEnd_toEndOf="@id/et_University"
         app:layout_constraintStart_toStartOf="@id/et_University"
@@ -91,13 +94,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
 
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="8dp"
+
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/password"
-        app:layout_constraintEnd_toEndOf="@id/et_Username"
+
+        app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/et_Username"
-        app:layout_constraintTop_toBottomOf="@id/et_Username"
+        app:layout_constraintStart_toStartOf="@id/et_email"
+        app:layout_constraintTop_toBottomOf="@id/et_email"
         />
 
     <EditText
@@ -110,6 +117,10 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/confirm_password"
+
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="8dp"
+
         app:layout_constraintEnd_toEndOf="@id/et_Password"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/et_Password"
