@@ -14,10 +14,4 @@
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/primaryStyleEditText</item>
     </style>
-
-    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/black</item>
-        <item name="android:colorButtonNormal">@color/black</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
 </resources>

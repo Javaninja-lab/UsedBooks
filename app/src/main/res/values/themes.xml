@@ -18,4 +18,5 @@
     <style name="primaryStyleEditText" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/shape_edit_text</item>
     </style>
+
 </resources>
