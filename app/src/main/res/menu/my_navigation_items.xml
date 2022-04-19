@@ -2,12 +2,12 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/home"
-        android:title="home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home"/>
     <!--android:icon=""-->
     <item
         android:id="@+id/search"
-        android:title="search"
+        android:title="@string/search"
         android:icon="@drawable/ic_search"/>
 
     <item android:id="@+id/add"
@@ -15,11 +15,11 @@
         android:enabled="false"/>
 
     <item android:id="@+id/chat"
-        android:title="chat"
+        android:title="@string/chat"
         android:icon="@drawable/ic_message"/>
 
     <item android:id="@+id/profile"
-        android:title="profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_person"/>
     <!--android:icon=""-->
 </menu>
