@@ -1,10 +1,15 @@
 package com.example.usedbooks
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.usedbooks.dataClass.Database
+import kotlinx.android.synthetic.main.fragment_chat.*
+import org.postgresql.util.PSQLException
+import java.sql.DriverManager
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +31,15 @@ class ChatFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+        try {
+            val connection =
+                DriverManager.getConnection(Database.jdbcUrl, "sql4486484", "Lw6ul89qq8")
+            val query = connection.prepareStatement("SELECT * FROM studenti")
+            val result = query.executeQuery()
+            testTextView.setText(result.getString("nome"))
+        }catch (e : PSQLException){
+            e.printStackTrace()
         }
     }
 

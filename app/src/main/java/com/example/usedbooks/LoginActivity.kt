@@ -3,12 +3,15 @@ package com.example.usedbooks
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.usedbooks.dataClass.Database
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        Database.getIstance()
 
         btn_SingIn.setOnClickListener {
             val i = Intent(this,RegisterActivity::class.java);
