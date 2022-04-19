@@ -8,8 +8,14 @@
 
 
     <ListView
+        android:id="@+id/ListViewHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ListViewHome"
-        tools:listitem="@layout/list_item_home"/>
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="55dp"
+        tools:listitem="@layout/list_item_home" >
+
+    </ListView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
