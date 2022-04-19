@@ -3,23 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/home"
         android:title="@string/home"
-        android:icon="@drawable/ic_home"/>
-    <!--android:icon=""-->
+        android:icon="@drawable/ic_home"
+        app:showAsAction="always" />
     <item
         android:id="@+id/search"
         android:title="@string/search"
-        android:icon="@drawable/ic_search"/>
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always" />
 
     <item android:id="@+id/add"
         android:title=""
-        android:enabled="false"/>
+        android:enabled="false"
+        app:showAsAction="always" />
 
     <item android:id="@+id/chat"
         android:title="@string/chat"
-        android:icon="@drawable/ic_message"/>
+        android:icon="@drawable/ic_message"
+        app:showAsAction="always" />
 
     <item android:id="@+id/profile"
         android:title="@string/profile"
-        android:icon="@drawable/ic_person"/>
-    <!--android:icon=""-->
+        android:icon="@drawable/ic_person"
+        app:showAsAction="always" />
 </menu>
