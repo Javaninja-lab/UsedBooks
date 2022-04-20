@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "971437026157",
+    "project_id": "usedbooks-347019",
+    "storage_bucket": "usedbooks-347019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971437026157:android:974b4d8402be6996ed8864",
+        "android_client_info": {
+          "package_name": "com.example.usedbooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971437026157-1lfajvinplegnelh7jg9ipgdvj2e0lf3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXVcJje_PgWppPuKbB38cUC-t2aSfWyaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971437026157-1lfajvinplegnelh7jg9ipgdvj2e0lf3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
