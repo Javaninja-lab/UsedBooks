@@ -14,16 +14,17 @@
 
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="match_parent"
+            android:id="@+id/et_cerca_annunci"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_search"
+            android:drawableStart="@drawable/ic_search"
             android:drawablePadding="5dp"
             android:ems="10"
+            android:hint="@string/search"
             android:inputType="textPersonName"
-            android:text="search" />
+            />
 
 
     </LinearLayout>
@@ -34,7 +35,5 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="55dp"
-        >
-
-    </ListView>
+        />
 </LinearLayout>

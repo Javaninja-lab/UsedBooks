@@ -17,4 +17,5 @@
     <string name="chat">Chat</string>
     <string name="profile">Profile</string>
     <string name="testtext">TestText</string>
+    <string name="hi">Hi</string>
 </resources>
