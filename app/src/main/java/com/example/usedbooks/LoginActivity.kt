@@ -3,7 +3,7 @@ package com.example.usedbooks
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -11,12 +11,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        Database.getIstance()
-
         btn_SingIn.setOnClickListener {
-            val i = Intent(this,RegisterActivity::class.java);
+            val i = Intent(this, RegisterActivity::class.java);
             startActivity(i)
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_Login.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)

@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iv_foto_materiale"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
@@ -28,28 +29,31 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_nome_materiale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome materiale"
-                android:textColor="@color/blue"
-                android:textSize="24dp"
+                android:text="@string/name_of_material"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_nome_venditore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Nome proprietario" />
+                android:text="@string/name_of_vendor" />
 
         </LinearLayout>
 
     </LinearLayout>
-        <TextView
-            android:id="@+id/prezzoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5€"
-            android:padding="15dp"
-            android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/tv_prezzo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="15dp"
+        android:text="@string/price" />
 
     </RelativeLayout>

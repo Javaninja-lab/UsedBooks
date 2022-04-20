@@ -18,4 +18,9 @@
     <string name="profile">Profile</string>
     <string name="testtext">TestText</string>
     <string name="hi">Hi</string>
+    <string name="contact_me">Contact Me</string>
+    <string name="name_of_material">Name of material</string>
+    <string name="name_of_client">Name of client</string>
+    <string name="price">Price</string>
+    <string name="name_of_vendor">Name of vendor</string>
 </resources>
