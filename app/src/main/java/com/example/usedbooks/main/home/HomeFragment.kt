@@ -6,16 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.main.home.MaterialeFragment
 
 class HomeFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,9 +21,7 @@ class HomeFragment : Fragment() {
 
         val btn = view.findViewById<Button>(R.id.btn_test_home)
         btn.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragmentContainerViewMainActivity, MaterialeFragment())
-                    ?.addToBackStack(null)?.commit()
+                it.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment)
         }
         return view
     }

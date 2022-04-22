@@ -6,8 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/fragmentContainerViewMainActivity"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
@@ -17,7 +20,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/my_nav_main"
+        />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"

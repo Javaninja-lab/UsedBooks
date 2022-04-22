@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home"
+    <item android:id="@+id/homeFragment"
         android:title="@string/home"
         android:icon="@drawable/ic_home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/search"
+        android:id="@+id/searchFragment"
         android:title="@string/search"
         android:icon="@drawable/ic_search"
         app:showAsAction="always" />
 
-    <item android:id="@+id/add"
+    <item android:id="@+id/addFragment"
         android:title=""
         android:enabled="false"
         app:showAsAction="always" />
 
-    <item android:id="@+id/chat"
+    <item android:id="@+id/chatFragment"
         android:title="@string/chat"
         android:icon="@drawable/ic_message"
         app:showAsAction="always" />
 
-    <item android:id="@+id/profile"
+    <item android:id="@+id/profileFragment"
         android:title="@string/profile"
         android:icon="@drawable/ic_person"
         app:showAsAction="always" />
