@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import com.example.usedbooks.main.DBmanager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -15,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val db= Firebase.firestore
+        val db= DBmanager()
         val btn= findViewById<Button>(R.id.btn_Register)
         btn.setOnClickListener {
             val name= findViewById<EditText>(R.id.et_Name)
@@ -25,21 +27,16 @@ class RegisterActivity : AppCompatActivity() {
             val password= findViewById<EditText>(R.id.et_Password)
             val password2= findViewById<EditText>(R.id.et_ConfirmPassword)
 
-            Log.d("test","test")
-            val studente = hashMapOf(
-                "cognome" to surname.text.toString(),
-                "nome" to name.text.toString(),
-                "email" to email.text.toString(),
-                "password" to password.text.toString()
-            )
-            db.collection("studenti")
-                .add(studente)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
+            if(password.text.toString().equals(password2.text.toString()))
+            {
+                db.AddStudente(name.text.toString(),surname.text.toString(),email.text.toString(),password.text.toString(),)
+            }
+            else
+            {
+                Toast.makeText(this, "password non uguali", Toast.LENGTH_SHORT).show()
+            }
+
+
 
         }
     }
