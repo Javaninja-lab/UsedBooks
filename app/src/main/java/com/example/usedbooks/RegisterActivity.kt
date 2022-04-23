@@ -1,23 +1,17 @@
 package com.example.usedbooks
 
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.usedbooks.main.DBmanager
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.usedbooks.dataClass.Database
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val db= DBmanager()
         val btn= findViewById<Button>(R.id.btn_Register)
         btn.setOnClickListener {
             val name= findViewById<EditText>(R.id.et_Name)
@@ -29,7 +23,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if(password.text.toString().equals(password2.text.toString()))
             {
-                db.AddStudente(name.text.toString(),surname.text.toString(),email.text.toString(),password.text.toString(),)
+                Database.addStudente(name.text.toString(),surname.text.toString(),email.text.toString(),password.text.toString(),)
             }
             else
             {

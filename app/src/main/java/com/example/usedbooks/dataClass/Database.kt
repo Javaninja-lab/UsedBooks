@@ -1,16 +1,12 @@
 package com.example.usedbooks.dataClass
 
+import android.content.ContentValues
 import android.util.Log
-import android.widget.Toast
-import java.sql.Connection
-import java.sql.DriverManager
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-class Database() {
-    private lateinit var connection: Connection
-
-    private fun Database() {
-        connection = DriverManager.getConnection(jdbcUrl, "sql4486484", "Lw6ul89qq8")
-    }
+class Database {
+    private val database = Firebase.firestore
 
     // TODO: Cambiare con chiamata a database
     private fun getMateriali() : ArrayList<Materiale> {
@@ -21,29 +17,43 @@ class Database() {
         return dareturn
     }
 
-    companion object {
-        val jdbcUrl = "jdbc:postgresql://sql4.freesqldatabase.com:3306/sql4486484"
+    private fun addStudente(name: String,surname: String,email: String,password: String){
+        val studente = hashMapOf(
+            "cognome" to surname,
+            "nome" to name,
+            "email" to email,
+            "password" to password
+        )
+        database.collection("studenti")
+            .add(studente)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+            }
+    }
 
+    companion object {
         private lateinit var istance : Database
 
         private fun getIstance() : Database {
-            if(this::istance.isInitialized){
+            if(!this::istance.isInitialized)
                 istance = Database()
-            } else {
-                istance = Database()
-            }
             return istance
         }
 
-        fun getPrimoNome() : String {
-            val query = getIstance().connection.prepareStatement("SELECT * FROM studenti")
-            val result = query.executeQuery()
-            return result.getString("nome")
+        fun inizializateDatabase() : Boolean {
+            getIstance()
+            return this::istance.isInitialized
         }
-
 
         fun getMateriali() : ArrayList<Materiale> {
             return getIstance().getMateriali()
+        }
+
+        fun addStudente(name: String, surname: String, email: String, password: String) {
+            getIstance().addStudente(name, surname, email, password)
         }
     }
 }
