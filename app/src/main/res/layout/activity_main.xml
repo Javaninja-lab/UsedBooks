@@ -47,7 +47,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAddAnnuncio"
+        android:id="@+id/btn_Add_Annuncio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
@@ -56,7 +56,7 @@
         app:layout_anchorGravity="top|center"
         app:maxImageSize="32dp"
         app:tint="@color/white"
-        />
+        android:contentDescription="@string/add_annunce" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

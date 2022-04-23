@@ -1,14 +1,16 @@
 package com.example.usedbooks.main.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.*
 import androidx.navigation.findNavController
 import com.example.usedbooks.R
-import com.example.usedbooks.main.home.MaterialeFragment
+import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Materiale
 
 class HomeFragment : Fragment() {
 
@@ -19,26 +21,55 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val btn = view.findViewById<Button>(R.id.btn_test_home)
+        val adapter = MaterialeAdapter(this.requireContext(), Database.getMateriali())
+        val lv_home = view.findViewById<ListView>(R.id.lv_home)
+        lv_home.adapter = adapter
+        lv_home.setOnItemClickListener { adapterView, view, i, l ->
+            view.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment)
+        }
+
+
+        /*val btn = view.findViewById<Button>(R.id.btn_test_home)
         btn.setOnClickListener {
                 it.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment)
-        }
+        }*/
         return view
     }
+}
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         * @return A new instance of fragment SearchFragment.
-         */
-        @JvmStatic
-        fun newInstance() =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
+class MaterialeAdapter(private val context: Context,
+       private val dataSource: ArrayList<Materiale>) : BaseAdapter() {
 
-                }
-            }
+    private val inflater: LayoutInflater
+            = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    override fun getCount(): Int {
+        return dataSource.size
+    }
+
+    override fun getItem(position: Int): Materiale {
+        return dataSource[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // Get view for row item
+        val rowView = inflater.inflate(R.layout.list_item_home, parent, false)
+
+        val materiale = getItem(position)
+
+        val iv_foto_materiale = rowView.findViewById<ImageView>(R.id.iv_foto_materiale)
+        //TODO(Mettere immagine presa dalla classe)
+        val tv_nome_materiale = rowView.findViewById<TextView>(R.id.tv_nome_materiale)
+        tv_nome_materiale.setText(materiale.nome)
+        val tv_nome_venditore = rowView.findViewById<TextView>(R.id.tv_nome_venditore)
+        tv_nome_venditore.setText(materiale.idVenditore.toString())
+        val tv_prezzo = rowView.findViewById<TextView>(R.id.tv_prezzo)
+        tv_prezzo.setText(materiale.prezzo.toString())
+        return rowView
     }
 
 }

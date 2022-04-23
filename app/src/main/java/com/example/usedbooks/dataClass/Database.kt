@@ -16,7 +16,7 @@ class Database() {
     private fun getMateriali() : ArrayList<Materiale> {
         val dareturn = ArrayList<Materiale>()
         for(i in 1..4) {
-            dareturn.add(Materiale(i, "Prova"+i, "Descrizione_"+i, i.toFloat(), i.toFloat(), i, i))
+            dareturn.add(Materiale(i, "Prova"+i, "Descrizione_"+i, i.toDouble(), i.toFloat(), i.toFloat(), i, i))
         }
         return dareturn
     }

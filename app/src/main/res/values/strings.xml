@@ -23,4 +23,5 @@
     <string name="name_of_client">Name of client</string>
     <string name="price">Price</string>
     <string name="name_of_vendor">Name of vendor</string>
+    <string name="add_annunce">Add annunce</string>
 </resources>
