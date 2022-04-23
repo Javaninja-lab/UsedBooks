@@ -14,6 +14,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
         val db= Firebase.firestore
         val btn= findViewById<Button>(R.id.btn_Register)
         btn.setOnClickListener {
