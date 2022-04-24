@@ -1,6 +1,7 @@
 package com.example.usedbooks.dataClass
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -34,6 +35,21 @@ class Database {
             }
     }
 
+    fun getStudenti() : MutableList<Studente> {
+        val list: MutableList<Studente> = mutableListOf()
+        database.collection("studenti")
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    val studente = document.toObject(Studente::class.java)
+                    list.add(studente)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+        return list
+    }
+
     companion object {
         private lateinit var istance : Database
 
@@ -54,6 +70,10 @@ class Database {
 
         fun addStudente(name: String, surname: String, email: String, password: String) {
             getIstance().addStudente(name, surname, email, password)
+        }
+
+        fun getStudenti(): MutableList<Studente>{
+            return getIstance().getStudenti()
         }
     }
 }

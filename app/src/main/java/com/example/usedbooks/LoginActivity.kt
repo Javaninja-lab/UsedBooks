@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Studente
 import com.example.usedbooks.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -13,6 +14,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         Database.inizializateDatabase()
+        val test : MutableList<Studente> = Database.getStudenti()
 
         val btn_SingIn = findViewById<Button>(R.id.btn_SingIn)
         btn_SingIn.setOnClickListener {
