@@ -14,7 +14,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         Database.inizializateDatabase()
-        val test : MutableList<Studente> = Database.getStudenti()
+        val test : ArrayList<Studente> = Database.getStudenti()
+        println(test[0].cognome.toString())
 
         val btn_SingIn = findViewById<Button>(R.id.btn_SingIn)
         btn_SingIn.setOnClickListener {
