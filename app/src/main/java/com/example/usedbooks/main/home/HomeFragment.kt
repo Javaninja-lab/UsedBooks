@@ -66,7 +66,7 @@ class MaterialeAdapter(private val context: Context,
         val tv_nome_materiale = rowView.findViewById<TextView>(R.id.tv_nome_materiale)
         tv_nome_materiale.setText(materiale.nome)
         val tv_nome_venditore = rowView.findViewById<TextView>(R.id.tv_nome_venditore)
-        tv_nome_venditore.setText(materiale.idVenditore.toString())
+        //tv_nome_venditore.setText(materiale.idVenditore.toString())
         val tv_prezzo = rowView.findViewById<TextView>(R.id.tv_prezzo)
         tv_prezzo.setText(materiale.prezzo.toString())
         return rowView

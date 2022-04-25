@@ -1,8 +1,10 @@
 package com.example.usedbooks
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.example.usedbooks.dataClass.Database
@@ -25,22 +27,33 @@ class LoginActivity : AppCompatActivity() {
         }
         val btn_Login = findViewById<Button>(R.id.btn_Login)
         btn_Login.setOnClickListener {
-            val studenti = Database.getStudenti()
+
             val email : String = findViewById<EditText>(R.id.et_email_login).text.toString()
             val password = findViewById<EditText>(R.id.et_password_login).text.toString()
-            var corretto : Studente? = null
-            for(studente in studenti ) {
-                if(email.equals(studente.email)) {
-                    if(Gestore.checkHash(password, studente.password))
-                        corretto = studente
-                    break
+            val studente = Database.getStudente(email)
+
+            if(studente==null)
+            {
+                Log.d(TAG,"STUDENTE NON TROVATO")
+            }
+            else
+            {
+                Log.d(TAG,"STUDENTE trovato ${studente.nome}")
+                if(password.equals(studente.password))
+                {
+                    Database.setLoggedStudent(studente)
+                    val i = Intent(this, MainActivity::class.java)
+                    startActivity(i)
+                }
+                else
+                {
+                    Log.d(TAG,"password errata ${studente.nome}")
                 }
             }
-            if(corretto != null) {
-                Database.setLoggedStudent(corretto)
-                val i = Intent(this, MainActivity::class.java)
-                startActivity(i)
-            }
+
+            /*if(corretto != null) {
+
+            }*/
         }
     }
 }

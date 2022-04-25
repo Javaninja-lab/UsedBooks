@@ -13,10 +13,11 @@ class Database {
     private lateinit var loggedStudente: Studente
 
     // TODO: Cambiare con chiamata a database
+    // TODO: query materiali da uno studente
     private fun getMateriali() : ArrayList<Materiale> {
         val dareturn = ArrayList<Materiale>()
         for(i in 1..4) {
-            dareturn.add(Materiale(i, "Prova"+i, "Descrizione_"+i, i.toDouble(), i.toFloat(), i.toFloat(), i, i))
+            //dareturn.add(Materiale(i, "Prova"+i, "Descrizione_"+i, i.toDouble(), i.toFloat(), i.toFloat(), i, i))
         }
         return dareturn
     }
@@ -46,7 +47,7 @@ class Database {
         for(z in k)
         {
             //TODO : Implementare query per cercare chat
-            val studente = Studente(z.id.toInt(),z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString(), ArrayList<Chat>())
+            val studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
             list.add(studente)
         }
         //Log.d(TAG, "${k[0]["password"]}")
@@ -66,6 +67,28 @@ class Database {
 
 
         return list
+    }
+
+    private fun getStudente( username:String) : Studente?{
+
+        val i =database.collection("studenti").whereEqualTo("email",username).get()
+        while (!i.isComplete){}// questa fa schifo
+        val k :MutableList<DocumentSnapshot> = i.result.documents
+        if(k.size==0)
+            return null
+        else
+        {
+            var studente :Studente=Studente("","","","","")
+            for(z in k)
+            {
+                 studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
+
+            }
+            return studente
+        }
+
+
+
     }
 
     fun setLoggedStudent(studente: Studente) {
@@ -104,6 +127,9 @@ class Database {
 
         fun getStudenti(): ArrayList<Studente> {
             return getIstance().getStudenti()
+        }
+        fun getStudente(username:String):Studente?{
+            return getIstance().getStudente(username)
         }
     }
 }
