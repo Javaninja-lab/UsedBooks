@@ -4,11 +4,13 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class Database {
-    private val database = Firebase.firestore
+    private var database = Firebase.firestore
+    private lateinit var loggedStudente: Studente
 
     // TODO: Cambiare con chiamata a database
     private fun getMateriali() : ArrayList<Materiale> {
@@ -36,14 +38,15 @@ class Database {
             }
     }
 
-    fun getStudenti() : ArrayList<Studente> {
+    private fun getStudenti() : ArrayList<Studente> {
         val list: ArrayList<Studente> = ArrayList<Studente>()
         val i = database.collection("studenti").get()
         while (!i.isComplete){}// questa fa schifo
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
-            val studente: Studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
+            //TODO : Implementare query per cercare chat
+            val studente = Studente(z.id.toInt(),z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString(), ArrayList<Chat>())
             list.add(studente)
         }
         //Log.d(TAG, "${k[0]["password"]}")
@@ -87,7 +90,7 @@ class Database {
             getIstance().addStudente(name, surname, email, password)
         }
 
-        fun getStudenti(): ArrayList<Studente>{
+        fun getStudenti(): ArrayList<Studente> {
             return getIstance().getStudenti()
         }
     }

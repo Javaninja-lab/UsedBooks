@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.usedbooks.NuovoAnnuncioActivity
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragmentContainerViewMainActivity)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setupWithNavController(navController)
+
 
         val btn_Add_Annuncio = findViewById<FloatingActionButton>(R.id.btn_Add_Annuncio)
         btn_Add_Annuncio.setOnClickListener {

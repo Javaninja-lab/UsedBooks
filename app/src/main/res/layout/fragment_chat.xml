@@ -12,5 +12,5 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="55dp"
-        />
+        tools:listitem="@layout/list_item_chat"/>
 </LinearLayout>

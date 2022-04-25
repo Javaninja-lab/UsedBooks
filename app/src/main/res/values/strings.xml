@@ -24,4 +24,7 @@
     <string name="price">Price</string>
     <string name="name_of_vendor">Name of vendor</string>
     <string name="add_annunce">Add annunce</string>
+    <string name="name_of_student">Name of student</string>
+    <string name="last_messagge">Last messagge...</string>
+    <string name="date_last_messagge">Date last messagge</string>
 </resources>
