@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_Surname" />
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_email_login"
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_email" />
+                app:layout_constraintTop_toBottomOf="@+id/et_email_login" />
 
             <EditText
                 android:id="@+id/et_ConfirmPassword"

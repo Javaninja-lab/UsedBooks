@@ -68,6 +68,10 @@ class Database {
         return list
     }
 
+    fun setLoggedStudent(studente: Studente) {
+        loggedStudente = studente
+    }
+
     companion object {
         private lateinit var istance : Database
 
@@ -75,6 +79,14 @@ class Database {
             if(!this::istance.isInitialized)
                 istance = Database()
             return istance
+        }
+
+        fun setLoggedStudent(studente: Studente) {
+            getIstance().setLoggedStudent(studente)
+        }
+
+        fun getLoggedStudent() : Studente {
+            return getIstance().loggedStudente
         }
 
         fun inizializateDatabase() : Boolean {

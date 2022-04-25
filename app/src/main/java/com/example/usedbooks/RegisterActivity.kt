@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Gestore
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,26 +18,19 @@ class RegisterActivity : AppCompatActivity() {
             val name= findViewById<EditText>(R.id.et_Name)
             val surname= findViewById<EditText>(R.id.et_Surname)
             val uni= findViewById<EditText>(R.id.et_University)
-            val email= findViewById<EditText>(R.id.et_email)
+            val email= findViewById<EditText>(R.id.et_email_login)
             val password= findViewById<EditText>(R.id.et_Password)
             val password2= findViewById<EditText>(R.id.et_ConfirmPassword)
 
             if(password.text.toString().equals(password2.text.toString()))
-            {
-                Database.addStudente(name.text.toString(),surname.text.toString(),email.text.toString(),password.text.toString(),)
-            }
+                Database.addStudente(name.text.toString(),surname.text.toString(),email.text.toString(), Gestore.getHash(password.text.toString()))
             else
-            {
                 Toast.makeText(this, "password non uguali", Toast.LENGTH_SHORT).show()
-            }
-
-
-
         }
     }
 
-    override fun finish() {
-        super.finish()
+    override fun onBackPressed() {
+        super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right)
     }
 }

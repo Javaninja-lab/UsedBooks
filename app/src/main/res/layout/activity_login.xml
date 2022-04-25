@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/test" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/et_email_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@id/imageView" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/et_password_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -59,10 +59,10 @@
             android:hint="@string/password"
             android:inputType="textPassword"
 
-            app:layout_constraintEnd_toEndOf="@id/editTextEmail"
+            app:layout_constraintEnd_toEndOf="@id/et_email_login"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/editTextEmail"
-            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+            app:layout_constraintStart_toStartOf="@id/et_email_login"
+            app:layout_constraintTop_toBottomOf="@id/et_email_login" />
 
         <Button
             android:id="@+id/btn_Login"
@@ -73,11 +73,11 @@
 
             android:layout_marginTop="128dp"
             android:text="@string/login"
-            app:layout_constraintEnd_toEndOf="@id/editTextTextPassword"
+            app:layout_constraintEnd_toEndOf="@id/et_password_login"
 
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+            app:layout_constraintStart_toStartOf="@id/et_password_login"
+            app:layout_constraintTop_toBottomOf="@+id/et_password_login" />
 
         <Button
             android:id="@+id/btn_SingIn"
