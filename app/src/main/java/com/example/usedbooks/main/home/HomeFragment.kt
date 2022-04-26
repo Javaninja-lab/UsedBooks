@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 }
 
 class MaterialeAdapter(private val context: Context,
-       private val dataSource: ArrayList<Materiale>) : BaseAdapter() {
+       private val dataSource: ArrayList<Materiale?>) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -47,7 +47,7 @@ class MaterialeAdapter(private val context: Context,
         return dataSource.size
     }
 
-    override fun getItem(position: Int): Materiale {
+    override fun getItem(position: Int): Materiale? {
         return dataSource[position]
     }
 
@@ -64,11 +64,11 @@ class MaterialeAdapter(private val context: Context,
         val iv_foto_materiale = rowView.findViewById<ImageView>(R.id.iv_foto_materiale)
         //TODO(Mettere immagine presa dalla classe)
         val tv_nome_materiale = rowView.findViewById<TextView>(R.id.tv_nome_materiale)
-        tv_nome_materiale.setText(materiale.nome)
+        tv_nome_materiale.setText(materiale?.nome)
         val tv_nome_venditore = rowView.findViewById<TextView>(R.id.tv_nome_venditore)
         //tv_nome_venditore.setText(materiale.idVenditore.toString())
         val tv_prezzo = rowView.findViewById<TextView>(R.id.tv_prezzo)
-        tv_prezzo.setText(materiale.prezzo.toString())
+        tv_prezzo.setText(materiale?.prezzo.toString())
         return rowView
     }
 
