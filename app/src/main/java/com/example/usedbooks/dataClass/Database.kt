@@ -12,14 +12,49 @@ class Database {
     private var database = Firebase.firestore
     private lateinit var loggedStudente: Studente
 
-    // TODO: Cambiare con chiamata a database
-    // TODO: query materiali da uno studente
-    private fun getMateriali() : ArrayList<Materiale> {
-        val dareturn = ArrayList<Materiale>()
-        for(i in 1..4) {
-            //dareturn.add(Materiale(i, "Prova"+i, "Descrizione_"+i, i.toDouble(), i.toFloat(), i.toFloat(), i, i))
+
+    private fun getMateriali() : ArrayList<Materiale?> {
+        val dareturn = ArrayList<Materiale?>()
+        val i = database.collection("materiale").get()
+        while (!i.isComplete){}// questa fa schifo
+        val k: MutableList<DocumentSnapshot> = i.result.documents
+        for(z in k)
+        {
+            val c= z.getGeoPoint("cordinate")
+            val materiale =
+                c?.let {
+                    Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["prezzo"].toString().toDouble(),
+                        it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
+                }
+            dareturn.add(materiale)
         }
         return dareturn
+    }
+
+    private fun getMaterialiStudente(username: String): ArrayList<Materiale?>{
+
+        val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
+        val i =database.collection("studenti").whereEqualTo("proprietario",username).get()
+        while (!i.isComplete){}// questa fa schifo
+        val k :MutableList<DocumentSnapshot> = i.result.documents
+        if(k.size==0)
+            return list
+        else
+        {
+            for(z in k)
+            {
+                val c= z.getGeoPoint("cordinate")
+                val materiale =
+                    c?.let {
+                        Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["prezzo"].toString().toDouble(),
+                            it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
+                    }
+                list.add(materiale)
+
+            }
+        }
+        return list
+
     }
 
     private fun addStudente(name: String,surname: String,email: String,password: String){
@@ -46,25 +81,9 @@ class Database {
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
-            //TODO : Implementare query per cercare chat
             val studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
             list.add(studente)
         }
-        //Log.d(TAG, "${k[0]["password"]}")
-                /*database.collection("studenti")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-
-                    val studente: Studente = Studente(document.id,document["nome"].toString(),document["cognome"].toString(),document["email"].toString(),document["password"].toString())
-                    list.add(studente)
-                    Log.d(TAG, "${document.id} => ${document["password"]}")
-                }
-                Log.d(TAG,"${list[0].cognome.toString()}")
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }*/
-
 
         return list
     }
@@ -117,7 +136,7 @@ class Database {
             return this::istance.isInitialized
         }
 
-        fun getMateriali() : ArrayList<Materiale> {
+        fun getMateriali() : ArrayList<Materiale?> {
             return getIstance().getMateriali()
         }
 

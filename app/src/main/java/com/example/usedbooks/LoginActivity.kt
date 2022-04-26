@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
             val email : String = findViewById<EditText>(R.id.et_email_login).text.toString()
             val password = findViewById<EditText>(R.id.et_password_login).text.toString()
             val studente = Database.getStudente(email)
-
             if(studente==null)
             {
                 Log.d(TAG,"STUDENTE NON TROVATO")
