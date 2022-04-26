@@ -14,7 +14,11 @@
             android:id="@+id/action_homeFragment_to_materialeFragment"
             app:destination="@id/materialeFragment"
             app:popUpTo="@id/homeFragment"
-            app:popUpToSaveState="true" />
+            app:popUpToSaveState="true" >
+            <argument
+                android:name="materiale"
+                app:argType="com.example.usedbooks.dataClass.Materiale"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -34,5 +38,10 @@
     <fragment
         android:id="@+id/materialeFragment"
         android:name="com.example.usedbooks.main.home.MaterialeFragment"
-        android:label="MaterialeFragment" />
+        android:label="MaterialeFragment" >
+        <argument
+            android:name="materiale"
+            app:argType="com.example.usedbooks.dataClass.Materiale"
+            />
+    </fragment>
 </navigation>

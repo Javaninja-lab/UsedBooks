@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:orientation="horizontal">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MaterialeFragment" >
+        tools:context=".MaterialeFragment"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/iv_foto_materiale"
             android:layout_width="298dp"
             android:layout_height="365dp"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="48dp"
             android:src="@drawable/test"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,12 +30,11 @@
             android:id="@+id/tv_nome_materiale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="48dp"
             android:text="@string/name_of_material"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_foto_materiale"
+            app:layout_constraintStart_toStartOf="@+id/iv_foto_materiale"
             app:layout_constraintTop_toBottomOf="@+id/iv_foto_materiale" />
 
         <TextView
@@ -54,25 +57,25 @@
             app:layout_constraintStart_toStartOf="@id/tv_nome_venditore"
             app:layout_constraintTop_toBottomOf="@id/tv_nome_venditore" />
 
-        <com.google.android.gms.maps.MapView
+        <fragment
             android:id="@+id/mv_materiale"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
             android:layout_marginTop="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_prezzo"
+            app:layout_constraintStart_toStartOf="@+id/tv_prezzo"
             app:layout_constraintTop_toBottomOf="@id/tv_prezzo" />
 
         <Button
             android:id="@+id/btn_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="48dp"
-            android:layout_marginEnd="32dp"
             android:text="@string/contact_me"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/mv_materiale"
+            app:layout_constraintStart_toStartOf="@+id/mv_materiale"
             app:layout_constraintTop_toBottomOf="@id/mv_materiale" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</LinearLayout>

@@ -26,8 +26,8 @@ class HomeFragment : Fragment() {
         val lv_home = view.findViewById<ListView>(R.id.lv_home)
         lv_home.adapter = adapter
         lv_home.setOnItemClickListener { adapterView, view, position, id ->
-            val bundle = bundleOf("materiale" to adapterView.getItemAtPosition(position) as Materiale)
-            view.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment, bundle)
+            val action = HomeFragmentDirections.actionHomeFragmentToMaterialeFragment(adapterView.getItemAtPosition(position) as Materiale)
+            view.findNavController().navigate(action)
         }
         return view
     }
@@ -53,7 +53,11 @@ class MaterialeAdapter(private val context: Context,
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         // Get view for row item
-        val rowView = inflater.inflate(R.layout.list_item_home, parent, false)
+        var rowView : View
+        if(convertView == null)
+            rowView = inflater.inflate(R.layout.list_item_home, parent, false)
+        else
+            rowView = convertView
 
         val materiale = getItem(position)
 
