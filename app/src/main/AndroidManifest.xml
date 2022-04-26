@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyA9t7HDV5QsQrFZCKthA3fDxnyoSVtu8uU" />
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>

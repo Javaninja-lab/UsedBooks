@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 }
 
 class MaterialeAdapter(private val context: Context,
-       private val dataSource: ArrayList<Materiale?>) : BaseAdapter() {
+       private val dataSource: ArrayList<Materiale>) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

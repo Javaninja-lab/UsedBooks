@@ -13,20 +13,21 @@ class Database {
     private lateinit var loggedStudente: Studente
 
 
-    private fun getMateriali() : ArrayList<Materiale?> {
-        val dareturn = ArrayList<Materiale?>()
+    private fun getMateriali() : ArrayList<Materiale> {
+        val dareturn = ArrayList<Materiale>()
         val i = database.collection("materiale").get()
         while (!i.isComplete){}// questa fa schifo
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
             val c= z.getGeoPoint("cordinate")
-            val materiale =
+            val materiale : Materiale? =
                 c?.let {
                     Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["prezzo"].toString().toDouble(),
                         it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
                 }
-            dareturn.add(materiale)
+            if(materiale!=null)
+                dareturn.add(materiale)
         }
         return dareturn
     }
@@ -88,7 +89,7 @@ class Database {
         return list
     }
 
-    private fun getStudente( username:String) : Studente?{
+    private fun getStudente(username : String) : Studente?{
 
         val i =database.collection("studenti").whereEqualTo("email",username).get()
         while (!i.isComplete){}// questa fa schifo
@@ -105,9 +106,6 @@ class Database {
             }
             return studente
         }
-
-
-
     }
 
     fun setLoggedStudent(studente: Studente) {
@@ -136,7 +134,7 @@ class Database {
             return this::istance.isInitialized
         }
 
-        fun getMateriali() : ArrayList<Materiale?> {
+        fun getMateriali() : ArrayList<Materiale> {
             return getIstance().getMateriali()
         }
 
@@ -144,10 +142,10 @@ class Database {
             getIstance().addStudente(name, surname, email, password)
         }
 
-        fun getStudenti(): ArrayList<Studente> {
+        fun getStudenti() : ArrayList<Studente> {
             return getIstance().getStudenti()
         }
-        fun getStudente(username:String):Studente?{
+        fun getStudente(username:String) : Studente? {
             return getIstance().getStudente(username)
         }
     }
