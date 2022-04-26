@@ -5,5 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NuovoAnnuncioActivity">
-
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mv_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

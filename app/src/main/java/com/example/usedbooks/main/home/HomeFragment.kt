@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
@@ -24,15 +25,10 @@ class HomeFragment : Fragment() {
         val adapter = MaterialeAdapter(this.requireContext(), Database.getMateriali())
         val lv_home = view.findViewById<ListView>(R.id.lv_home)
         lv_home.adapter = adapter
-        lv_home.setOnItemClickListener { adapterView, view, i, l ->
-            view.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment)
+        lv_home.setOnItemClickListener { adapterView, view, position, id ->
+            val bundle = bundleOf("materiale" to adapterView.getItemAtPosition(position) as Materiale)
+            view.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment, bundle)
         }
-
-
-        /*val btn = view.findViewById<Button>(R.id.btn_test_home)
-        btn.setOnClickListener {
-                it.findNavController().navigate(R.id.action_homeFragment_to_materialeFragment)
-        }*/
         return view
     }
 }
@@ -66,7 +62,7 @@ class MaterialeAdapter(private val context: Context,
         val tv_nome_materiale = rowView.findViewById<TextView>(R.id.tv_nome_materiale)
         tv_nome_materiale.setText(materiale?.nome)
         val tv_nome_venditore = rowView.findViewById<TextView>(R.id.tv_nome_venditore)
-        //tv_nome_venditore.setText(materiale.idVenditore.toString())
+        tv_nome_venditore.setText(materiale?.proprietario)
         val tv_prezzo = rowView.findViewById<TextView>(R.id.tv_prezzo)
         tv_prezzo.setText(materiale?.prezzo.toString())
         return rowView

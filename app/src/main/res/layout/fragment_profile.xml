@@ -46,10 +46,6 @@
         android:layout_height="300dp"
         android:orientation="horizontal">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mv_profile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </LinearLayout>
 
 </LinearLayout>

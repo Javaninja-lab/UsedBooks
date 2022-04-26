@@ -24,10 +24,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_profile, container, false)
-        val map = layout.findViewById<MapView>(R.id.mv_profile)
-        map.getMapAsync {
-            it.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)).title("Prova Marker"))
-        }
         return layout
     }
 
