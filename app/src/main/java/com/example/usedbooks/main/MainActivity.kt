@@ -3,11 +3,8 @@ package com.example.usedbooks.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.usedbooks.NuovoAnnuncioActivity
 import com.example.usedbooks.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton

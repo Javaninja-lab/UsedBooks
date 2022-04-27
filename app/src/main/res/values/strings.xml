@@ -27,4 +27,16 @@
     <string name="name_of_student">Name of student</string>
     <string name="last_messagge">Last messagge...</string>
     <string name="date_last_messagge">Date last messagge</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="password_confirmpassword_different">Password and Confirm password are different</string>
+    <string name="register_ok">Registration succesfull</string>
+    <string name="register_not_ok">Registration unsuccessful</string>
 </resources>

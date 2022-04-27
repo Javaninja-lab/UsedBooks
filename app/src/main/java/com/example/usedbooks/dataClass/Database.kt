@@ -59,7 +59,7 @@ class Database {
 
     }
 
-    private fun addStudente(name: String,surname: String,email: String,password: String){
+    private fun addStudente(name: String,surname: String,email: String,password: String) : Studente?{
         val studente = hashMapOf(
             "cognome" to surname,
             "nome" to name,
@@ -74,6 +74,8 @@ class Database {
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
+        //TODO("Implementare controllo se l'add è andata correttamente e restituire lo studente appena aggiunto")
+        return Studente("0", name, surname, email, password)
     }
 
     //return -1 se non trova il corso
@@ -119,35 +121,29 @@ class Database {
     }
 
     private fun getStudenti() : ArrayList<Studente> {
-        val list: ArrayList<Studente> = ArrayList<Studente>()
+        val list : ArrayList<Studente> = ArrayList()
         val i = database.collection("studenti").get()
-        while (!i.isComplete){}// questa fa schifo
-        val k: MutableList<DocumentSnapshot> = i.result.documents
-        for(z in k)
-        {
+        while (!i.isComplete); // questa fa schifo
+        val k : MutableList<DocumentSnapshot> = i.result.documents
+        for(z in k) {
             val studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
             list.add(studente)
         }
-
         return list
     }
 
-    private fun getStudente(username : String) : Studente?{
-
-        val i =database.collection("studenti").whereEqualTo("email",username).get()
-        while (!i.isComplete){}// questa fa schifo
-        val k :MutableList<DocumentSnapshot> = i.result.documents
-        if(k.size==0)
-            return null
-        else
-        {
-            var studente :Studente=Studente("","","","","")
-            for(z in k)
-            {
-                 studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
-
+    private fun getStudente(username : String) : Studente? {
+        val i = database.collection("studenti").whereEqualTo("email",username).get()
+        while (!i.isComplete); // questa fa schifo
+        val k : MutableList<DocumentSnapshot> = i.result.documents
+        return if(k.size == 0)
+            null
+        else {
+            var studente : Studente = Studente("","","","","")
+            for(z in k) {
+                studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
             }
-            return studente
+            studente
         }
     }
 
@@ -181,8 +177,8 @@ class Database {
             return getIstance().getMateriali()
         }
 
-        fun addStudente(name: String, surname: String, email: String, password: String) {
-            getIstance().addStudente(name, surname, email, password)
+        fun addStudente(name: String, surname: String, email: String, password: String) : Studente? {
+            return getIstance().addStudente(name, surname, email, password)
         }
 
         fun getStudenti() : ArrayList<Studente> {
