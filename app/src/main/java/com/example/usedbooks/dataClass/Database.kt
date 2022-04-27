@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -23,7 +24,7 @@ class Database {
             val c= z.getGeoPoint("cordinate")
             val materiale : Materiale? =
                 c?.let {
-                    Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["prezzo"].toString().toDouble(),
+                    Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                         it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
                 }
             if(materiale!=null)
@@ -47,7 +48,7 @@ class Database {
                 val c= z.getGeoPoint("cordinate")
                 val materiale =
                     c?.let {
-                        Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["prezzo"].toString().toDouble(),
+                        Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                             it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
                     }
                 list.add(materiale)
@@ -73,6 +74,48 @@ class Database {
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
+    }
+
+    //return -1 se non trova il corso
+    private fun getCorsoId(nome: String): String{
+        val i=database.collection("Corso").whereEqualTo("nome",nome).get()
+        while (!i.isComplete){}// questa fa schifo
+        val k :MutableList<DocumentSnapshot> = i.result.documents
+        if(k.size==0)
+            return "-1"
+        else
+        {
+            return k[0].id
+        }
+    }
+
+    //return -1 se non trova il corso
+    private fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
+        val c = GeoPoint(latitudine,longitudine)
+        val corso=getCorsoId(NomeCorso)
+        if(corso.equals("-1"))
+            return -1
+        val materiale = hashMapOf(
+            "cordinate" to c,
+            "descrizione" to descrizione,
+            "idCorso" to corso,
+            "nome" to nome,
+            "prezzo" to prezzo,
+            "proprietario" to loggedStudente.id.toString(),
+            "stato" to stato,
+            "tipologia" to tipologia
+
+        )
+
+        database.collection("materiale").add(materiale).addOnSuccessListener {
+                documentReference ->
+            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+        }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+            }
+        return 1
+
     }
 
     private fun getStudenti() : ArrayList<Studente> {
@@ -147,6 +190,9 @@ class Database {
         }
         fun getStudente(username:String) : Studente? {
             return getIstance().getStudente(username)
+        }
+        fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
+            return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )
         }
     }
 }
