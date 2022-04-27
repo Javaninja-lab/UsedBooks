@@ -16,7 +16,6 @@ import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 
 class HomeFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

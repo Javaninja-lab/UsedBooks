@@ -1,9 +1,9 @@
-package com.example.usedbooks
+package com.example.usedbooks.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.usedbooks.R
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
