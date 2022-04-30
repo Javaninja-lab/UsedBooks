@@ -38,19 +38,16 @@ class LoginFragment : Fragment() {
             val email : String = layout.findViewById<EditText>(R.id.et_email_login).text.toString()
             val password = layout.findViewById<EditText>(R.id.et_password_login).text.toString()
             val studente = Database.getStudente(email)
-            if(studente==null)
-            {
+            if(studente==null) {
                 Log.d(ContentValues.TAG,"STUDENTE NON TROVATO")
             }
-            else
-            {
+            else {
                 Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
                 if(password.equals(studente.password)) {
                     Database.setLoggedStudent(studente)
                     Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
                 }
-                else
-                {
+                else {
                     Log.d(ContentValues.TAG,"password errata ${studente.nome}")
                 }
             }
