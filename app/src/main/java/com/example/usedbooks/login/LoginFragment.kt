@@ -15,12 +15,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.main.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
+    private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Database.inizializateDatabase()
+        mAuth= FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
