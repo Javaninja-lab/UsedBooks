@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Studente
+import com.example.usedbooks.dataClass.User
 
-class UserAdapter(val context: Context, val userList: ArrayList<Studente>) :
+class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -18,14 +19,14 @@ class UserAdapter(val context: Context, val userList: ArrayList<Studente>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.list_item_chat,parent,false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.list_item_chat,parent,false)// da vedere se funziona
         return UserViewHolder(view)
     }
 
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser= userList[position]
-        holder.mittente.text= currentUser.nome+" "+currentUser.cognome
+        holder.mittente.text= currentUser.username
     }
 
     override fun getItemCount(): Int {

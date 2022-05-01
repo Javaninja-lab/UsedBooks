@@ -7,7 +7,7 @@
     android:tag="chat">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ListViewSearch"
+        android:id="@+id/RecyclerViewChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"

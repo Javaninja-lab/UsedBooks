@@ -13,9 +13,13 @@ import androidx.navigation.Navigation
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
+import com.example.usedbooks.dataClass.User
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterFragment : Fragment() {
 
+    private lateinit var mDbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,6 +48,8 @@ class RegisterFragment : Fragment() {
                 if(studente != null) {
                     Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
                     Database.setLoggedStudent(studente)
+                    val s = Database.getStudente(email.text.toString())
+                    addUserToDatabaseRealtime(s?.id.toString(),name.text.toString()+" "+surname.text.toString())
                     Navigation.findNavController(it).navigate(R.id.action_registerFragment_to_mainActivity)
                 } else {
                     Toast.makeText(layoutInflater.context, R.string.register_not_ok, Toast.LENGTH_LONG).show()
@@ -55,4 +61,12 @@ class RegisterFragment : Fragment() {
 
         return layoutInflater
     }
+
+    private fun addUserToDatabaseRealtime(id:String,nome:String){
+        mDbRef= FirebaseDatabase.getInstance().getReference()
+
+        mDbRef.child("user").child(id).setValue(User(id,nome))
+    }
+
+
 }
