@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.TextChat">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RelativeChat"
+        android:layout_above="@+id/linearChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+         />
+
+    <LinearLayout
+        android:id="@+id/linearChat"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <EditText
+            android:id="@+id/messageBox"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="Type a message"
+            android:layout_margin="5dp"
+            android:layout_weight="85"/>
+       <Button
+           android:id="@+id/invioButton"
+           style="@style/primaryStyleButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="invio"
+           android:layout_weight="10"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="5dp"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
