@@ -51,8 +51,10 @@ class ChatFragment : Fragment() {
                 userList.clear()
                 for(postSnapshot in snapshot.children){
                     val currentUser =postSnapshot.getValue(User::class.java)
-                    userList.add(currentUser!!)
-                    //aggiunta studente all'array list
+                    if(Database.getLoggedStudent().id!= currentUser?.id)
+                    {
+                        userList.add(currentUser!!)
+                    }
                 }
                 adapter.notifyDataSetChanged()
 

@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -46,7 +47,8 @@ class LoginFragment : Fragment() {
             }
             else {
                 Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
-                if(password.equals(studente.password)) {
+
+                if(Gestore.getHash(password).equals(studente.password)) {
                     Database.setLoggedStudent(studente)
                     Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
                 }

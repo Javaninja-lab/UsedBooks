@@ -47,7 +47,8 @@ class RegisterFragment : Fragment() {
                     Gestore.getHash(password.text.toString()))
                 if(studente != null) {
                     Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
-                    Database.setLoggedStudent(studente)
+                    val studente = Database.getStudente(email.text.toString())
+                    Database.setLoggedStudent(studente!!)
                     val s = Database.getStudente(email.text.toString())
                     addUserToDatabaseRealtime(s?.id.toString(),name.text.toString()+" "+surname.text.toString())
                     Navigation.findNavController(it).navigate(R.id.action_registerFragment_to_mainActivity)
