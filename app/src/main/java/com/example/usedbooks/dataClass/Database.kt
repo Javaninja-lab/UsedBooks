@@ -139,7 +139,7 @@ class Database {
         return if(k.size == 0)
             null
         else {
-            var studente : Studente = Studente("","","","","")
+            var studente = Studente()
             for(z in k) {
                 studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
             }

@@ -1,10 +1,13 @@
-package com.example.usedbooks.main
+package com.example.usedbooks.main.chat
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.KeyListener
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
@@ -14,15 +17,6 @@ import com.example.usedbooks.firebase.MessageAdapter
 import com.google.firebase.database.*
 
 class TextChat : AppCompatActivity() {
-
-    private lateinit var chatRecyclerView : RecyclerView
-    private lateinit var messageBox: EditText
-    private lateinit var sendButton: Button
-    private lateinit var messageAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Messaggio>
-    private lateinit var mDbref : DatabaseReference
-
-
     var receiverRoom: String? = null
     var senderRoom: String? = null
 
@@ -35,20 +29,20 @@ class TextChat : AppCompatActivity() {
         val receiverid =intent.getStringExtra("id")
         val senderid= Database.getLoggedStudent().id
 
-        mDbref= FirebaseDatabase.getInstance().getReference()
+        val mDbref= FirebaseDatabase.getInstance().getReference()
          //todo impostare una text view per il nome
 
 
         //codice univoco della stanza
-        senderRoom= receiverid+senderid
-        receiverRoom= senderid+receiverid
+        val senderRoom= receiverid+senderid
+        val receiverRoom= senderid+receiverid
 
 
-        chatRecyclerView= findViewById(R.id.RelativeChat)
-        messageBox= findViewById(R.id.messageBox)
-        sendButton= findViewById(R.id.invioButton)
-        messageList= ArrayList()
-        messageAdapter= MessageAdapter(this,messageList)
+        val chatRecyclerView= findViewById<RecyclerView>(R.id.RelativeChat)
+        val messageBox= findViewById<EditText>(R.id.mb_messaggio)
+        val sendButton= findViewById<Button>(R.id.invioButton)
+        val messageList= ArrayList<Messaggio>()
+        val messageAdapter= MessageAdapter(this,messageList)
 
         chatRecyclerView.layoutManager= LinearLayoutManager(this)
         chatRecyclerView.adapter= messageAdapter
@@ -57,7 +51,6 @@ class TextChat : AppCompatActivity() {
         mDbref.child("chats").child(senderRoom!!).child("messages")
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-
                     messageList.clear()
                     for(postSnapshot in snapshot.children){
                         val message= postSnapshot.getValue(Messaggio::class.java)
@@ -71,23 +64,19 @@ class TextChat : AppCompatActivity() {
                 }
 
             })
-
-
-
-        //aggiungere il messaggio al database
+        //TODO(aggiungere il messaggio al database)
         sendButton.setOnClickListener{
-
             val message= messageBox.text.toString()
             val messageObject = Messaggio(message, senderid)
-            mDbref.child("chats").child(senderRoom!!).child("messages").push()
+            mDbref.child("chats").child(senderRoom).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
-                    mDbref.child("chats").child(receiverRoom!!).child("messages").push()
+                    mDbref.child("chats").child(receiverRoom).child("messages").push()
                         .setValue(messageObject)
                 }
             messageBox.setText("")
-
-
         }
 
+        val mb_messaggio = findViewById<TextView>(R.id.mb_messaggio)
+        mb_messaggio.keyListener
     }
 }

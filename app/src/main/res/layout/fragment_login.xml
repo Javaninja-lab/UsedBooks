@@ -63,33 +63,51 @@
             app:layout_constraintStart_toStartOf="@id/et_email_login"
             app:layout_constraintTop_toBottomOf="@id/et_email_login" />
 
-        <Button
-            android:id="@+id/btn_Login"
-            style="@style/primaryStyleButton"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/et_password_login"
+            app:layout_constraintStart_toStartOf="@+id/et_password_login"
+            app:layout_constraintTop_toBottomOf="@+id/et_password_login">
 
-            android:layout_marginTop="128dp"
-            android:text="@string/login"
-            app:layout_constraintEnd_toEndOf="@id/et_password_login"
+                <ProgressBar
+                    android:id="@+id/pb_caricamento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="invisible"/>
 
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/et_password_login"
-            app:layout_constraintTop_toBottomOf="@+id/et_password_login" />
+                <Button
+                    android:id="@+id/btn_Login"
+                    style="@style/primaryStyleButton"
+                    android:layout_width="0dp"
 
-        <Button
-            android:id="@+id/btn_SingIn"
-            style="@style/secondStyleButton"
-            android:layout_width="0dp"
+                    android:layout_height="wrap_content"
 
-            android:layout_height="wrap_content"
+                    android:text="@string/login"
 
-            android:layout_marginTop="24dp"
-            android:text="@string/sign_in"
-            app:layout_constraintEnd_toEndOf="@id/btn_Login"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/btn_Login"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Login" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_SingIn"
+                    style="@style/secondStyleButton"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="24dp"
+                    android:text="@string/sign_in"
+                    app:layout_constraintEnd_toEndOf="@id/btn_Login"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/btn_Login"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_Login" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

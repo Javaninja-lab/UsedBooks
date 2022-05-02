@@ -3,20 +3,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_item_listview">
+    <ImageView
+        android:id="@+id/iv_foto_profilo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/test"
+        android:layout_weight="3"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/iv_foto_profilo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/test"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:orientation="vertical">
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_nome_studente"
                 android:layout_width="wrap_content"
@@ -30,7 +28,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/last_messagge"/>
-        </LinearLayout>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_data_messaggio"
@@ -38,5 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:padding="15dp"
-        android:text="@string/date_last_messagge"/>
+        android:text="@string/date_last_messagge"
+        android:layout_weight="15"/>
 </LinearLayout>

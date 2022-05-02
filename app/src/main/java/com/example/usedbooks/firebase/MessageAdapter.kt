@@ -48,11 +48,10 @@ class MessageAdapter(val context:Context,val messageList: ArrayList<Messaggio>):
 
     override fun getItemViewType(position: Int): Int {
         val currentMessage=messageList[position]
-        if(Database.getLoggedStudent().id.equals(currentMessage.senderId)){
+        if(Database.getLoggedStudent().id.equals(currentMessage.senderId)) {
             return ITEM_SENT
         }
-        else
-        {
+        else {
             return ITEM_RECEIVE
         }
     }

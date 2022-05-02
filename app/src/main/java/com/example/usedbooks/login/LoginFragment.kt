@@ -2,6 +2,7 @@ package com.example.usedbooks.login
 
 import android.content.ContentValues
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R

@@ -4,42 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.TextChat">
+    tools:context=".main.chat.TextChat">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RelativeChat"
-        android:layout_above="@+id/linearChat"
+    <LinearLayout
+        android:id="@+id/ll_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-         />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/testtext" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RelativeChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearChat"
+        android:layout_below="@id/ll_topbar"/>
 
     <LinearLayout
         android:id="@+id/linearChat"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        android:weightSum="100">
+        android:weightSum="101">
+
         <EditText
-            android:id="@+id/messageBox"
+            android:id="@+id/mb_messaggio"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:hint="Type a message"
-            android:layout_margin="5dp"
-            android:layout_weight="85"/>
-       <Button
-           android:id="@+id/invioButton"
-           style="@style/primaryStyleButton"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="invio"
-           android:layout_weight="10"
-           android:layout_marginLeft="10dp"
-           android:layout_marginTop="5dp"/>
+            android:layout_weight="100"
+            android:hint="@string/type_a_message"
+            android:imeOptions="actionSend" />
 
-
+        <Button
+            android:id="@+id/invioButton"
+            style="@style/primaryStyleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="@string/send" />
     </LinearLayout>
 
 </RelativeLayout>

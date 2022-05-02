@@ -3,16 +3,14 @@ package com.example.usedbooks.firebase
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
-import com.example.usedbooks.dataClass.Studente
 import com.example.usedbooks.dataClass.User
-import com.example.usedbooks.main.TextChat
+import com.example.usedbooks.main.chat.TextChat
 
 class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -32,7 +30,7 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
         holder.mittente.text= currentUser.username
 
         holder.itemView.setOnClickListener{
-            val intent = Intent(context,TextChat::class.java)
+            val intent = Intent(context, TextChat::class.java)
             intent.putExtra("name",Database.getLoggedStudent().nome+" "+Database.getLoggedStudent().cognome)
             intent.putExtra("id",currentUser.id)
 

@@ -1,7 +1,6 @@
-package com.example.usedbooks.main
+package com.example.usedbooks.main.chat
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
-import com.example.usedbooks.dataClass.Studente
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.firebase.UserAdapter
 import com.google.firebase.database.*
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ChatFragment : Fragment() {
 
@@ -25,8 +22,6 @@ class ChatFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
 
     override fun onCreateView(
@@ -51,8 +46,7 @@ class ChatFragment : Fragment() {
                 userList.clear()
                 for(postSnapshot in snapshot.children){
                     val currentUser =postSnapshot.getValue(User::class.java)
-                    if(Database.getLoggedStudent().id!= currentUser?.id)
-                    {
+                    if(Database.getLoggedStudent().id!= currentUser?.id) {
                         userList.add(currentUser!!)
                     }
                 }

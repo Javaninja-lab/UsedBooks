@@ -11,6 +11,8 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="email_address">Email Address</string>
 
+    <string name="send">Send Message</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
@@ -39,4 +41,5 @@
     <string name="password_confirmpassword_different">Password and Confirm password are different</string>
     <string name="register_ok">Registration succesfull</string>
     <string name="register_not_ok">Registration unsuccessful</string>
+    <string name="type_a_message">Type a message</string>
 </resources>
