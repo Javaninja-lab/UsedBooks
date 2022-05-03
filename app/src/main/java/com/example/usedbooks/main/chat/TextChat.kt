@@ -17,21 +17,18 @@ import com.example.usedbooks.firebase.MessageAdapter
 import com.google.firebase.database.*
 
 class TextChat : AppCompatActivity() {
-    var receiverRoom: String? = null
-    var senderRoom: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_chat)
-
-
         val name = intent.getStringExtra("name")
         val receiverid =intent.getStringExtra("id")
         val senderid= Database.getLoggedStudent().id
 
         val mDbref= FirebaseDatabase.getInstance().getReference()
-         //todo impostare una text view per il nome
 
+        val tv_nome_contatto = findViewById<TextView>(R.id.tv_nome_contatto)
+        tv_nome_contatto.setText(name)
 
         //codice univoco della stanza
         val senderRoom= receiverid+senderid
@@ -64,7 +61,7 @@ class TextChat : AppCompatActivity() {
                 }
 
             })
-        //TODO(aggiungere il messaggio al database)
+        //TODO(Aggiungere il messaggio al database)
         sendButton.setOnClickListener{
             val message= messageBox.text.toString()
             val messageObject = Messaggio(message, senderid)
@@ -76,7 +73,6 @@ class TextChat : AppCompatActivity() {
             messageBox.setText("")
         }
 
-        val mb_messaggio = findViewById<TextView>(R.id.mb_messaggio)
-        mb_messaggio.keyListener
+
     }
 }

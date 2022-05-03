@@ -6,28 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".main.chat.TextChat">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
+
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:id="@+id/iv_foto_profilo"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
+            android:id="@+id/tv_nome_contatto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/testtext" />
-
-    </LinearLayout>
+            android:text="@string/testtext"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_foto_profilo"
+            app:layout_constraintTop_toTopOf="@+id/iv_foto_profilo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RelativeChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearChat"
-        android:layout_below="@id/ll_topbar"/>
+        android:layout_below="@id/ll_topbar" />
 
     <LinearLayout
         android:id="@+id/linearChat"

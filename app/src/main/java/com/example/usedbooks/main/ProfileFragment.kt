@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.example.usedbooks.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -24,6 +25,8 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_profile, container, false)
+        val iv_foto_profilo = layout.findViewById<ImageView>(R.id.iv_foto_profilo)
+        //TODO(Cambiamento immagine profilo)
         return layout
     }
 

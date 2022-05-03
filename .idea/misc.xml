@@ -29,9 +29,12 @@
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_main.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_nuovo_annuncio.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_register.xml" value="0.2975630611372381" />
-        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_text_chat.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_text_chat.xml" value="0.33" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_chat.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_home.xml" value="0.26201269265639165" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_login.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_profile.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_register.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/list_item_chat.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/receive.xml" value="0.14578879863189398" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/sent.xml" value="0.14578879863189398" />
