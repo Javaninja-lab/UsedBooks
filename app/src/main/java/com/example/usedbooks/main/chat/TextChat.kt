@@ -8,21 +8,29 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.firebase.MessageAdapter
+import com.example.usedbooks.main.home.MaterialeFragmentArgs
 import com.google.firebase.database.*
 
 class TextChat : AppCompatActivity() {
 
+    val args : TextChatArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_chat)
-        val name = intent.getStringExtra("name")
-        val receiverid =intent.getStringExtra("id")
+
+
+        val name : String = args.nameVendor
+        val receiverid : String = args.id
+
         val senderid= Database.getLoggedStudent().id
 
         val mDbref= FirebaseDatabase.getInstance().getReference()

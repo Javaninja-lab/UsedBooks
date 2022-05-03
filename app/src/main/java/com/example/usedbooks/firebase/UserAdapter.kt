@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.User
+import com.example.usedbooks.main.chat.ChatFragment
+import com.example.usedbooks.main.chat.ChatFragmentDirections
 import com.example.usedbooks.main.chat.TextChat
+import com.example.usedbooks.main.home.HomeFragmentDirections
 
 class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val mittente= itemView.findViewById<TextView>(R.id.tv_nome_studente)
+        val mittente = itemView.findViewById<TextView>(R.id.tv_nome_studente)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -26,15 +30,16 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
 
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val currentUser= userList[position]
-        holder.mittente.text= currentUser.username
-
-        holder.itemView.setOnClickListener{
-            val intent = Intent(context, TextChat::class.java)
+        val currentUser = userList[position]
+        holder.mittente.text = currentUser.username
+        holder.itemView.setOnClickListener {
+            val action = ChatFragmentDirections.actionChatFragmentToTextChat(currentUser.username!!, currentUser.id!!)
+            holder.itemView.findNavController().navigate(action)
+            /*val intent = Intent(context, TextChat::class.java)
             intent.putExtra("name",Database.getLoggedStudent().nome+" "+Database.getLoggedStudent().cognome)
             intent.putExtra("id",currentUser.id)
 
-            context?.startActivity(intent)
+            context?.startActivity(intent)*/
         }
     }
 
