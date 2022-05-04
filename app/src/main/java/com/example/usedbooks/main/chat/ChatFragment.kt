@@ -20,10 +20,6 @@ class ChatFragment : Fragment() {
     private lateinit var adapter: UserAdapter
     private lateinit var mDbRef: DatabaseReference
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +36,7 @@ class ChatFragment : Fragment() {
 
         //prelevo dati dal database realtime
 
-       mDbRef.child("user").addValueEventListener(object : ValueEventListener{
+        mDbRef.child("user").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 for(postSnapshot in snapshot.children){
@@ -58,5 +54,7 @@ class ChatFragment : Fragment() {
         })
         return view
     }
+
+
 
 }

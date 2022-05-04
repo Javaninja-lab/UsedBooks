@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
@@ -21,14 +22,6 @@ import com.example.usedbooks.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
-
-    private lateinit var mAuth: FirebaseAuth
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Database.inizializateDatabase()
-        mAuth= FirebaseAuth.getInstance()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,20 +34,21 @@ class LoginFragment : Fragment() {
         }
         val btn_Login = layout.findViewById<Button>(R.id.btn_Login)
         btn_Login.setOnClickListener {
-            val email : String = layout.findViewById<EditText>(R.id.et_email_login).text.toString()
+            val email = layout.findViewById<EditText>(R.id.et_email_login).text.toString()
             val password = layout.findViewById<EditText>(R.id.et_password_login).text.toString()
             val studente = Database.getStudente(email)
             if(studente==null) {
+                Toast.makeText(layout.context, "Email non presente", Toast.LENGTH_LONG).show()
                 Log.d(ContentValues.TAG,"STUDENTE NON TROVATO")
             }
             else {
                 Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
-
                 if(Gestore.getHash(password).equals(studente.password)) {
                     Database.setLoggedStudent(studente)
                     Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
                 }
                 else {
+                    Toast.makeText(layout.context, "Password errata", Toast.LENGTH_LONG).show()
                     Log.d(ContentValues.TAG,"password errata ${studente.nome}")
                 }
             }
