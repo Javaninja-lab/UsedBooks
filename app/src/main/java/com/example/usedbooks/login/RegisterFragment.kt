@@ -14,12 +14,14 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class RegisterFragment : Fragment() {
-
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -28,36 +30,13 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val layoutInflater =  inflater.inflate(R.layout.fragment_register, container, false)
+        val layoutInflater = inflater.inflate(R.layout.fragment_register, container, false)
 
-        val btn= layoutInflater.findViewById<Button>(R.id.btn_Register)
+        auth = FirebaseAuth.getInstance()
+
+        val btn = layoutInflater.findViewById<Button>(R.id.btn_Register)
         btn.setOnClickListener {
-            val name= layoutInflater.findViewById<EditText>(R.id.et_Name)
-            val surname= layoutInflater.findViewById<EditText>(R.id.et_Surname)
-            val uni= layoutInflater.findViewById<EditText>(R.id.et_University)
-            val email= layoutInflater.findViewById<EditText>(R.id.et_email_login)
-            val password= layoutInflater.findViewById<EditText>(R.id.et_Password)
-            val password2= layoutInflater.findViewById<EditText>(R.id.et_ConfirmPassword)
-
-            if(password.text.toString().equals(password2.text.toString())) {
-                val studente = Database.addStudente(
-                    name.text.toString(),
-                    surname.text.toString(),
-                    email.text.toString(),
-                    Gestore.getHash(password.text.toString()))
-                if(studente != null) {
-                    Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
-                    val studente = Database.getStudente(email.text.toString())
-                    Database.setLoggedStudent(studente!!)
-                    val s = Database.getStudente(email.text.toString())
-                    addUserToDatabaseRealtime(s?.id.toString(),name.text.toString()+" "+surname.text.toString())
-                    Navigation.findNavController(it).navigate(R.id.action_registerFragment_to_mainActivity)
-                } else {
-                    Toast.makeText(layoutInflater.context, R.string.register_not_ok, Toast.LENGTH_LONG).show()
-                }
-            }
-            else
-                Toast.makeText(layoutInflater.context, R.string.password_confirmpassword_different, Toast.LENGTH_SHORT).show()
+            onSingUpClick()
         }
 
         return layoutInflater
@@ -65,9 +44,33 @@ class RegisterFragment : Fragment() {
 
     private fun addUserToDatabaseRealtime(id:String,nome:String){
         mDbRef= FirebaseDatabase.getInstance().getReference()
-
         mDbRef.child("user").child(id).setValue(User(id,nome))
     }
 
+    private fun onSingUpClick() {
+        val name = view?.findViewById<EditText>(R.id.et_Name)!!.text.toString().trim()
+        val surname = view?.findViewById<EditText>(R.id.et_Surname)!!.text.toString().trim()
+        val uni = view?.findViewById<EditText>(R.id.et_University)!!.text.toString().trim()
+        val email = view?.findViewById<EditText>(R.id.et_email_login)!!.text.toString().trim()
+        val password = Gestore.getHash(view?.findViewById<EditText>(R.id.et_Password)!!.text.toString().trim())
+        val password2 = Gestore.getHash(view?.findViewById<EditText>(R.id.et_ConfirmPassword)!!.text.toString().trim())
 
+        if(password.equals(password2)) {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                if(it.isSuccessful) {
+                    val studente = Database.addStudente(name, surname, email, password)
+                    Database.setLoggedStudent(studente!!)
+                    addUserToDatabaseRealtime(studente.id, "$name $surname")
+                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_mainActivity)
+                    Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
+                }
+                else {
+                    Toast.makeText(layoutInflater.context, R.string.register_not_ok, Toast.LENGTH_LONG).show()
+                    Toast.makeText(layoutInflater.context, it.exception.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        else
+            Toast.makeText(layoutInflater.context, R.string.password_confirmpassword_different, Toast.LENGTH_SHORT).show()
+    }
 }

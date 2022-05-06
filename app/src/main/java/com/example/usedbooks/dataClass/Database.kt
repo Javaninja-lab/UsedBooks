@@ -189,8 +189,8 @@ class Database {
         fun getStudenti() : ArrayList<Studente> {
             return getIstance().getStudenti()
         }
-        fun getStudente(username:String) : Studente? {
-            return getIstance().getStudente(username)
+        fun getStudente(email : String) : Studente? {
+            return getIstance().getStudente(email)
         }
         fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
             return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )

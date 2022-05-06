@@ -4,15 +4,13 @@ import android.content.ContentValues
 import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
@@ -22,11 +20,15 @@ import com.example.usedbooks.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_login, container, false)
+
+        auth = FirebaseAuth.getInstance()
 
         val btn_SingIn = layout.findViewById<Button>(R.id.btn_SingIn)
         btn_SingIn.setOnClickListener {
@@ -34,25 +36,49 @@ class LoginFragment : Fragment() {
         }
         val btn_Login = layout.findViewById<Button>(R.id.btn_Login)
         btn_Login.setOnClickListener {
-            val email = layout.findViewById<EditText>(R.id.et_email_login).text.toString()
-            val password = layout.findViewById<EditText>(R.id.et_password_login).text.toString()
-            val studente = Database.getStudente(email)
-            if(studente==null) {
-                Toast.makeText(layout.context, "Email non presente", Toast.LENGTH_LONG).show()
-                Log.d(ContentValues.TAG,"STUDENTE NON TROVATO")
-            }
-            else {
-                Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
-                if(Gestore.getHash(password).equals(studente.password)) {
-                    Database.setLoggedStudent(studente)
-                    Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
-                }
-                else {
-                    Toast.makeText(layout.context, "Password errata", Toast.LENGTH_LONG).show()
-                    Log.d(ContentValues.TAG,"password errata ${studente.nome}")
-                }
+            onLoginClick()
+        }
+
+        return layout
+    }
+
+    private fun onLoginClick() {
+        val emailEditText = requireView().findViewById<EditText>(R.id.et_email_login)
+        val passwordEditText = requireView().findViewById<EditText>(R.id.et_password_login)
+        val email = emailEditText.text.toString().trim()
+        val passwordNotHashed = passwordEditText.text.toString().trim()
+        if (email.isEmpty()) {
+            emailEditText.error = "Enter email"
+            return
+        }
+        if (passwordNotHashed.isEmpty()) {
+            passwordEditText.error = "Enter password"
+            return
+        }
+        val password = Gestore.getHash(passwordNotHashed)
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            if(it.isSuccessful) {
+                Database.setLoggedStudent(Database.getStudente(email)!!)
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_mainActivity)
+            } else {
+                Toast.makeText(emailEditText.context, "Credenziali errate", Toast.LENGTH_LONG).show()
             }
         }
-        return layout
+        /*val studente = Database.getStudente(email)
+        if(studente==null) {
+            Toast.makeText(layout.context, "Email non presente", Toast.LENGTH_LONG).show()
+            Log.d(ContentValues.TAG,"STUDENTE NON TROVATO")
+        }
+        else {
+            Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
+            if(Gestore.getHash(password).equals(studente.password)) {
+                Database.setLoggedStudent(studente)
+                Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
+            }
+            else {
+                Toast.makeText(layout.context, "Password errata", Toast.LENGTH_LONG).show()
+                Log.d(ContentValues.TAG,"password errata ${studente.nome}")
+            }
+        }*/
     }
 }
