@@ -35,11 +35,6 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
         holder.itemView.setOnClickListener {
             val action = ChatFragmentDirections.actionChatFragmentToTextChat(currentUser.username!!, currentUser.id!!)
             holder.itemView.findNavController().navigate(action)
-            /*val intent = Intent(context, TextChat::class.java)
-            intent.putExtra("name",Database.getLoggedStudent().nome+" "+Database.getLoggedStudent().cognome)
-            intent.putExtra("id",currentUser.id)
-
-            context?.startActivity(intent)*/
         }
     }
 

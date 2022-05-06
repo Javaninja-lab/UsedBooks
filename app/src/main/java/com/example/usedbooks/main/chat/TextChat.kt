@@ -43,17 +43,17 @@ class TextChat : AppCompatActivity() {
         val receiverRoom= senderid+receiverid
 
 
-        val chatRecyclerView= findViewById<RecyclerView>(R.id.RelativeChat)
-        val messageBox= findViewById<EditText>(R.id.mb_messaggio)
-        val sendButton= findViewById<Button>(R.id.invioButton)
-        val messageList= ArrayList<Messaggio>()
-        val messageAdapter= MessageAdapter(this,messageList)
+        val chatRecyclerView = findViewById<RecyclerView>(R.id.RelativeChat)
+        val messageBox = findViewById<EditText>(R.id.mb_messaggio)
+        val sendButton = findViewById<Button>(R.id.invioButton)
+        val messageList = ArrayList<Messaggio>()
+        val messageAdapter = MessageAdapter(this,messageList)
 
         chatRecyclerView.layoutManager= LinearLayoutManager(this)
         chatRecyclerView.adapter= messageAdapter
 
         //aggiungere i messaggi alla recyclervieew
-        mDbref.child("chats").child(senderRoom!!).child("messages")
+        mDbref.child("chats").child(senderRoom).child("messages")
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messageList.clear()
@@ -71,7 +71,7 @@ class TextChat : AppCompatActivity() {
             })
         //TODO(Aggiungere il messaggio al database)
         sendButton.setOnClickListener{
-            val message= messageBox.text.toString()
+            val message= messageBox.text.toString().trim()
             val messageObject = Messaggio(message, senderid)
             mDbref.child("chats").child(senderRoom).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {

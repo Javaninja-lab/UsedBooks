@@ -47,6 +47,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
 
+                android:text="Prova"
+
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
@@ -57,6 +59,8 @@
 
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="32dp"
+
+                android:text="Prova"
 
                 android:layout_marginEnd="48dp"
                 android:ems="10"
@@ -73,6 +77,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
+
+                android:text="Prova"
 
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="48dp"
@@ -95,6 +101,8 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="48dp"
 
+                android:text="1@1.com"
+
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="8dp"
 
@@ -114,6 +122,8 @@
 
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="32dp"
+
+                android:text="1"
 
                 android:layout_marginEnd="48dp"
                 android:drawableLeft="@drawable/ic_lock"
@@ -137,6 +147,8 @@
 
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="48dp"
+
+                android:text="1"
 
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="8dp"
