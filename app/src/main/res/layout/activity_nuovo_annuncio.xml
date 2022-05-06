@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".main.NuovoAnnuncioActivity">
 
+
+    <ImageView
+        android:id="@+id/immagineTest"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/addImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+    </ImageView>
+
     <Button
         android:id="@+id/addImage"
         android:layout_width="wrap_content"

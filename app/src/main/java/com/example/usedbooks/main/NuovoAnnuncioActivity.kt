@@ -1,22 +1,34 @@
 package com.example.usedbooks.main
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.example.usedbooks.R
-import com.example.usedbooks.dataClass.Database
-import com.example.usedbooks.dataClass.Gestore
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.jar.Manifest
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class NuovoAnnuncioActivity : AppCompatActivity() {
+    private var strUri :String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuovo_annuncio)
@@ -27,9 +39,26 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
         val addImage = findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
-                takePhoto(this)
+            takePhoto(this)
+            println(strUri)
+            val imgFile = File(strUri)
+            if(imgFile.exists()) {
+
+                val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+                val image = findViewById<ImageView>(R.id.imageView)
+                image.setImageBitmap(myBitmap)
+            }
+
+
         }
     }
+
+    private var uri: Uri?= null
+
+    private lateinit var currentImgepath: String
+
+
+
     private val requestMultiplePermissionLaucher= registerForActivityResult (ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
         var permissionGranted = false
         resultsMap.forEach {
@@ -64,10 +93,40 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     }
 
 
-
+    private fun createImageFile(): File {
+        val timestamp= SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "Specimen_${timestamp}",
+            ".jpg",
+            imageDirectory
+        ).apply {
+            currentImgepath= absolutePath
+        }
+    }
 
     fun invokeCamera() {
+        val file = createImageFile()
+        try{
+            uri = FileProvider.getUriForFile(this,"com.example.usedbooks.fileprovider",file)
+        }
+        catch (e: Exception){
+            Log.e(TAG, " ${e.message} ")
+            var foo= e.message
+        }
+        getCameraImage.launch(uri)
 
+    }
+
+    private val getCameraImage = registerForActivityResult(ActivityResultContracts.TakePicture()){
+        success-> if (success){
+            Log.i(TAG,"Image Location: $uri")
+            strUri= uri.toString()
+        }
+        else
+    {
+        Log.i(TAG,"Image Location: $uri")
+    }
     }
 
     fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
