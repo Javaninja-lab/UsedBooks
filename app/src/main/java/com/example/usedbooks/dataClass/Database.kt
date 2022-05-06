@@ -91,6 +91,11 @@ class Database {
         }
     }
 
+    private fun storeImage(){
+
+    }
+
+
     //return -1 se non trova il corso
     private fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
         val c = GeoPoint(latitudine,longitudine)

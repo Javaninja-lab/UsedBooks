@@ -1,7 +1,12 @@
 package com.example.usedbooks.dataClass
 
+import android.content.Context
+import android.content.pm.PackageManager.PERMISSION_GRANTED
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
+import java.util.jar.Manifest
 
 abstract class Gestore {
     companion object {
@@ -18,5 +23,7 @@ abstract class Gestore {
         fun checkHash(input: String, daCheck : String) : Boolean {
             return getHash(input).equals(daCheck)
         }
+
+
     }
 }
