@@ -40,13 +40,15 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         val addImage = findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
             takePhoto(this)
-            println(strUri)
+            Log.i(TAG, strUri)
             val imgFile = File(strUri)
+            val image = findViewById<ImageView>(R.id.immagineTest)
+            image.setImageURI(uri)
             if(imgFile.exists()) {
 
-                val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-                val image = findViewById<ImageView>(R.id.imageView)
-                image.setImageBitmap(myBitmap)
+               // val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+
+                //image.setImageBitmap(myBitmap)
             }
 
 
@@ -115,13 +117,15 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             var foo= e.message
         }
         getCameraImage.launch(uri)
+        Log.i(TAG, "l'uri è"+uri)
+        strUri= "com.example.usedbooks.fileprovider"+uri?.path.toString()
 
     }
 
     private val getCameraImage = registerForActivityResult(ActivityResultContracts.TakePicture()){
         success-> if (success){
             Log.i(TAG,"Image Location: $uri")
-            strUri= uri.toString()
+
         }
         else
     {
