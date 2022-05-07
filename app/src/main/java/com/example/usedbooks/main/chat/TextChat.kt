@@ -31,7 +31,7 @@ class TextChat : AppCompatActivity() {
         val name : String = args.nameVendor
         val receiverid : String = args.id
 
-        val senderid= Database.getLoggedStudent().id
+        val senderid= Database.getLoggedStudent()!!.id
 
         val mDbref= FirebaseDatabase.getInstance().getReference()
 

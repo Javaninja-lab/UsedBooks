@@ -1,5 +1,6 @@
 package com.example.usedbooks.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.User
+import com.example.usedbooks.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -61,8 +63,10 @@ class RegisterFragment : Fragment() {
                     val studente = Database.addStudente(name, surname, email, password)
                     Database.setLoggedStudent(studente!!)
                     addUserToDatabaseRealtime(studente.id, "$name $surname")
-                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_mainActivity)
                     Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 }
                 else {
                     Toast.makeText(layoutInflater.context, R.string.register_not_ok, Toast.LENGTH_LONG).show()

@@ -22,6 +22,11 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
+    companion object {
+        var fatto : Boolean = false
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +47,14 @@ class LoginFragment : Fragment() {
         return layout
     }
 
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            login(currentUser.email!!)
+        }
+    }
+
     private fun onLoginClick() {
         val emailEditText = requireView().findViewById<EditText>(R.id.et_email_login)
         val passwordEditText = requireView().findViewById<EditText>(R.id.et_password_login)
@@ -58,27 +71,17 @@ class LoginFragment : Fragment() {
         val password = Gestore.getHash(passwordNotHashed)
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful) {
-                Database.setLoggedStudent(Database.getStudente(email)!!)
-                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_mainActivity)
+                login(email)
             } else {
                 Toast.makeText(emailEditText.context, "Credenziali errate", Toast.LENGTH_LONG).show()
             }
         }
-        /*val studente = Database.getStudente(email)
-        if(studente==null) {
-            Toast.makeText(layout.context, "Email non presente", Toast.LENGTH_LONG).show()
-            Log.d(ContentValues.TAG,"STUDENTE NON TROVATO")
-        }
-        else {
-            Log.d(ContentValues.TAG,"STUDENTE trovato ${studente.nome}")
-            if(Gestore.getHash(password).equals(studente.password)) {
-                Database.setLoggedStudent(studente)
-                Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_mainActivity)
-            }
-            else {
-                Toast.makeText(layout.context, "Password errata", Toast.LENGTH_LONG).show()
-                Log.d(ContentValues.TAG,"password errata ${studente.nome}")
-            }
-        }*/
+    }
+
+    private fun login(email : String) {
+        Database.setLoggedStudent(Database.getStudente(email)!!)
+        val intent = Intent(context, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
