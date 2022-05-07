@@ -32,13 +32,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.fg_main)
-        if(fragment!=null) {
-            val f = fragment.childFragmentManager.fragments[0]
-            Toast.makeText(this, f.tag, Toast.LENGTH_LONG).show()
-            //if(f.)
-        }
-        super.onBackPressed()
-    }
 }

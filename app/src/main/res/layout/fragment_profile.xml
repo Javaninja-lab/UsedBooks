@@ -33,6 +33,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_foto_profilo"
             app:layout_constraintTop_toTopOf="@+id/iv_foto_profilo" />
+
+        <ImageButton
+            android:id="@+id/ib_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_login_24"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_nome_cliente"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_nome_cliente"
+            app:layout_constraintTop_toTopOf="@+id/tv_nome_cliente" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout

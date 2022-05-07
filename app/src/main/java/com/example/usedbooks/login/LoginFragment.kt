@@ -22,6 +22,11 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
+    companion object {
+        var fatto : Boolean = false
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +49,8 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         val currentUser = auth.currentUser
-        if(currentUser != null) {
+        if (currentUser != null) {
             login(currentUser.email!!)
         }
     }
@@ -76,6 +80,8 @@ class LoginFragment : Fragment() {
 
     private fun login(email : String) {
         Database.setLoggedStudent(Database.getStudente(email)!!)
-        Navigation.findNavController(requireView()).navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+        val intent = Intent(context, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
