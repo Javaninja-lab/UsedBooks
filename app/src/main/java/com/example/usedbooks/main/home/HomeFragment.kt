@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
 
 class MaterialeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var items : ArrayList<Materiale>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = MaterialeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_home, parent, false))
         return view

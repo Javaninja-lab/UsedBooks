@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.usedbooks.R
@@ -31,5 +32,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
         }
     }
+
 
 }
