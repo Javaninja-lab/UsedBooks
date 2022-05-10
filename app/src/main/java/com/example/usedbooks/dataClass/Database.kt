@@ -78,7 +78,7 @@ class Database {
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
         //TODO("Implementare controllo se l'add è andata correttamente e restituire lo studente appena aggiunto")
-        return Studente("0", name, surname, email, password)
+        return Studente("0",name, surname, email, User("0", "Prova"))
     }
 
     //return -1 se non trova il corso
@@ -111,10 +111,9 @@ class Database {
             "idCorso" to corso,
             "nome" to nome,
             "prezzo" to prezzo,
-            "proprietario" to loggedStudente.id.toString(),
+            "proprietario" to loggedStudente.utente?.id,
             "stato" to stato,
             "tipologia" to tipologia
-
         )
 
         database.collection("materiale").add(materiale).addOnSuccessListener {
@@ -125,7 +124,6 @@ class Database {
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
         return 1
-
     }
 
     private fun getStudenti() : ArrayList<Studente> {
@@ -134,7 +132,8 @@ class Database {
         while (!i.isComplete); // questa fa schifo
         val k : MutableList<DocumentSnapshot> = i.result.documents
         for(z in k) {
-            val studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
+            val utente = User(z.id, z["password"].toString())
+            val studente = Studente(z.id, z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
             list.add(studente)
         }
         return list
@@ -149,7 +148,8 @@ class Database {
         else {
             var studente = Studente()
             for(z in k) {
-                studente = Studente(z.id,z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),z["password"].toString())
+                val utente = User(z.id, z["password"].toString())
+                studente = Studente(z.id, z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
             }
             studente
         }
@@ -159,34 +159,27 @@ class Database {
         loggedStudente = studente
     }
 
+    fun getLastMessage(studenteRichiesto : User, studenteLoggato : User) : Messaggio {
+        return Messaggio()
+    }
+
     companion object {
         private lateinit var istance : Database
-
         private fun getIstance() : Database {
             if(!this::istance.isInitialized)
                 istance = Database()
             return istance
         }
-
-        fun setLoggedStudent(studente: Studente) {
-            getIstance().setLoggedStudent(studente)
-        }
-
-        fun getLoggedStudent() : Studente {
-            return getIstance().loggedStudente
-        }
-
         fun inizializateDatabase() : Boolean {
             getIstance()
             return this::istance.isInitialized
         }
 
-        fun getMateriali() : ArrayList<Materiale> {
-            return getIstance().getMateriali()
+        fun setLoggedStudent(studente: Studente) {
+            getIstance().setLoggedStudent(studente)
         }
-
-        fun addStudente(name: String, surname: String, email: String, password: String) : Studente? {
-            return getIstance().addStudente(name, surname, email, password)
+        fun getLoggedStudent() : Studente {
+            return getIstance().loggedStudente
         }
 
         fun getStudenti() : ArrayList<Studente> {
@@ -195,8 +188,19 @@ class Database {
         fun getStudente(email : String) : Studente? {
             return getIstance().getStudente(email)
         }
+        fun addStudente(name: String, surname: String, email: String, password: String) : Studente? {
+            return getIstance().addStudente(name, surname, email, password)
+        }
+        fun getLastMessage(studenteRichiesto : User, studenteLoggato : User) : Messaggio {
+            return getIstance().getLastMessage(studenteRichiesto, studenteLoggato)
+        }
+
+        fun getMateriali() : ArrayList<Materiale> {
+            return getIstance().getMateriali()
+        }
         fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
             return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )
         }
+
     }
 }

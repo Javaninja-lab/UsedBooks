@@ -42,4 +42,5 @@
     <string name="register_ok">Registration succesfull</string>
     <string name="register_not_ok">Registration unsuccessful</string>
     <string name="type_a_message">Type a message</string>
+    <string name="add_image">Add image</string>
 </resources>

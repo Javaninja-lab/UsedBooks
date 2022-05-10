@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/shape_item_listview">
-    <ImageView
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_foto_profilo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/test"
-        android:layout_weight="3"/>
+        app:srcCompat="@drawable/test"
+        android:layout_weight="3"
+        app:shapeAppearanceOverlay="@style/roundedCorners"
+        />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +37,6 @@
         android:id="@+id/tv_data_messaggio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:padding="15dp"
         android:text="@string/date_last_messagge"
         android:layout_weight="15"/>
