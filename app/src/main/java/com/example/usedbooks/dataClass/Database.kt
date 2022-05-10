@@ -78,7 +78,7 @@ class Database {
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
         //TODO("Implementare controllo se l'add è andata correttamente e restituire lo studente appena aggiunto")
-        return Studente(name, surname, email, User("0", "Prova"))
+        return Studente("0",name, surname, email, User("0", "Prova"))
     }
 
     //return -1 se non trova il corso
@@ -133,7 +133,7 @@ class Database {
         val k : MutableList<DocumentSnapshot> = i.result.documents
         for(z in k) {
             val utente = User(z.id, z["password"].toString())
-            val studente = Studente(z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
+            val studente = Studente(z.id, z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
             list.add(studente)
         }
         return list
@@ -149,7 +149,7 @@ class Database {
             var studente = Studente()
             for(z in k) {
                 val utente = User(z.id, z["password"].toString())
-                studente = Studente(z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
+                studente = Studente(z.id, z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
             }
             studente
         }
