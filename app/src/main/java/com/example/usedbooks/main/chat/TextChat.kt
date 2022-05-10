@@ -69,7 +69,7 @@ class TextChat : AppCompatActivity() {
                 }
 
             })
-        //TODO(Aggiungere il messaggio al database)
+
         sendButton.setOnClickListener{
             val message= messageBox.text.toString().trim()
             val messageObject = Messaggio(message, senderid)

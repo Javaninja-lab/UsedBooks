@@ -25,6 +25,8 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.text.SimpleDateFormat
@@ -36,7 +38,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     var strUri :String=""
     var photos: ArrayList<Photo> = ArrayList<Photo>()
 
-    private lateinit var firestore: FirebaseFirestore
+    private  var firestore= Firebase.firestore
     private var storageReference = FirebaseStorage.getInstance().getReference()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +57,19 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             image.setImageURI(uri)
             val photo = photos[0]
             saveImage(photos)
-            if(imgFile.exists()) {
+
+            //if(imgFile.exists()) {
 
                // val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
 
                 //image.setImageBitmap(myBitmap)
-            }
+            //}
 
 
         }
+
     }
+
 
     private var uri: Uri?= null
 
@@ -127,15 +132,22 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             Log.e(TAG, " ${e.message} ")
             var foo= e.message
         }
+        val i=0
         getCameraImage.launch(uri)
         Log.i(TAG, "l'uri è"+uri)
         strUri= "com.example.usedbooks.fileprovider"+uri?.path.toString()
+
         val photo = Photo(localUri = uri.toString())
         photos.add(photo)
 
+
+
     }
 
+    var i =0
+
     private val getCameraImage = registerForActivityResult(ActivityResultContracts.TakePicture()){
+
         success-> if (success){
             Log.i(TAG,"Image Location: $uri")
 
@@ -180,12 +192,13 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     }
 
     private fun updatePhotoDatabase(photo: Photo) {
-        var photoCollection = firestore.collection("user").document(Database.getLoggedStudent().id).collection("photos")
+
+        var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
         var handle = photoCollection.add(photo)
         handle.addOnSuccessListener {
             Log.i(TAG, "successfully update photo metadata")
             photo.id=it.id
-            var photoCollection = firestore.collection("user").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
+            var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
         }
         handle.addOnFailureListener{
             Log.e(TAG, "error updating photo data: ${it.message}")
