@@ -19,9 +19,9 @@ import com.example.usedbooks.firebase.MessageAdapter
 import com.example.usedbooks.main.home.MaterialeFragmentArgs
 import com.google.firebase.database.*
 
-class TextChat : AppCompatActivity() {
+class SingleChat : AppCompatActivity() {
 
-    val args : TextChatArgs by navArgs()
+    val args : SingleChatArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

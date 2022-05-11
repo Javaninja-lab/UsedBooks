@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.usedbooks.main.chat.ChatFragment"
+        android:name="com.example.usedbooks.main.chat.ListChatsFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <activity
         android:id="@+id/textChat"
-        android:name="com.example.usedbooks.main.chat.TextChat"
+        android:name="com.example.usedbooks.main.chat.SingleChat"
         android:label="activity_text_chat"
         tools:layout="@layout/activity_text_chat">
         <argument

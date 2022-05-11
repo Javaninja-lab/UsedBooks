@@ -1,8 +1,6 @@
 package com.example.usedbooks.firebase
 
 import android.content.Context
-import android.content.Intent
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.User
-import com.example.usedbooks.main.chat.ChatFragment
 import com.example.usedbooks.main.chat.ChatFragmentDirections
-import com.example.usedbooks.main.chat.TextChat
-import com.example.usedbooks.main.home.HomeFragmentDirections
 
 class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {

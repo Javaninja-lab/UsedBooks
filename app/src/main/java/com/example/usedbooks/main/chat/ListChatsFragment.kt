@@ -13,7 +13,7 @@ import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.firebase.UserAdapter
 import com.google.firebase.database.*
 
-class ChatFragment : Fragment() {
+class ListChatsFragment : Fragment() {
 
     private lateinit var  userRecyclerView: RecyclerView
     private lateinit var userList: ArrayList<User>

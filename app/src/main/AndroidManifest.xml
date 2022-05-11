@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UsedBooks">
         <activity
-            android:name=".main.chat.TextChat"
+            android:name=".main.chat.SingleChat"
             android:exported="false" />
 
         <meta-data
