@@ -1,16 +1,20 @@
 package com.example.usedbooks.main
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
@@ -38,11 +42,29 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     var strUri :String=""
     var photos: ArrayList<Photo> = ArrayList<Photo>()
 
+    companion object{
+        val IMAGE_REQUEST_CODE=100
+    }
+
+
+
+
+
     private  var firestore= Firebase.firestore
     private var storageReference = FirebaseStorage.getInstance().getReference()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuovo_annuncio)
+
+
+
+        val gallery = findViewById<Button>(R.id.gallery)
+        gallery.setOnClickListener {
+
+            startForResult.launch("image/*")
+
+        }
+
 
         val addImage = findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
@@ -63,6 +85,17 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
 
         }
+
+    }
+
+
+    val startForResult = registerForActivityResult(ActivityResultContracts.GetContent()) {
+
+        val image = findViewById<ImageView>(R.id.immagineTest)
+        image.setImageURI(it)
+        val photo = Photo(localUri = it.toString())
+        photos.add(photo)
+        saveImage(photos)
 
     }
 
