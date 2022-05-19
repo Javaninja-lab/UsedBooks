@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.User
-import com.example.usedbooks.main.chat.ChatFragmentDirections
+import com.example.usedbooks.main.chat.ListChatsFragmentDirections
 
 class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -38,7 +38,7 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
         holder.dataMessaggio.text = messaggio.message
         holder.utlimoMessaggio.text = messaggio.message?.subSequence(0..32)
         holder.itemView.setOnClickListener {
-            val action = ChatFragmentDirections.actionChatFragmentToTextChat(currentUser.username!!, currentUser.id!!)
+            val action = ListChatsFragmentDirections.actionChatFragmentToTextChat(currentUser.username!!, currentUser.id!!)
             holder.itemView.findNavController().navigate(action)
         }
     }
