@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -41,14 +42,7 @@ import kotlin.collections.ArrayList
 class NuovoAnnuncioActivity : AppCompatActivity() {
     var strUri :String=""
     var photos: ArrayList<Photo> = ArrayList<Photo>()
-
-    companion object{
-        val IMAGE_REQUEST_CODE=100
-    }
-
-
-
-
+    private lateinit var immagineTest : ImageView
 
     private  var firestore= Firebase.firestore
     private var storageReference = FirebaseStorage.getInstance().getReference()
@@ -65,9 +59,13 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
         }
 
+        immagineTest = findViewById(R.id.immagineTest);
 
         val addImage = findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
+            takePhoto(this)
+
+            /*
             takePhoto(this)
             Log.i(TAG, strUri)
             val imgFile = File(strUri)
@@ -82,21 +80,32 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
                 //image.setImageBitmap(myBitmap)
             //}
-
+            */
 
         }
 
     }
 
+    fun capturePhoto() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startCamera.launch(cameraIntent)
+    }
+
+    val startCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            if(data!=null)
+                immagineTest.setImageBitmap(data.extras?.get("data") as Bitmap)
+        }
+    }
 
     val startForResult = registerForActivityResult(ActivityResultContracts.GetContent()) {
-
         val image = findViewById<ImageView>(R.id.immagineTest)
         image.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         photos.add(photo)
         saveImage(photos)
-
     }
 
 
@@ -117,24 +126,21 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             }
         }
         if (permissionGranted){
-            invokeCamera()
+            capturePhoto()
         }
-        else
-        {
-            Toast.makeText(this,"unable to load camera without permission.", Toast.LENGTH_LONG).show()
+        else {
+            Toast.makeText(this,"Unable to load camera without permission.", Toast.LENGTH_LONG).show()
         }
     }
 
     fun takePhoto(context : Context){
-        if(hasCameraPermission(context)== PackageManager.PERMISSION_GRANTED && hasExternalStoregaePermission(context)== PackageManager.PERMISSION_GRANTED)
-        {
-            invokeCamera()
+        if(hasCameraPermission(context) == PackageManager.PERMISSION_GRANTED && hasExternalStoregaePermission(context)== PackageManager.PERMISSION_GRANTED) {
+            capturePhoto()
         }
         else {
             requestMultiplePermissionLaucher.launch(arrayOf(
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.CAMERA
-
             ))
         }
     }
@@ -150,42 +156,6 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         ).apply {
             currentImgepath= absolutePath
         }
-    }
-
-    fun invokeCamera() {
-        val file = createImageFile()
-        try{
-            uri = FileProvider.getUriForFile(this,"com.example.usedbooks.fileprovider",file)
-        }
-        catch (e: Exception){
-            Log.e(TAG, " ${e.message} ")
-            var foo= e.message
-        }
-        val i=0
-        getCameraImage.launch(uri)
-        Log.i(TAG, "l'uri è"+uri)
-        strUri= "com.example.usedbooks.fileprovider"+uri?.path.toString()
-
-        val photo = Photo(localUri = uri.toString())
-        photos.add(photo)
-
-
-
-    }
-
-    var i =0
-
-    private val getCameraImage = registerForActivityResult(ActivityResultContracts.TakePicture()){
-
-        success-> if (success){
-            Log.i(TAG,"Image Location: $uri")
-
-
-        }
-        else
-    {
-        Log.i(TAG,"Image Location: $uri")
-    }
     }
 
     fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
