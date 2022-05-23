@@ -27,6 +27,7 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Photo
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,7 +60,13 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
         }
 
-        immagineTest = findViewById(R.id.immagineTest);
+        immagineTest = findViewById(R.id.iv_foto_scelta)
+
+        val supportMapFragment =
+            supportFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?
+        supportMapFragment?.getMapAsync {
+            it.addMarker(MarkerOptions().title("Posizione Materiale").position(LatLng(0.0, 0.0)))
+        }
 
         val addImage = findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
@@ -101,7 +108,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     }
 
     val startForResult = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        val image = findViewById<ImageView>(R.id.immagineTest)
+        val image = findViewById<ImageView>(R.id.iv_foto_scelta)
         image.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         photos.add(photo)

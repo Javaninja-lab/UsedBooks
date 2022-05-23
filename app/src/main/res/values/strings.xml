@@ -43,4 +43,12 @@
     <string name="register_not_ok">Registration unsuccessful</string>
     <string name="type_a_message">Type a message</string>
     <string name="add_image">Add image</string>
+    <string name="add_image_from_files">Add image from files</string>
+    <string name="add_image_from_camera">Add image from camera</string>
+    <string name="new_announcement">New Announcement</string>
+    <string name="select_position">Select position</string>
+    <string name="send_data">Send data</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="typology">Typology</string>
 </resources>

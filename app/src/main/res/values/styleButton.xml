@@ -16,11 +16,4 @@
         <item name="android:textColor">?attr/colorOnSecondary</item>
         <item name="backgroundTint">?attr/colorSecondaryVariant</item>
     </style>
-    <style name="primaryStyleTextView" parent="ShapeAppearanceOverlay.Material3.Button">
-        <item name="android:padding">10dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="shapeAppearanceOverlay">@style/shapeButton</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="background">?attr/colorPrimary</item>
-    </style>
 </resources>
