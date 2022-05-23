@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -18,29 +17,24 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Photo
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class NuovoAnnuncioActivity : AppCompatActivity() {
+    //TODO chiamare saveimage quando si inviano tutti i dati
     var strUri :String=""
     var photos: ArrayList<Photo> = ArrayList<Photo>()
     private lateinit var immagineTest : ImageView
@@ -56,7 +50,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         val gallery = findViewById<Button>(R.id.gallery)
         gallery.setOnClickListener {
 
-            startForResult.launch("image/*")
+            startGallery.launch("image/*")
 
         }
 
@@ -72,23 +66,6 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         addImage.setOnClickListener {
             takePhoto(this)
 
-            /*
-            takePhoto(this)
-            Log.i(TAG, strUri)
-            val imgFile = File(strUri)
-            val image = findViewById<ImageView>(R.id.immagineTest)
-            image.setImageURI(uri)
-            val photo = photos[0]
-            saveImage(photos)
-
-            //if(imgFile.exists()) {
-
-               // val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-
-                //image.setImageBitmap(myBitmap)
-            //}
-            */
-
         }
 
     }
@@ -102,15 +79,31 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
-            if(data!=null)
+
+            if(data!=null) {
                 immagineTest.setImageBitmap(data.extras?.get("data") as Bitmap)
+                val uri= getImageUri(this,data.extras?.get("data") as Bitmap)
+                Log.i("uri","${uri}")
+                val photo = Photo(localUri = uri.toString())
+                photos.add(photo)
+                saveImage(photos)
+            }
         }
     }
 
-    val startForResult = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
+    }
+
+    val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         val image = findViewById<ImageView>(R.id.iv_foto_scelta)
         image.setImageURI(it)
         val photo = Photo(localUri = it.toString())
+        Log.i("uri","${it.toString()}")
         photos.add(photo)
         saveImage(photos)
     }
@@ -153,7 +146,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     }
 
 
-    private fun createImageFile(): File {
+    /*private fun createImageFile(): File {
         val timestamp= SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
@@ -163,7 +156,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         ).apply {
             currentImgepath= absolutePath
         }
-    }
+    }*/
 
     fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
     fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
