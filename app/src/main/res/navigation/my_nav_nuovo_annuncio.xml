@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav_nuovo_activity"
+    app:startDestination="@id/datiFragment">
+
+    <fragment
+        android:id="@+id/datiFragment"
+        android:name="com.example.usedbooks.main.nuovoAnnuncio.DatiFragment"
+        android:label="fragment_nuovo_annuncio_dati"
+        tools:layout="@layout/fragment_nuovo_annuncio_dati" >
+        <action
+            android:id="@+id/action_datiFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.usedbooks.main.nuovoAnnuncio.MapsFragment"
+        android:label="fragment_nuovo_annuncio_maps"
+        tools:layout="@layout/fragment_nuovo_annuncio_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.usedbooks.main.nuovoAnnuncio.CameraFragment"
+        android:label="fragment_nuovo_annuncio_camera"
+        tools:layout="@layout/fragment_nuovo_annuncio_camera" />
+</navigation>

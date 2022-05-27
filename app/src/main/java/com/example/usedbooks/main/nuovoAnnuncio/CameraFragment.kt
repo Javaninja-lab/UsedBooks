@@ -1,39 +1,36 @@
-package com.example.usedbooks.main
+package com.example.usedbooks.main.nuovoAnnuncio
 
 import android.app.Activity
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Photo
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
+class CameraFragment : Fragment() {
 
-class NuovoAnnuncioActivity : AppCompatActivity() {
     //TODO chiamare saveimage quando si inviano tutti i dati
     var strUri :String=""
     var photos: ArrayList<Photo> = ArrayList<Photo>()
@@ -41,33 +38,27 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
     private  var firestore= Firebase.firestore
     private var storageReference = FirebaseStorage.getInstance().getReference()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nuovo_annuncio)
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_nuovo_annuncio_camera, container, false)
 
-
-        val gallery = findViewById<Button>(R.id.gallery)
+        val gallery = view.findViewById<Button>(R.id.gallery)
         gallery.setOnClickListener {
-
             startGallery.launch("image/*")
-
         }
 
-        immagineTest = findViewById(R.id.iv_foto_scelta)
+        immagineTest = view.findViewById(R.id.iv_foto_scelta)
 
-        val supportMapFragment =
-            supportFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?
-        supportMapFragment?.getMapAsync {
-            it.addMarker(MarkerOptions().title("Posizione Materiale").position(LatLng(0.0, 0.0)))
-        }
-
-        val addImage = findViewById<Button>(R.id.addImage)
+        val addImage = view.findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
-            takePhoto(this)
-
+            takePhoto(this.requireContext())
         }
 
+        return view
     }
 
     fun capturePhoto() {
@@ -82,7 +73,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
             if(data!=null) {
                 immagineTest.setImageBitmap(data.extras?.get("data") as Bitmap)
-                val uri= getImageUri(this,data.extras?.get("data") as Bitmap)
+                val uri= getImageUri(this.requireContext(),data.extras?.get("data") as Bitmap)
                 Log.i("uri","${uri}")
                 val photo = Photo(localUri = uri.toString())
                 photos.add(photo)
@@ -100,7 +91,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
     }
 
     val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        val image = findViewById<ImageView>(R.id.iv_foto_scelta)
+        val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
         image.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         Log.i("uri","${it.toString()}")
@@ -129,7 +120,7 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
             capturePhoto()
         }
         else {
-            Toast.makeText(this,"Unable to load camera without permission.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this.requireContext(),"Unable to load camera without permission.", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -171,21 +162,21 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
 
     private fun uploadPhotos() {
         photos.forEach{
-            photo->
+                photo->
             var uri = Uri.parse(photo.localUri)
             val imageRef = storageReference.child("image/${Database.getLoggedStudent().id}/${uri.lastPathSegment}")
             val uploadTask = imageRef.putFile(uri)
             uploadTask.addOnSuccessListener {
-                Log.i(TAG, "Image uploaded $imageRef")
+                Log.i(ContentValues.TAG, "Image uploaded $imageRef")
                 val downloadUrl = imageRef.downloadUrl
-                downloadUrl.addOnSuccessListener { 
-                    remoteUri->
+                downloadUrl.addOnSuccessListener {
+                        remoteUri->
                     photo.remoteUri = remoteUri.toString()
                     updatePhotoDatabase(photo)
                 }
             }
             uploadTask.addOnFailureListener{
-                Log.e(TAG, it.message?: "No message")
+                Log.e(ContentValues.TAG, it.message?: "No message")
             }
         }
     }
@@ -195,12 +186,12 @@ class NuovoAnnuncioActivity : AppCompatActivity() {
         var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
         var handle = photoCollection.add(photo)
         handle.addOnSuccessListener {
-            Log.i(TAG, "successfully update photo metadata")
+            Log.i(ContentValues.TAG, "successfully update photo metadata")
             photo.id=it.id
             var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
         }
         handle.addOnFailureListener{
-            Log.e(TAG, "error updating photo data: ${it.message}")
+            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
         }
     }
 

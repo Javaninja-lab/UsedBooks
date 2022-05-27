@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.nuovoAnnuncio.DatiFragment" >
+
+    <EditText
+        android:id="@+id/et_title_new_annuncio"
+        style="@style/primaryStyleTextView"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/title"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_descrizione_new_annuncio"
+        style="@style/primaryStyleTextView"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/description"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_title_new_annuncio" />
+
+    <EditText
+        android:id="@+id/et_tipologia_new_annuncio"
+        style="@style/primaryStyleTextView"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/typology"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_descrizione_new_annuncio" />
+
+    <EditText
+        android:id="@+id/_prezzo_new_annuncio"
+        style="@style/primaryStyleTextView"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+
+        android:layout_marginTop="10dp"
+        android:hint="@string/price"
+        android:inputType="numberDecimal"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_tipologia_new_annuncio" />
+
+    <Button
+        android:id="@+id/bt_invio_dati"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+
+        android:text="@string/send_data"
+
+        app:layout_constraintEnd_toEndOf="@+id/_prezzo_new_annuncio"
+        app:layout_constraintStart_toStartOf="@+id/_prezzo_new_annuncio"
+        app:layout_constraintTop_toBottomOf="@+id/_prezzo_new_annuncio" />
+</androidx.constraintlayout.widget.ConstraintLayout>

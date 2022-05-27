@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.NuovoAnnuncioActivity">
+    tools:context=".main.nuovoAnnuncio.NuovoAnnuncioActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -19,152 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
+    <fragment
+        android:id="@+id/fr_nuovo_annuncio"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_dati"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <EditText
-                    android:id="@+id/et_title_new_annuncio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:hint="@string/title"
-
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="50dp"
-                    style="@style/primaryStyleTextView"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <EditText
-                    android:id="@+id/et_descrizione_new_annuncio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:hint="@string/description"
-
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="50dp"
-                    style="@style/primaryStyleTextView"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_title_new_annuncio" />
-                <EditText
-                    android:id="@+id/et_tipologia_new_annuncio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:hint="@string/typology"
-
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="50dp"
-                    style="@style/primaryStyleTextView"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_descrizione_new_annuncio" />
-                <EditText
-                    android:id="@+id/_prezzo_new_annuncio"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-
-                    android:hint="@string/price"
-                    android:inputType="numberDecimal"
-
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="50dp"
-                    style="@style/primaryStyleTextView"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_tipologia_new_annuncio" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_maps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_dati">
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/map_add_annuncio"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/select_position"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/map_add_annuncio" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_camera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_maps">
-
-                <ImageView
-                    android:id="@+id/iv_foto_scelta"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_foto_scelta">
-
-                    <Button
-                        android:id="@+id/addImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_image_from_camera" />
-
-                    <Button
-                        android:id="@+id/gallery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_image_from_files" />
-                </LinearLayout>
-            </RelativeLayout>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/send_data"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_camera"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/my_nav_nuovo_annuncio"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
