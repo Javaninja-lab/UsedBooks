@@ -26,12 +26,14 @@
         style="@style/primaryStyleTextView"
         android:layout_width="0dp"
 
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
 
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="10dp"
-        android:hint="@string/description"
+        android:layout_marginBottom="10dp"
 
+        android:hint="@string/description"
+        app:layout_constraintBottom_toTopOf="@+id/et_tipologia_new_annuncio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_title_new_annuncio" />
@@ -44,12 +46,12 @@
         android:layout_height="wrap_content"
 
         android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/typology"
+        android:layout_marginBottom="10dp"
 
+        android:hint="@string/typology"
+        app:layout_constraintBottom_toTopOf="@+id/_prezzo_new_annuncio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_descrizione_new_annuncio" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/_prezzo_new_annuncio"
@@ -59,24 +61,24 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:hint="@string/price"
-        android:inputType="numberDecimal"
 
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/bt_invio_dati"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_tipologia_new_annuncio" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bt_invio_dati"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+
+        android:layout_marginBottom="50dp"
 
         android:text="@string/send_data"
-
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/_prezzo_new_annuncio"
-        app:layout_constraintStart_toStartOf="@+id/_prezzo_new_annuncio"
-        app:layout_constraintTop_toBottomOf="@+id/_prezzo_new_annuncio" />
+        app:layout_constraintStart_toStartOf="@+id/_prezzo_new_annuncio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
