@@ -2,15 +2,21 @@ package com.example.usedbooks.dataClass
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class Database {
     private var database = Firebase.firestore
+    private var storageReference = FirebaseStorage.getInstance().getReference()
     private lateinit var loggedStudente: Studente
 
 
@@ -94,17 +100,74 @@ class Database {
         }
     }
 
-    private fun storeImage(){
+   private fun GetPhotoMateriale(Uri: String): Bitmap{
+       val imagereference = storageReference.child(Uri)
+       lateinit var  bitmap: Bitmap
+       val localfile : File = File.createTempFile("test","jpg")
+       imagereference.getFile(localfile).addOnSuccessListener {
+           bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
+       }
+       return bitmap
+   }
 
+    private fun SequenzaAggiuntaMateriale(materialeDaAggiungere: MaterialeDaAggiungere, nomeCorso: Corso){
+      val id=  addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, materialeDaAggiungere.stato,nomeCorso.nome)
+        AddPhotos(materialeDaAggiungere.photos!!,id)
+    }
+
+    private fun AddPhotos(photos: ArrayList<Photo>, idMateriale: String){
+        photos.forEach{
+                photo->
+            var uri = Uri.parse(photo.localUri)
+            val uriimageRemote="image/materiali/${idMateriale}/${uri.lastPathSegment}"
+            val imageRef = storageReference.child(uriimageRemote)
+            val uploadTask = imageRef.putFile(uri)
+            uploadTask.addOnSuccessListener {
+                Log.i(ContentValues.TAG, "Image uploaded $imageRef")
+                val downloadUrl = imageRef.downloadUrl
+                downloadUrl.addOnSuccessListener {
+                        remoteUri->
+                    photo.remoteUri = remoteUri.toString()
+                    updatePhotoDatabaseMateriale(uriimageRemote,idMateriale)
+                }
+            }
+            uploadTask.addOnFailureListener{
+                Log.e(ContentValues.TAG, it.message?: "No message")
+            }
+        }
+    }
+
+    private fun updatePhotoDatabaseMateriale(photo:String, idMateriale: String) {
+
+        var photoCollection = database.collection("materiale").document(idMateriale).collection("photos")
+        var handle = photoCollection.add(photo)
+        handle.addOnSuccessListener {
+            Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
+
+        }
+        handle.addOnFailureListener{
+            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
+        }
+
+        /*var photoCollection = database.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
+        var handle = photoCollection.add(photo)
+        handle.addOnSuccessListener {
+            Log.i(ContentValues.TAG, "successfully update photo metadata")
+            photo.id=it.id
+            var photoCollection = database.collection("studenti").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
+        }
+        handle.addOnFailureListener{
+            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
+        }*/
     }
 
 
     //return -1 se non trova il corso
-    private fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
-        val c = GeoPoint(latitudine,longitudine)
+    private fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double?,longitudine : Double?,stato : String ,NomeCorso : String ): String{
+        val c = GeoPoint(latitudine!!,longitudine!!)
         val corso=getCorsoId(NomeCorso)
         if(corso.equals("-1"))
-            return -1
+            return "-1"
         val materiale = hashMapOf(
             "cordinate" to c,
             "descrizione" to descrizione,
@@ -115,15 +178,16 @@ class Database {
             "stato" to stato,
             "tipologia" to tipologia
         )
-
+        var id=""
         database.collection("materiale").add(materiale).addOnSuccessListener {
                 documentReference ->
+            id=documentReference.id
             Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
         }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
-        return 1
+        return id
     }
 
     private fun getStudenti() : ArrayList<Studente> {
@@ -198,7 +262,7 @@ class Database {
         fun getMateriali() : ArrayList<Materiale> {
             return getIstance().getMateriali()
         }
-        fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): Int{
+        fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): String{
             return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )
         }
 

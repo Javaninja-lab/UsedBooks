@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.ArrayList
 
 class CameraFragment : Fragment() {
@@ -52,6 +54,17 @@ class CameraFragment : Fragment() {
         }
 
         immagineTest = view.findViewById(R.id.iv_foto_scelta)
+
+
+        val btn= view.findViewById<Button>(R.id.buttonTest)
+        btn.setOnClickListener {
+            val imagereference = storageReference.child("image/"+Database.getLoggedStudent().id+"/image:62")
+            val localfile :File= File.createTempFile("test","jpg")
+            imagereference.getFile(localfile).addOnSuccessListener {
+                val bitmap: Bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
+                immagineTest.setImageBitmap(bitmap)
+            }
+        }
 
         val addImage = view.findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {

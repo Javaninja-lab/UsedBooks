@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 import com.example.usedbooks.main.home.HomeFragmentDirections
@@ -37,6 +38,7 @@ class DatiFragment : Fragment() {
                 et_prezzo_new_annuncio.text.toString().toDouble())
             val action = DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
             findNavController().navigate(action)*/
+
             findNavController().navigate(R.id.action_datiFragment_to_mapsFragment)
         }
 
