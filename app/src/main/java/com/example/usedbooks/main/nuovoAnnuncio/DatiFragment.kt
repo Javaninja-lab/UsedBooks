@@ -32,11 +32,12 @@ class DatiFragment : Fragment() {
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
 
         bt_invio_dati.setOnClickListener {
-            materialeDaInviare = MaterialeDaAggiungere(et_title_new_annuncio.text.toString(),
+            /*materialeDaInviare = MaterialeDaAggiungere(et_title_new_annuncio.text.toString(),
                 et_descrizione_new_annuncio.text.toString(), et_tipologia_new_annuncio.text.toString(),
                 et_prezzo_new_annuncio.text.toString().toDouble())
             val action = DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
-            findNavController().navigate(action)
+            findNavController().navigate(action)*/
+            findNavController().navigate(R.id.action_datiFragment_to_mapsFragment)
         }
 
         return view
