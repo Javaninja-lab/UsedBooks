@@ -19,7 +19,7 @@
             app:popExitAnim="@anim/slide_out_right">
             <argument
                 android:name="materiale_provvisorio"
-                app:argType="com.example.usedbooks.dataClass.Materiale" />
+                app:argType="com.example.usedbooks.dataClass.MaterialeDaAggiungere" />
         </action>
     </fragment>
     <fragment
@@ -27,6 +27,9 @@
         android:name="com.example.usedbooks.main.nuovoAnnuncio.MapsFragment"
         android:label="fragment_nuovo_annuncio_maps"
         tools:layout="@layout/fragment_nuovo_annuncio_maps" >
+        <argument
+            android:name="materiale_provvisorio"
+            app:argType="com.example.usedbooks.dataClass.MaterialeDaAggiungere"/>
         <action
             android:id="@+id/action_mapsFragment_to_cameraFragment"
             app:destination="@id/cameraFragment"
@@ -36,12 +39,16 @@
             app:popExitAnim="@anim/slide_out_right">
             <argument
                 android:name="materiale_provvisorio"
-                app:argType="com.example.usedbooks.dataClass.Materiale"/>
+                app:argType="com.example.usedbooks.dataClass.MaterialeDaAggiungere"/>
         </action>
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.usedbooks.main.nuovoAnnuncio.CameraFragment"
         android:label="fragment_nuovo_annuncio_camera"
-        tools:layout="@layout/fragment_nuovo_annuncio_camera" />
+        tools:layout="@layout/fragment_nuovo_annuncio_camera">
+        <argument
+            android:name="materiale_provvisorio"
+            app:argType="com.example.usedbooks.dataClass.MaterialeDaAggiungere"/>
+    </fragment>
 </navigation>
