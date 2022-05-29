@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
@@ -33,13 +34,21 @@ class DatiFragment : Fragment() {
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
 
         bt_invio_dati.setOnClickListener {
-            /*materialeDaInviare = MaterialeDaAggiungere(et_title_new_annuncio.text.toString(),
-                et_descrizione_new_annuncio.text.toString(), et_tipologia_new_annuncio.text.toString(),
-                et_prezzo_new_annuncio.text.toString().toDouble())
-            val action = DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
-            findNavController().navigate(action)*/
+            val title : String = et_title_new_annuncio.text.toString()
+            val descrizione : String = et_descrizione_new_annuncio.text.toString()
+            val tipologia : String = et_tipologia_new_annuncio.text.toString()
+            val prezzo : Double = if (et_prezzo_new_annuncio.text.toString().isEmpty()) (-1.0) else (et_prezzo_new_annuncio.text.toString().toDouble());
 
-            findNavController().navigate(R.id.action_datiFragment_to_mapsFragment)
+            if(!title.isEmpty() && !descrizione.isEmpty() && !tipologia.isEmpty() && prezzo > 0) {
+                materialeDaInviare = MaterialeDaAggiungere(title, descrizione, tipologia, prezzo)
+                val action =
+                    DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(view.context, "Error in submitted data", Toast.LENGTH_SHORT).show()
+            }
+
+            //findNavController().navigate(R.id.action_datiFragment_to_mapsFragment)
         }
 
         return view

@@ -52,4 +52,5 @@
     <string name="description">Description</string>
     <string name="typology">Typology</string>
     <string name="get_current_position">Get current position</string>
+    <string name="testnumber">80</string>
 </resources>

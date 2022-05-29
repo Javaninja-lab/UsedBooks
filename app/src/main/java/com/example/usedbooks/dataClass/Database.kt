@@ -111,7 +111,7 @@ class Database {
    }
 
     private fun SequenzaAggiuntaMateriale(materialeDaAggiungere: MaterialeDaAggiungere, nomeCorso: Corso){
-      val id=  addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, materialeDaAggiungere.stato,nomeCorso.nome)
+      val id=  addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",nomeCorso.nome)
         AddPhotos(materialeDaAggiungere.photos!!,id)
     }
 
