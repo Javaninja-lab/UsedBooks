@@ -46,6 +46,7 @@ class MapsFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
+        map.moveCamera(CameraUpdateFactory.zoomTo(13F))
         impostaCordinata()
     }
 
@@ -106,7 +107,7 @@ class MapsFragment : Fragment() {
                     locationByGPS = lastKnownLocationByGps
                 }
             } else {
-                Toast.makeText(requireContext(), "GPS NOT ACITVATED", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "GPS not activated", Toast.LENGTH_LONG).show()
             }
             if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 locationManager.requestLocationUpdates(
@@ -127,6 +128,14 @@ class MapsFragment : Fragment() {
                     locationByGPS
                 } else {
                     locationByNetwork
+                }
+            } else {
+                if(locationByGPS != null || locationByNetwork != null){
+                    if(locationByGPS!=null){
+                        currentLocation = locationByGPS
+                    } else {
+                        currentLocation = locationByNetwork
+                    }
                 }
             }
             if(currentLocation!=null){
