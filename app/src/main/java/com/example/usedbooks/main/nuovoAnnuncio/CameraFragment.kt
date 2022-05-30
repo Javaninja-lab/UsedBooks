@@ -21,8 +21,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 import com.example.usedbooks.dataClass.Photo
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -32,6 +34,9 @@ import java.io.File
 import java.util.ArrayList
 
 class CameraFragment : Fragment() {
+
+    val args : CameraFragmentArgs by navArgs()
+    lateinit var materialeDaAggiungere: MaterialeDaAggiungere
 
     //TODO chiamare saveimage quando si inviano tutti i dati
     var strUri :String=""
@@ -55,6 +60,12 @@ class CameraFragment : Fragment() {
 
         immagineTest = view.findViewById(R.id.iv_foto_scelta)
 
+        materialeDaAggiungere = args.materialeProvvisorio
+
+        val btn_send_data = view.findViewById<Button>(R.id.btn_send_data)
+        btn_send_data.setOnClickListener {
+            Database.addAnnuncio(materialeDaAggiungere)
+        }
 
         val btn= view.findViewById<Button>(R.id.buttonTest)
         btn.setOnClickListener {
@@ -117,8 +128,6 @@ class CameraFragment : Fragment() {
 
     private lateinit var currentImgepath: String
 
-
-
     private val requestMultiplePermissionLaucher= registerForActivityResult (ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
         var permissionGranted = false
         resultsMap.forEach {
@@ -167,8 +176,7 @@ class CameraFragment : Fragment() {
 
 
     private fun saveImage(photos: ArrayList<Photo>){
-        if(photos.isNotEmpty())
-        {
+        if(photos.isNotEmpty()) {
             uploadPhotos()
         }
     }
@@ -195,7 +203,6 @@ class CameraFragment : Fragment() {
     }
 
     private fun updatePhotoDatabase(photo: Photo) {
-
         var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
         var handle = photoCollection.add(photo)
         handle.addOnSuccessListener {

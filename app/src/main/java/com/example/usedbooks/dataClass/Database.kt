@@ -110,12 +110,12 @@ class Database {
        return bitmap
    }
 
-    private fun SequenzaAggiuntaMateriale(materialeDaAggiungere: MaterialeDaAggiungere, nomeCorso: Corso){
-      val id=  addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",nomeCorso.nome)
-        AddPhotos(materialeDaAggiungere.photos!!,id)
+    private fun addAnnuncio(materialeDaAggiungere: MaterialeDaAggiungere){
+        val id = addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",materialeDaAggiungere.corso)
+        addPhotos(materialeDaAggiungere.photos!!,id)
     }
 
-    private fun AddPhotos(photos: ArrayList<Photo>, idMateriale: String){
+    private fun addPhotos(photos: ArrayList<Photo>, idMateriale: String){
         photos.forEach{
                 photo->
             var uri = Uri.parse(photo.localUri)
@@ -266,5 +266,8 @@ class Database {
             return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )
         }
 
+        fun addAnnuncio(materiale : MaterialeDaAggiungere) {
+            return getIstance().addAnnuncio(materiale)
+        }
     }
 }

@@ -31,16 +31,18 @@ class DatiFragment : Fragment() {
         val et_descrizione_new_annuncio = view.findViewById<EditText>(R.id.et_descrizione_new_annuncio)
         val et_tipologia_new_annuncio = view.findViewById<EditText>(R.id.et_tipologia_new_annuncio)
         val et_prezzo_new_annuncio = view.findViewById<EditText>(R.id.et_prezzo_new_annuncio)
+        val et_corso_new_annuncio = view.findViewById<EditText>(R.id.et_corso_new_annuncio)
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
 
         bt_invio_dati.setOnClickListener {
             val title : String = et_title_new_annuncio.text.toString()
             val descrizione : String = et_descrizione_new_annuncio.text.toString()
             val tipologia : String = et_tipologia_new_annuncio.text.toString()
+            val corso : String = et_corso_new_annuncio.text.toString()
             val prezzo : Double = if (et_prezzo_new_annuncio.text.toString().isEmpty()) (-1.0) else (et_prezzo_new_annuncio.text.toString().toDouble());
 
-            if(!title.isEmpty() && !descrizione.isEmpty() && !tipologia.isEmpty() && prezzo > 0) {
-                materialeDaInviare = MaterialeDaAggiungere(title, descrizione, tipologia, prezzo)
+            if(!title.isEmpty() && !descrizione.isEmpty() && !tipologia.isEmpty() && !corso.isEmpty() && prezzo > 0) {
+                materialeDaInviare = MaterialeDaAggiungere(title, descrizione, tipologia, corso, prezzo)
                 val action =
                     DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
                 findNavController().navigate(action)

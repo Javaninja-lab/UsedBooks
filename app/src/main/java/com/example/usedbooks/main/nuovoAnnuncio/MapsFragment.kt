@@ -71,7 +71,10 @@ class MapsFragment : Fragment() {
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
         bt_invio_dati.setOnClickListener {
             materialeDaAggiungere = MaterialeDaAggiungere(materialeDaAggiungere, latitudine, longitudine)
-            findNavController().navigate(R.id.action_mapsFragment_to_cameraFragment)
+            val action =
+                MapsFragmentDirections.actionMapsFragmentToCameraFragment(materialeDaAggiungere)
+            findNavController().navigate(action)
+            //findNavController().navigate(R.id.action_mapsFragment_to_cameraFragment)
         }
 
         return view

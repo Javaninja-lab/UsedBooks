@@ -8,7 +8,6 @@
 
     <EditText
         android:id="@+id/et_title_new_annuncio"
-        style="@style/primaryStyleTextView"
         android:layout_width="0dp"
 
         android:layout_height="wrap_content"
@@ -26,7 +25,6 @@
     <EditText
         android:id="@+id/et_descrizione_new_annuncio"
 
-        style="@style/primaryStyleTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
@@ -45,7 +43,6 @@
     <EditText
         android:id="@+id/et_tipologia_new_annuncio"
 
-        style="@style/primaryStyleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
@@ -54,6 +51,21 @@
         android:text="@string/testtext"
         android:hint="@string/typology"
 
+        app:layout_constraintBottom_toTopOf="@+id/et_corso_new_annuncio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/et_corso_new_annuncio"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="10dp"
+
+        android:text="@string/testtext"
+        android:hint="@string/university_course"
+
         app:layout_constraintBottom_toTopOf="@+id/et_prezzo_new_annuncio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -61,7 +73,6 @@
     <EditText
         android:id="@+id/et_prezzo_new_annuncio"
 
-        style="@style/primaryStyleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
