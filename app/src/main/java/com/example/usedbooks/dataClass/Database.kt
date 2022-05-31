@@ -27,6 +27,7 @@ class Database {
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
+           // val x=  z.getDocumentReference("photos")
             val c= z.getGeoPoint("cordinate")
             val materiale : Materiale? =
                 c?.let {
@@ -96,6 +97,8 @@ class Database {
             return k[0].id
         }
     }
+
+
 
    private fun getPhotoMateriale(Uri: String): Bitmap{
        val imagereference = storageReference.child(Uri)
