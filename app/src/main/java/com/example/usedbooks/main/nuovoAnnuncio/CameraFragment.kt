@@ -177,11 +177,11 @@ class CameraFragment : Fragment() {
 
     private fun saveImage(photos: ArrayList<Photo>){
         if(photos.isNotEmpty()) {
-            uploadPhotos()
+            materialeDaAggiungere.photos=photos
         }
     }
 
-    private fun uploadPhotos() {
+    /*private fun uploadPhotos() {
         photos.forEach{
                 photo->
             var uri = Uri.parse(photo.localUri)
@@ -200,9 +200,9 @@ class CameraFragment : Fragment() {
                 Log.e(ContentValues.TAG, it.message?: "No message")
             }
         }
-    }
+    }*/
 
-    private fun updatePhotoDatabase(photo: Photo) {
+    /*private fun updatePhotoDatabase(photo: Photo) {
         var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
         var handle = photoCollection.add(photo)
         handle.addOnSuccessListener {
@@ -213,7 +213,7 @@ class CameraFragment : Fragment() {
         handle.addOnFailureListener{
             Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
         }
-    }
+    }*/
 
 
 }

@@ -124,8 +124,8 @@ class Database {
                 val downloadUrl = imageRef.downloadUrl
                 downloadUrl.addOnSuccessListener {
                         remoteUri->
-                    photo.remoteUri = remoteUri.toString()
-                    updatePhotoDatabaseMateriale(uriimageRemote,idMateriale)
+                    photo.remoteUri = uriimageRemote
+                    updatePhotoDatabaseMateriale(photo,idMateriale)
                 }
             }
             uploadTask.addOnFailureListener{
@@ -134,13 +134,14 @@ class Database {
         }
     }
 
-    private fun updatePhotoDatabaseMateriale(photo:String, idMateriale: String) {
+    private fun updatePhotoDatabaseMateriale(photo:Photo, idMateriale: String) {
 
         var photoCollection = database.collection("materiale").document(idMateriale).collection("photos")
         var handle = photoCollection.add(photo)
         handle.addOnSuccessListener {
             Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
-
+            photo.id=it.id
+            var photoCollection = database.collection("materiale").document(idMateriale).collection("photos").document(photo.id).set(photo)
         }
         handle.addOnFailureListener{
             Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
@@ -176,14 +177,18 @@ class Database {
             "tipologia" to tipologia
         )
         var id=""
-        database.collection("materiale").add(materiale).addOnSuccessListener {
+        val s= database.collection("materiale").add(materiale).addOnSuccessListener {
                 documentReference ->
             id=documentReference.id
-            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${id}")
         }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
+
+        while(!s.isComplete){}
+        id=s.result.id
+        var i=0
         return id
     }
 

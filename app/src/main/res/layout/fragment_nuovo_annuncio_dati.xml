@@ -63,8 +63,8 @@
         android:layout_marginHorizontal="50dp"
         android:layout_marginBottom="10dp"
 
-        android:text="@string/testtext"
         android:hint="@string/university_course"
+        android:text="logica"
 
         app:layout_constraintBottom_toTopOf="@+id/et_prezzo_new_annuncio"
         app:layout_constraintEnd_toEndOf="parent"
