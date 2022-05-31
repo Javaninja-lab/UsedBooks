@@ -18,7 +18,7 @@
             android:id="@+id/iv_foto_profilo"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_weight="1"
+            android:layout_marginStart="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/test" />
@@ -38,10 +38,11 @@
 
         <ImageButton
             android:id="@+id/ib_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="30dp"
             android:src="@drawable/ic_baseline_login_24"
+            android:backgroundTint="?attr/colorPrimaryVariant"
             app:layout_constraintBottom_toBottomOf="@+id/tv_nome_cliente"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_nome_cliente" />
