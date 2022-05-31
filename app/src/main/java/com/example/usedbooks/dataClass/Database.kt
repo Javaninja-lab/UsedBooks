@@ -65,9 +65,6 @@ class Database {
 
     }
 
-
-
-
     private fun addStudente(name: String,surname: String,email: String,password: String) : Studente?{
         val studente = hashMapOf(
             "cognome" to surname,
@@ -100,7 +97,7 @@ class Database {
         }
     }
 
-   private fun GetPhotoMateriale(Uri: String): Bitmap{
+   private fun getPhotoMateriale(Uri: String): Bitmap{
        val imagereference = storageReference.child(Uri)
        lateinit var  bitmap: Bitmap
        val localfile : File = File.createTempFile("test","jpg")
@@ -267,7 +264,13 @@ class Database {
         }
 
         fun addAnnuncio(materiale : MaterialeDaAggiungere) {
-            return getIstance().addAnnuncio(materiale)
+            getIstance().addAnnuncio(materiale)
+        }
+        fun getPhotoMateriale(uri : String) : Bitmap {
+            return getIstance().getPhotoMateriale(uri)
+        }
+        fun getMaterialiStudente(username: String) : ArrayList<Materiale?> {
+            return getIstance().getMaterialiStudente(username)
         }
     }
 }

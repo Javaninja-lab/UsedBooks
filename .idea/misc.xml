@@ -42,7 +42,7 @@
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_chat.xml" value="0.14578879863189398" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_home.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_login.xml" value="0.26201269265639165" />
-        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_materiale.xml" value="0.14542415378186377" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_materiale.xml" value="0.33" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_nuovo_annuncio_camera.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_nuovo_annuncio_dati.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_nuovo_annuncio_maps.xml" value="0.2975630611372381" />
@@ -50,6 +50,7 @@
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_register.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/list_item_chat.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/list_item_home.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/list_item_material_complete.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/receive.xml" value="0.14578879863189398" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/sent.xml" value="0.14578879863189398" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/menu/my_navigation_items.xml" value="0.2975630611372381" />

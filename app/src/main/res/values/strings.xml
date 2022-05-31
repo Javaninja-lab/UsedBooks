@@ -54,4 +54,6 @@
     <string name="get_current_position">Get current position</string>
     <string name="testnumber">80</string>
     <string name="university_course">University course</string>
+    <string name="you_have_no_published_ad">You have no published ad</string>
+    <string name="state_of_material">State of material</string>
 </resources>

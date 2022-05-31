@@ -29,8 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/hi"
+            style="@style/primaryStyleTextView"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_foto_profilo"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_logout"
             app:layout_constraintStart_toEndOf="@+id/iv_foto_profilo"
             app:layout_constraintTop_toTopOf="@+id/iv_foto_profilo" />
 
@@ -38,30 +40,30 @@
             android:id="@+id/ib_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/ic_baseline_login_24"
             app:layout_constraintBottom_toBottomOf="@+id/tv_nome_cliente"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_nome_cliente"
             app:layout_constraintTop_toTopOf="@+id/tv_nome_cliente" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_no_material"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/you_have_no_published_ad"
+        android:textAlignment="center"
+        android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lv_profile"
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
 
-    </LinearLayout>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        tools:listitem="@layout/list_item_material_complete" />
 </LinearLayout>

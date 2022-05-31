@@ -2,7 +2,7 @@
 <resources>
     <style name="primaryStyleTextView">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="background">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">48sp</item>
     </style>
 </resources>

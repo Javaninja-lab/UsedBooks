@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Database
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -36,6 +38,8 @@ class MaterialeFragment : Fragment() {
         tv_nome_venditore.setText(materiale.proprietario)
         val tv_prezzo = view.findViewById<TextView>(R.id.tv_prezzo)
         tv_prezzo.setText(materiale.prezzo.toString())
+        val iv_foto_materiale = view.findViewById<ImageView>(R.id.iv_foto_materiale)
+        //iv_foto_materiale.setImageBitmap(Database.getPhotoMateriale(materiale.))
 
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?
