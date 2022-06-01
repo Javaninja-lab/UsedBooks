@@ -27,7 +27,7 @@ class Database {
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
-           // val x=  z.getDocumentReference("photos")
+
             val c= z.getGeoPoint("cordinate")
             val materiale : Materiale? =
                 c?.let {
@@ -38,6 +38,15 @@ class Database {
                 dareturn.add(materiale)
         }
         return dareturn
+    }
+
+    private fun getUriPhotosMateriale(idMateriale: String) : String{
+        val x=  database.collection("materiale/"+idMateriale+"/photos").get();
+        while(!x.isComplete){}
+        val y: MutableList<DocumentSnapshot> = x.result.documents;
+        val string= y[0]["remoteUri"].toString()
+        val t=0;
+        return string;
     }
 
     private fun getMaterialiStudente(username: String): ArrayList<Materiale?>{
@@ -279,6 +288,9 @@ class Database {
         }
         fun getMaterialiStudente(username: String) : ArrayList<Materiale?> {
             return getIstance().getMaterialiStudente(username)
+        }
+        fun getUriPhotoMateriale(idMateriale: String): String{
+            return getIstance().getUriPhotosMateriale(idMateriale)
         }
     }
 }

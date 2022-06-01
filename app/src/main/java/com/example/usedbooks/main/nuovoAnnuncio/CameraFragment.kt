@@ -69,12 +69,14 @@ class CameraFragment : Fragment() {
 
         val btn= view.findViewById<Button>(R.id.buttonTest)
         btn.setOnClickListener {
-            val imagereference = storageReference.child("image/"+Database.getLoggedStudent().id+"/image:62")
+            /*val imagereference = storageReference.child("image/"+Database.getLoggedStudent().id+"/image:62")
             val localfile :File= File.createTempFile("test","jpg")
             imagereference.getFile(localfile).addOnSuccessListener {
                 val bitmap: Bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
                 immagineTest.setImageBitmap(bitmap)
-            }
+            }*/
+            Database.getUriPhotoMateriale(
+                    "Jt35xdpSyzEgrUUgAotV")
         }
 
         val addImage = view.findViewById<Button>(R.id.addImage)
