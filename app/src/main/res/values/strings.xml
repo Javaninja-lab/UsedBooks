@@ -56,4 +56,8 @@
     <string name="university_course">University course</string>
     <string name="you_have_no_published_ad">You have no published ad</string>
     <string name="state_of_material">State of material</string>
+    <string name="sold">Sold</string>
+    <string name="materials_for_sale">Materials for sale</string>
+    <string name="materials_sold">Materials sold</string>
+    <string name="transaction">Transaction</string>
 </resources>

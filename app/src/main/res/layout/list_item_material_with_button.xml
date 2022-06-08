@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_item_listview"
+        android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/iv_foto_materiale"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/test"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_information_materiale"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ll_information_materiale" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_information_materiale"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_foto_materiale"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_nome_materiale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/name_of_material"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_prezzo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/price" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sold"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="3dp"
+        android:text="@string/sold"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_information_materiale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ll_information_materiale"
+        app:layout_constraintTop_toTopOf="@+id/ll_information_materiale" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

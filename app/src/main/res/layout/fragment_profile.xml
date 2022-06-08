@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryVariant"
     android:orientation="vertical"
-    tools:context=".main.ProfileFragment"
+    tools:context=".main.profile.ProfileFragment"
     android:tag="profile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,24 +47,73 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_nome_cliente" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <TextView
-        android:id="@+id/tv_no_material"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/you_have_no_published_ad"
-        android:textAlignment="center"
-        android:visibility="gone"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lv_profile"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/materials_for_sale"
+                    style="@style/primaryStyleTextView"
+                    android:textSize="30sp"
+                    android:textAlignment="center"
+                    />
+                <TextView
+                    android:id="@+id/tv_no_material"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/you_have_no_published_ad"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lv_ad_invendita"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
-        tools:listitem="@layout/list_item_material_complete" />
+                    tools:listitem="@layout/list_item_material_with_button" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_ad_vendit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction"
+                    style="@style/primaryStyleTextView"
+                    android:textSize="30sp"
+                    android:textAlignment="center"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lv_ad_venduti"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    tools:listitem="@layout/list_item_material_complete" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

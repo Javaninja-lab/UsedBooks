@@ -74,7 +74,6 @@ class MapsFragment : Fragment() {
             val action =
                 MapsFragmentDirections.actionMapsFragmentToCameraFragment(materialeDaAggiungere)
             findNavController().navigate(action)
-            //findNavController().navigate(R.id.action_mapsFragment_to_cameraFragment)
         }
 
         return view

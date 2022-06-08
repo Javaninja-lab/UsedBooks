@@ -38,17 +38,32 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.usedbooks.main.ProfileFragment"
+        android:name="com.example.usedbooks.main.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_materialeFragment"
+            app:destination="@id/materialeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_soldFragment"
+            app:destination="@id/soldFragment">
+            <argument
+                android:name="materiale"
+                app:argType="com.example.usedbooks.dataClass.Materiale"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.usedbooks.main.SearchFragment"
+        android:name="com.example.usedbooks.main.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_materialeFragment"
+            app:destination="@id/materialeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/materialeFragment"
-        android:name="com.example.usedbooks.main.home.MaterialeFragment"
+        android:name="com.example.usedbooks.main.MaterialeFragment"
         android:label="MaterialeFragment" >
         <argument
             android:name="materiale"
@@ -67,4 +82,13 @@
             android:name="id"
             app:argType="string"/>
     </activity>
+    <fragment
+        android:id="@+id/soldFragment"
+        android:name="com.example.usedbooks.main.profile.SoldFragment"
+        android:label="fragment_sold"
+        tools:layout="@layout/fragment_sold">
+        <argument
+            android:name="materiale"
+            app:argType="com.example.usedbooks.dataClass.Materiale"/>
+    </fragment>
 </navigation>

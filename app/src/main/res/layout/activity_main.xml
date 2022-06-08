@@ -12,16 +12,8 @@
 
 
         android:layout_width="match_parent"
-        android:layout_height="1440dp"
-        android:layout_gravity="top"
+        android:layout_height="match_parent"
 
-        app:layout_anchor="@+id/bottomAppBar"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.0"
 
         app:defaultNavHost="true"
         app:navGraph="@navigation/my_nav_main" />
@@ -37,7 +29,7 @@
         app:fabCradleRoundedCornerRadius="10dp"
         app:fabCradleVerticalOffset="10dp" >
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@id/bottomNavigationView"
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
