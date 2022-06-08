@@ -75,8 +75,10 @@ class CameraFragment : Fragment() {
                 val bitmap: Bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
                 immagineTest.setImageBitmap(bitmap)
             }*/
-            Database.getUriPhotoMateriale(
-                    "Jt35xdpSyzEgrUUgAotV")
+            //Database.getUriPhotoMateriale( "Jt35xdpSyzEgrUUgAotV")
+
+            val list= Database.getMaterialiStudente("yAn9lOznTcFXT0CfUnlX")
+            val i=0;
         }
 
         val addImage = view.findViewById<Button>(R.id.addImage)

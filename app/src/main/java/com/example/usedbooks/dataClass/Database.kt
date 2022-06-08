@@ -52,7 +52,7 @@ class Database {
     private fun getMaterialiStudente(username: String): ArrayList<Materiale?>{
 
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
-        val i =database.collection("studenti").whereEqualTo("proprietario",username).get()
+        val i =database.collection("materiale").whereEqualTo("proprietario",username).get()
         while (!i.isComplete){}// questa fa schifo
         val k :MutableList<DocumentSnapshot> = i.result.documents
         if(k.size==0)
