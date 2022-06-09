@@ -9,6 +9,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -32,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.ArrayList
+import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
 
@@ -67,18 +70,23 @@ class CameraFragment : Fragment() {
             Database.addAnnuncio(materialeDaAggiungere)
         }
 
+        val resultHandler = Handler(Looper.getMainLooper())
         val btn= view.findViewById<Button>(R.id.buttonTest)
         btn.setOnClickListener {
-            /*val imagereference = storageReference.child("image/"+Database.getLoggedStudent().id+"/image:62")
-            val localfile :File= File.createTempFile("test","jpg")
-            imagereference.getFile(localfile).addOnSuccessListener {
-                val bitmap: Bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
-                immagineTest.setImageBitmap(bitmap)
-            }*/
-            //Database.getUriPhotoMateriale( "Jt35xdpSyzEgrUUgAotV")
+            val executor= Executors.newSingleThreadExecutor()
 
-            val list= Database.getMaterialiStudente("yAn9lOznTcFXT0CfUnlX")
-            val i=0;
+            executor.execute {
+                try {
+                    val response = Database.getMaterialiStudente(Database.getLoggedStudent().id)
+                    resultHandler.post {
+
+                    }
+
+                } catch (e: Exception) {
+                    //val errorResult = Result.Error(e)
+                    //resultHandler.post { callback(errorResult) }
+                }
+            }
         }
 
         val addImage = view.findViewById<Button>(R.id.addImage)

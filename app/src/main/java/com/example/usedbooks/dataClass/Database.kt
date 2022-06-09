@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
+import com.example.usedbooks.R
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
@@ -28,11 +30,13 @@ class Database {
         for(z in k)
         {
 
+            val  uri: ArrayList<String> = ArrayList()
+            uri.add(getUriPhotosMateriale(z.id))
             val c= z.getGeoPoint("cordinate")
             val materiale : Materiale? =
                 c?.let {
                     Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
-                        it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
+                        it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
                 }
             if(materiale!=null)
                 dareturn.add(materiale)
@@ -61,11 +65,13 @@ class Database {
         {
             for(z in k)
             {
+                val  uri: ArrayList<String> = ArrayList()
+                uri.add(getUriPhotosMateriale(z.id))
                 val c= z.getGeoPoint("cordinate")
                 val materiale =
                     c?.let {
                         Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
-                            it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString())
+                            it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
                     }
                 list.add(materiale)
 
@@ -113,9 +119,11 @@ class Database {
        val imagereference = storageReference.child(Uri)
        lateinit var  bitmap: Bitmap
        val localfile : File = File.createTempFile("test","jpg")
-       imagereference.getFile(localfile).addOnSuccessListener {
-           bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
-       }
+       val i=imagereference.getFile(localfile)
+       while (!i.isComplete){}
+       bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
+
+       val z=0
        return bitmap
    }
 

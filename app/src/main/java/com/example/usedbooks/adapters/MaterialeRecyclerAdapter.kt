@@ -1,5 +1,6 @@
 package com.example.usedbooks.adapters
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,19 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.main.home.HomeFragmentDirections
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 class MaterialeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var items : ArrayList<Materiale>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+
         val view = MaterialeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_complete, parent, false))
         return view
     }
@@ -39,12 +46,20 @@ class MaterialeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         items = list
     }
 
+
     class MaterialeViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         lateinit var materiale : Materiale
-
         fun bind(materiale: Materiale) {
             this.materiale = materiale
             val iv_foto_materiale = itemView.findViewById<ImageView>(R.id.iv_foto_materiale)
+            thread(start = true) {
+                val photoBitmap : Bitmap = Database.getPhotoMateriale(materiale.photos[0])
+                iv_foto_materiale.postDelayed({
+                    iv_foto_materiale.setImageBitmap(photoBitmap)
+                }, 1000L)
+                }
+
+
             //TODO(Mettere immagine presa dalla classe)
             val tv_nome_materiale = itemView.findViewById<TextView>(R.id.tv_nome_materiale)
             tv_nome_materiale.setText(materiale.nome)

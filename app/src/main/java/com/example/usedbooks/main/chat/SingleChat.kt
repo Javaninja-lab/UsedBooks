@@ -16,7 +16,7 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.firebase.MessageAdapter
-import com.example.usedbooks.main.home.MaterialeFragmentArgs
+import com.example.usedbooks.main.MaterialeFragmentArgs
 import com.google.firebase.database.*
 
 class SingleChat : AppCompatActivity() {
