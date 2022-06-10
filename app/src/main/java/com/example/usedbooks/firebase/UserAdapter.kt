@@ -32,6 +32,8 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser = userList[position]
         holder.mittente.text = currentUser.username
+
+        //holder.fotoProfilo.setImageBitmap()
         //TODO("Asseganre immagine alla chat")
         val messaggio = Database.getLastMessage(currentUser, Database.getLoggedStudent().utente!!)
         //TODO("Aggiungere data al messaggio")

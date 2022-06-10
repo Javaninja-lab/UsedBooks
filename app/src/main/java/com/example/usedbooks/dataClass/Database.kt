@@ -154,6 +154,33 @@ class Database {
         }
     }
 
+    private fun searchMateriale(corso: String): ArrayList<Materiale?> {
+        val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
+        val h =database.collection("Corso").whereEqualTo("nome",corso).get()
+        while (!h.isComplete){}// questa fa schifo
+        val u :MutableList<DocumentSnapshot> = h.result.documents
+        if(u.isEmpty())
+            return list
+        val idCorso = u[0].id
+        val i = database.collection("materiale").whereEqualTo("idCorso", idCorso).get()
+        while (!i.isComplete){}// questa fa schifo
+        val k: MutableList<DocumentSnapshot> = i.result.documents
+        for(z in k)
+        {
+            val  uri: ArrayList<String> = ArrayList()
+            uri.add(getUriPhotosMateriale(z.id))
+            val c= z.getGeoPoint("cordinate")
+            val materiale : Materiale? =
+                c?.let {
+                    Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
+                        it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
+                }
+            if(materiale!=null)
+                list.add(materiale)
+        }
+        return  list
+    }
+
     private fun updatePhotoDatabaseMateriale(photo:Photo, idMateriale: String) {
 
         var photoCollection = database.collection("materiale").document(idMateriale).collection("photos")
@@ -299,6 +326,9 @@ class Database {
         }
         fun getUriPhotoMateriale(idMateriale: String): String{
             return getIstance().getUriPhotosMateriale(idMateriale)
+        }
+        fun searchMateriale(corso: String): ArrayList<Materiale?> {
+            return getIstance().searchMateriale(corso)
         }
     }
 }
