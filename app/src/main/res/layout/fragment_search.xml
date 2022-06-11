@@ -40,13 +40,38 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        >
 
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <ProgressBar
+            android:id="@+id/pb_caricamento"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
 
-        tools:listitem="@layout/list_item_material_complete" />
+            style="?android:attr/progressBarStyleLarge"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:visibility="gone"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:listitem="@layout/list_item_material_complete" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
