@@ -12,16 +12,17 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.main.home.HomeFragmentDirections
+import com.example.usedbooks.main.profile.ProfileFragmentDirections
+import com.example.usedbooks.main.search.SearchFragmentDirections
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
-class MaterialeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MaterialeRecyclerAdapter(string: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var items : ArrayList<Materiale>
+    private var fragment = string
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-
         val view = MaterialeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_complete, parent, false))
         return view
     }
@@ -31,8 +32,16 @@ class MaterialeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             is MaterialeViewHolder -> {
                 holder.bind(items.get(position))
                 holder.itemView.setOnClickListener {
-                    val action = HomeFragmentDirections.actionHomeFragmentToMaterialeFragment(holder.materiale)
-                    it.findNavController().navigate(action)
+                    if(fragment == "home") {
+                        val action = HomeFragmentDirections.actionHomeFragmentToMaterialeFragment(holder.materiale)
+                        it.findNavController().navigate(action)
+                    } else if(fragment == "search") {
+                        val action = SearchFragmentDirections.actionSearchFragmentToMaterialeFragment(holder.materiale)
+                        it.findNavController().navigate(action)
+                    } else if(fragment == "profile") {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToMaterialeFragment(holder.materiale)
+                        it.findNavController().navigate(action)
+                    }
                 }
             }
         }

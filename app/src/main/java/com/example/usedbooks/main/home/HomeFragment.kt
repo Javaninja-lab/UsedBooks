@@ -24,29 +24,15 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val recyclerView  = view.findViewById<RecyclerView>(R.id.lv_home)
-        val adapter = MaterialeRecyclerAdapter()
+        val adapter = MaterialeRecyclerAdapter("home")
         recyclerView.adapter = adapter
-        //val executor= Executors.newSingleThreadExecutor()
-        var response: ArrayList<Materiale> = ArrayList()
+
+        val response: ArrayList<Materiale> = ArrayList()
         adapter.submitList(response)
-        Toast.makeText(requireContext(),"ciao", Toast.LENGTH_LONG).show()
-       /*executor.execute {
-            try {
-                //response = Database.getMateriali()
-                for ( materiale in Database.getMateriali()){
-                    response.add(materiale)
-                }
-                adapter.notifyDataSetChanged()
-                //resultHandler.post { callback(response) }
-            } catch (e: Exception) {
-                //val errorResult = Result.Error(e)
-                //resultHandler.post { callback(errorResult) }
-            }
-        }*/
 
         thread(start = true) {
             response.clear()
-            for ( materiale in Database.getMateriali()){
+            for (materiale in Database.getMateriali()){
                 response.add(materiale)
             }
             this.activity?.runOnUiThread{

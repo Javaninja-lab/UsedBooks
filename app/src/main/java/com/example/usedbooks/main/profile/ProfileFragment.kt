@@ -38,7 +38,7 @@ class ProfileFragment : Fragment() {
 
         val recyclerView  = view.findViewById<RecyclerView>(R.id.lv_ad_invendita)
         val tv_no_material = view.findViewById<TextView>(R.id.tv_no_material)
-        val adapter = MaterialeRecyclerAdapter()
+        val adapter = MaterialeRecyclerAdapter("profile")
         recyclerView.adapter = adapter
         val array = ArrayList<Materiale>()
         for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)){
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
 
         val recyclerView2  = view.findViewById<RecyclerView>(R.id.lv_ad_venduti)
         val tv_no_material2 = view.findViewById<LinearLayout>(R.id.ll_ad_vendit)
-        val adapter2 = MaterialeRecyclerAdapter()
+        val adapter2 = MaterialeRecyclerAdapter("profile")
         recyclerView2.adapter = adapter2
         val array2 = ArrayList<Materiale>()
         for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)){

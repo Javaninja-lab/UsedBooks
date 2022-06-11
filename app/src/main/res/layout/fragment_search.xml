@@ -28,24 +28,25 @@
             />
 
         <Button
-            android:id="@+id/searchBtn"
+            android:id="@+id/bt_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             style="@style/primaryStyleButton"
             android:drawablePadding="2dp"
             android:layout_margin="15dp"
-            android:text="search" />
+            android:text="@string/search" />
 
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ListViewSearch"
+        android:id="@+id/rv_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="55dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
         tools:listitem="@layout/list_item_material_complete" />
 </LinearLayout>

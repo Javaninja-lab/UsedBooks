@@ -29,29 +29,41 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val recyclerView  = view?.findViewById<RecyclerView>(R.id.ListViewSearch)
-        val adapter = MaterialeRecyclerAdapter()
+        val recyclerView  = layout.findViewById<RecyclerView>(R.id.rv_search)
+        val adapter = MaterialeRecyclerAdapter("search")
         recyclerView?.adapter = adapter
-        var response: ArrayList<Materiale> = ArrayList()
+        val response: ArrayList<Materiale> = ArrayList()
         adapter.submitList(response)
 
-        val btn_search = view?.findViewById<Button>(R.id.searchBtn)
-        btn_search?.setOnClickListener {
+        thread(start = true) {
+            response.clear()
+            for (materiale in Database.getMateriali()){
+                response.add(materiale)
+            }
+            this.activity?.runOnUiThread{
+                adapter.notifyDataSetChanged()
+            }
 
-            val search = view?.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
+        }
+
+        val bt_search = layout.findViewById<Button>(R.id.bt_search)
+        bt_search?.setOnClickListener {
+
+            val search = it.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
+            response.clear()
+            adapter.notifyDataSetChanged()
 
             thread(start = true) {
-                response.clear()
-                for ( materiale in Database.searchMateriale(search)){
-                    if(materiale==null)
-                        Toast.makeText(requireContext(),"nessun risultato", Toast.LENGTH_LONG).show()
-                    else
+                for (materiale in Database.searchMateriale(search)){
+                    if(materiale!=null)
                         response.add(materiale)
                 }
                 this.activity?.runOnUiThread{
-                    adapter.notifyDataSetChanged()
+                    if(response.size==0)
+                        Toast.makeText(context, "Nessun risultato", Toast.LENGTH_LONG).show()
+                    else
+                        adapter.notifyDataSetChanged()
                 }
-
             }
         }
         return layout
