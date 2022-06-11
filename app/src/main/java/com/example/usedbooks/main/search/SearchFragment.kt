@@ -49,7 +49,7 @@ class SearchFragment : Fragment() {
         val bt_search = layout.findViewById<Button>(R.id.bt_search)
         bt_search?.setOnClickListener {
 
-            val search = it.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
+            val search = layout.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
             response.clear()
             adapter.notifyDataSetChanged()
 
