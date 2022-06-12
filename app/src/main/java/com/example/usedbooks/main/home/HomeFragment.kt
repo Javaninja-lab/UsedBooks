@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val recyclerView  = view.findViewById<RecyclerView>(R.id.lv_home)
-        val adapter = MaterialeRecyclerAdapter("home")
+        val adapter = MaterialeRecyclerAdapter("home", false)
         recyclerView.adapter = adapter
 
         val pb_caricamento = view.findViewById<ProgressBar>(R.id.pb_caricamento)
@@ -38,9 +38,6 @@ class HomeFragment : Fragment() {
         val color = typedValue.data
         progressDrawable.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
         pb_caricamento.progressDrawable = progressDrawable
-
-
-
 
         val response: ArrayList<Materiale> = ArrayList()
         adapter.submitList(response)

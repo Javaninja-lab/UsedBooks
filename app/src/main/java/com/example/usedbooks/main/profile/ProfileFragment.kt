@@ -1,14 +1,15 @@
 package com.example.usedbooks.main.profile
 
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
@@ -18,6 +19,7 @@ import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.login.LoginActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 class ProfileFragment : Fragment() {
 
@@ -38,33 +40,62 @@ class ProfileFragment : Fragment() {
 
         val recyclerView  = view.findViewById<RecyclerView>(R.id.lv_ad_invendita)
         val tv_no_material = view.findViewById<TextView>(R.id.tv_no_material)
-        val adapter = MaterialeRecyclerAdapter("profile")
+        val adapter = MaterialeRecyclerAdapter("profile", true)
         recyclerView.adapter = adapter
         val array = ArrayList<Materiale>()
-        for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)){
-            if(m!=null)
-                array.add(m)
+        adapter.submitList(array)
+
+        val pb_caricamento = view.findViewById<ProgressBar>(R.id.pb_caricamento)
+        val progressDrawable: Drawable = pb_caricamento.indeterminateDrawable.mutate()
+        val typedValue = TypedValue()
+        requireContext().theme.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
+        val color = typedValue.data
+        progressDrawable.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+        pb_caricamento.progressDrawable = progressDrawable
+
+        thread(start = true) {
+            for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)) {
+                if (m != null)
+                    array.add(m)
+            }
+            this.requireActivity().runOnUiThread {
+                pb_caricamento.visibility = View.GONE
+                if (array.isEmpty()) {
+                    tv_no_material.visibility = View.VISIBLE
+                } else {
+                    recyclerView.visibility = View.VISIBLE
+                    adapter.notifyDataSetChanged()
+                }
+            }
         }
-        if(array.isEmpty()){
-            recyclerView.visibility = View.GONE
-            tv_no_material.visibility = View.VISIBLE
-        } else
-            adapter.submitList(array)
 
         val recyclerView2  = view.findViewById<RecyclerView>(R.id.lv_ad_venduti)
         val tv_no_material2 = view.findViewById<LinearLayout>(R.id.ll_ad_vendit)
-        val adapter2 = MaterialeRecyclerAdapter("profile")
+        val adapter2 = MaterialeRecyclerAdapter("profile", false)
         recyclerView2.adapter = adapter2
         val array2 = ArrayList<Materiale>()
-        for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)){
-            if(m!=null)
-                array2.add(m)
+        adapter2.submitList(array2)
+
+        val pb_caricamento2 = view.findViewById<ProgressBar>(R.id.pb_caricamento)
+        pb_caricamento2.progressDrawable = progressDrawable
+
+        thread(start = true) {
+            for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)) {
+                if (m != null)
+                    array2.add(m)
+            }
+            this.requireActivity().runOnUiThread {
+                pb_caricamento2.visibility = View.GONE
+                if (array2.isEmpty()) {
+                    recyclerView2.visibility = View.GONE
+                    tv_no_material2.visibility = View.VISIBLE
+                } else {
+                    recyclerView2.visibility = View.VISIBLE
+                    adapter2.notifyDataSetChanged()
+                }
+            }
         }
-        if(array2.isEmpty()){
-            recyclerView2.visibility = View.GONE
-            tv_no_material2.visibility = View.VISIBLE
-        } else
-            adapter2.submitList(array2)
+
 
         val ib_logout = view.findViewById<ImageButton>(R.id.ib_logout)
         ib_logout.setOnClickListener {

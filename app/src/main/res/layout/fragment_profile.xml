@@ -73,19 +73,39 @@
                     android:text="@string/you_have_no_published_ad"
                     android:textAlignment="center"
                     android:visibility="gone" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lv_ad_invendita"
-
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                <ProgressBar
+                    android:id="@+id/pb_caricamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
 
+                    style="?android:attr/progressBarStyleLarge"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    tools:listitem="@layout/list_item_material_with_button" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lv_ad_invendita"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:visibility="gone"
+
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        tools:listitem="@layout/list_item_material_with_button" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_ad_vendit"
@@ -100,19 +120,39 @@
                     android:textSize="30sp"
                     android:textAlignment="center"
                     />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lv_ad_venduti"
-
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    <ProgressBar
+                        android:id="@+id/pb_caricamento2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                        style="?android:attr/progressBarStyleLarge"
 
-                    tools:listitem="@layout/list_item_material_complete" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lv_ad_venduti"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:visibility="gone"
+
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        tools:listitem="@layout/list_item_material_complete" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

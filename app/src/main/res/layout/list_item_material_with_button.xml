@@ -24,9 +24,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:orientation="vertical"
+        android:layout_marginEnd="2dp"
 
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sold"
         app:layout_constraintStart_toEndOf="@+id/iv_foto_materiale"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -51,14 +53,13 @@
 
     <Button
         android:id="@+id/btn_sold"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="3dp"
         android:text="@string/sold"
         app:layout_constraintBottom_toBottomOf="@+id/ll_information_materiale"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ll_information_materiale"
+
         app:layout_constraintTop_toTopOf="@+id/ll_information_materiale" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

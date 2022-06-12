@@ -35,7 +35,7 @@ class SearchFragment : Fragment() {
         val layout = inflater.inflate(R.layout.fragment_search, container, false)
 
         val recyclerView  = layout.findViewById<RecyclerView>(R.id.rv_search)
-        val adapter = MaterialeRecyclerAdapter("search")
+        val adapter = MaterialeRecyclerAdapter("search", false)
         recyclerView?.adapter = adapter
         val response: ArrayList<Materiale> = ArrayList()
         adapter.submitList(response)

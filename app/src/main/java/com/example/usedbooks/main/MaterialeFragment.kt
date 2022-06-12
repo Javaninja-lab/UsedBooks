@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Gestore
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -37,7 +38,7 @@ class MaterialeFragment : Fragment() {
         val tv_prezzo = view.findViewById<TextView>(R.id.tv_prezzo)
         tv_prezzo.setText(materiale.prezzo.toString())
         val iv_foto_materiale = view.findViewById<ImageView>(R.id.iv_foto_materiale)
-        //iv_foto_materiale.setImageBitmap(Database.getPhotoMateriale(materiale.))
+        Gestore.setBitmap(materiale, iv_foto_materiale)
 
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?
