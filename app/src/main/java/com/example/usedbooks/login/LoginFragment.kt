@@ -50,9 +50,9 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if (currentUser != null) {
+        /*if (currentUser != null) {
             login(currentUser.email!!)
-        }
+        }*/
     }
 
     private fun onLoginClick() {

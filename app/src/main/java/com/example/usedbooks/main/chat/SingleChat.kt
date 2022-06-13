@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
+import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.firebase.MessageAdapter
 import com.example.usedbooks.main.MaterialeFragmentArgs
 import com.google.firebase.database.*
@@ -78,6 +79,7 @@ class SingleChat : AppCompatActivity() {
                     mDbref.child("chats").child(receiverRoom).child("messages").push()
                         .setValue(messageObject)
                 }
+            mDbref.child("user").child(receiverid).child(senderid).setValue(User(senderid,name))
             messageBox.setText("")
         }
 
