@@ -58,9 +58,12 @@ class MaterialeFragment : Fragment() {
         val btnContact = view.findViewById<Button>(R.id.btn_contact)
         btnContact.setOnClickListener {
                 var mDbRef: DatabaseReference= FirebaseDatabase.getInstance().getReference()
-                mDbRef.child("user").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
-                    User(materiale.proprietario,"name")
+                var NomeProprietario = Database.getStudenteFromId(materiale.proprietario)?.nome
+                mDbRef.child("users").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
+                    User(materiale.proprietario,NomeProprietario)
                 )
+            //TODO andare al fragment ListChatFragment
+
         }
         return view
     }

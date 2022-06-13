@@ -79,7 +79,7 @@ class SingleChat : AppCompatActivity() {
                     mDbref.child("chats").child(receiverRoom).child("messages").push()
                         .setValue(messageObject)
                 }
-            mDbref.child("user").child(receiverid).child(senderid).setValue(User(senderid,name))
+            mDbref.child("users").child(receiverid).child(senderid).setValue(User(senderid,name))
             messageBox.setText("")
         }
 

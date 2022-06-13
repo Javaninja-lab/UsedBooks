@@ -181,7 +181,20 @@ class Database {
         return  list
     }
 
-    //crea una funzione che restituisce lo studente dal database passando l'id del suo materiale
+    //crea una funzione che restituisce lo studente dal database passando l'id dello studente
+    private fun getStudenteFromId(id: String): Studente?{
+        val i=database.collection("studenti").document(id).get()
+        while (!i.isComplete){}// questa fa schifo
+        val k = i.result
+        if(k==null)
+            return null
+        else
+        {
+            val studente =
+                    Studente(k.id,k["nome"].toString(),k["cognome"].toString(),k["email"].toString(),User(k["idUtente"].toString(),k["username"].toString()))
+            return studente
+        }
+    }
 
 
 
@@ -333,6 +346,9 @@ class Database {
         }
         fun searchMateriale(corso: String): ArrayList<Materiale?> {
             return getIstance().searchMateriale(corso)
+        }
+        fun getStudenteFromId(id: String): Studente? {
+            return getIstance().getStudenteFromId(id)
         }
     }
 }

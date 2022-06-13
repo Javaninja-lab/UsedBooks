@@ -46,7 +46,7 @@ class RegisterFragment : Fragment() {
 
     private fun addUserToDatabaseRealtime(id:String,nome:String){
         mDbRef= FirebaseDatabase.getInstance().getReference()
-        mDbRef.child("user").child(id).setValue(User(id,nome))
+        mDbRef.child("users").child(id).setValue(User(id,nome))
     }
 
     private fun onSingUpClick() {
