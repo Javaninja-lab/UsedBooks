@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Gestore
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -43,7 +44,10 @@ class MaterialeFragment : Fragment() {
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?
         supportMapFragment?.getMapAsync {
-            it.addMarker(MarkerOptions().title("Posizione Materiale").position(LatLng(materiale.latitudine, materiale.Longitudine)))
+            val position = LatLng(materiale.latitudine, materiale.longitudine)
+            it.addMarker(MarkerOptions().title("Posizione Materiale").position(position))
+            it.moveCamera(CameraUpdateFactory.newLatLng(position))
+            it.moveCamera(CameraUpdateFactory.zoomTo(13F))
         }
         return view
     }
