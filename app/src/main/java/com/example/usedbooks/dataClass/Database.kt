@@ -181,6 +181,10 @@ class Database {
         return  list
     }
 
+    //crea una funzione che restituisce lo studente dal database passando l'id del suo materiale
+
+
+
     private fun updatePhotoDatabaseMateriale(photo:Photo, idMateriale: String) {
 
         var photoCollection = database.collection("materiale").document(idMateriale).collection("photos")

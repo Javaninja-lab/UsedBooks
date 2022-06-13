@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
+import com.example.usedbooks.dataClass.User
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MaterialeFragment : Fragment() {
@@ -48,6 +53,14 @@ class MaterialeFragment : Fragment() {
             it.addMarker(MarkerOptions().title("Posizione Materiale").position(position))
             it.moveCamera(CameraUpdateFactory.newLatLng(position))
             it.moveCamera(CameraUpdateFactory.zoomTo(13F))
+        }
+
+        val btnContact = view.findViewById<Button>(R.id.btn_contact)
+        btnContact.setOnClickListener {
+                var mDbRef: DatabaseReference= FirebaseDatabase.getInstance().getReference()
+                mDbRef.child("user").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
+                    User(materiale.proprietario,"name")
+                )
         }
         return view
     }

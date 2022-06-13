@@ -36,7 +36,7 @@ class ListChatsFragment : Fragment() {
 
         //prelevo dati dal database realtime
 
-        mDbRef.child("user").addValueEventListener(object : ValueEventListener{
+        mDbRef.child("user").child(Database.getLoggedStudent().id).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 for(postSnapshot in snapshot.children){
