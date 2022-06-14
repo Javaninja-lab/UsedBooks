@@ -8,6 +8,10 @@ import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import com.example.usedbooks.R
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
@@ -20,7 +24,7 @@ class Database {
     private var database = Firebase.firestore
     private var storageReference = FirebaseStorage.getInstance().getReference()
     private lateinit var loggedStudente: Studente
-
+    private var mDbref= FirebaseDatabase.getInstance().getReference()
 
     private fun getMateriali() : ArrayList<Materiale> {
         val dareturn = ArrayList<Materiale>()
@@ -285,12 +289,65 @@ class Database {
         }
     }
 
+    private fun getListUsersChat() : ArrayList<User> {
+        val userList: ArrayList<User> = ArrayList()
+        val mDbRef= FirebaseDatabase.getInstance().getReference()
+        val i= mDbRef.child("users").child(Database.getLoggedStudent().id)
+        val z=0
+            i.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for(postSnapshot in snapshot.children){
+                    val currentUser =postSnapshot.getValue(User::class.java)
+                    if(Database.getLoggedStudent()!!.id != currentUser?.id) {
+                        userList.add(currentUser!!)
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+        return userList
+    }
+
+
+
     fun setLoggedStudent(studente: Studente) {
         loggedStudente = studente
     }
 
-    fun getLastMessage(studenteRichiesto : User, studenteLoggato : User) : Messaggio {
-        return Messaggio()
+    fun getLastMessage(studenteRichiesto : User) : Messaggio {
+        val senderRoom= Database.getLoggedStudent().id+studenteRichiesto.id
+        val messageList= ArrayList<Messaggio>()
+        mDbref.child("chats").child(senderRoom).child("messages").get().addOnSuccessListener {
+            val k : MutableList<DataSnapshot> = it.children.toMutableList()
+            for(z in k) {
+                val messaggio = z.getValue(Messaggio::class.java)
+                if(messaggio != null)
+                    messageList.add(messaggio)
+            }
+        }
+        return messageList.last()
+    }
+
+    //prendere la data istantanea in timestamp
+
+
+
+    fun registerTransaction(idAcquirente:String, materiale: Materiale) {
+        val transazione = hashMapOf(
+            "DataTrasazione" to System.currentTimeMillis(),
+            "idAcquirente" to idAcquirente,
+            "idMateriale" to materiale.id,
+            "idVenditore" to loggedStudente.utente?.id,
+            "prezzo" to materiale.prezzo
+        )
+        database.collection("Transazioni")
+            .add(transazione)
     }
 
     companion object {
@@ -321,8 +378,8 @@ class Database {
         fun addStudente(name: String, surname: String, email: String, password: String) : Studente? {
             return getIstance().addStudente(name, surname, email, password)
         }
-        fun getLastMessage(studenteRichiesto : User, studenteLoggato : User) : Messaggio {
-            return getIstance().getLastMessage(studenteRichiesto, studenteLoggato)
+        fun getLastMessage(studenteRichiesto : User) : Messaggio {
+            return getIstance().getLastMessage(studenteRichiesto)
         }
 
         fun getMateriali() : ArrayList<Materiale> {
@@ -349,6 +406,12 @@ class Database {
         }
         fun getStudenteFromId(id: String): Studente? {
             return getIstance().getStudenteFromId(id)
+        }
+        fun getListUsersChat() : ArrayList<User>{
+            return getIstance().getListUsersChat()
+        }
+        fun registerTransaction(idAcquirente:String, materiale: Materiale) {
+            getIstance().registerTransaction(idAcquirente, materiale)
         }
     }
 }

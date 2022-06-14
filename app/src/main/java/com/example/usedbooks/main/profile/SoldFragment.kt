@@ -14,6 +14,7 @@ import com.example.usedbooks.dataClass.Studente
 import com.example.usedbooks.dataClass.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class SoldFragment : Fragment() {
@@ -34,6 +35,31 @@ class SoldFragment : Fragment() {
                 "Nel caso si voglia eliminare l'annuncio si selezioni il nome Altro"
 
 
+
+        val userList: ArrayList<User> = ArrayList()
+        val mDbRef= FirebaseDatabase.getInstance().getReference()
+        val i= mDbRef.child("users").child(Database.getLoggedStudent().id)
+        i.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for(postSnapshot in snapshot.children){
+                    val currentUser =postSnapshot.getValue(User::class.java)
+                    if(Database.getLoggedStudent()!!.id != currentUser?.id) {
+                        userList.add(currentUser!!)
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+
+
+        val z=0
+        Database.registerTransaction(userList.last().id!!, materiale)
         return layout
     }
 }
