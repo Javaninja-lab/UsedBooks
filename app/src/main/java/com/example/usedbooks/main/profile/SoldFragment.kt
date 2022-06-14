@@ -33,6 +33,7 @@ class SoldFragment : Fragment() {
         tv_title_sold.text = "Selezionare il cliente che ha comprato ${materiale.nome}. " +
                 "Nel caso si voglia eliminare l'annuncio si selezioni il nome Altro"
 
+
         return layout
     }
 }
