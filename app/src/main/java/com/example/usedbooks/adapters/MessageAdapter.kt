@@ -1,4 +1,4 @@
-package com.example.usedbooks.firebase
+package com.example.usedbooks.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

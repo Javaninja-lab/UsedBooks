@@ -1,4 +1,4 @@
-package com.example.usedbooks.firebase
+package com.example.usedbooks.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,12 +9,11 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
-import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.main.chat.ListChatsFragmentDirections
 
-class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
+class UserAdapter(val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -25,7 +24,7 @@ class UserAdapter(val context: Context?, val userList: ArrayList<User>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.list_item_chat,parent,false)// da vedere se funziona
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list_item_chat,parent,false)// da vedere se funziona
         return UserViewHolder(view)
     }
 

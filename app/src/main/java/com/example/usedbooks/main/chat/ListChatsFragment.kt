@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.User
-import com.example.usedbooks.firebase.UserAdapter
+import com.example.usedbooks.adapters.UserAdapter
 import com.google.firebase.database.*
 
 class ListChatsFragment : Fragment() {
@@ -26,9 +26,9 @@ class ListChatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
-        userList= ArrayList()
-        mDbRef= FirebaseDatabase.getInstance().getReference()
-        adapter = UserAdapter(this.context,userList)
+        userList = ArrayList()
+        mDbRef = FirebaseDatabase.getInstance().getReference()
+        adapter = UserAdapter(userList)
 
         userRecyclerView = view.findViewById(R.id.RecyclerViewChat)
         userRecyclerView.layoutManager= LinearLayoutManager(this.context)
@@ -40,8 +40,8 @@ class ListChatsFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 for(postSnapshot in snapshot.children){
-                    val currentUser =postSnapshot.getValue(User::class.java)
-                    if(Database.getLoggedStudent()!!.id != currentUser?.id) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if(Database.getLoggedStudent().id != currentUser?.id) {
                         userList.add(currentUser!!)
                     }
                 }

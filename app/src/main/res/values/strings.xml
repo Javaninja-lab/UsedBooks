@@ -60,4 +60,6 @@
     <string name="materials_for_sale">Materials for sale</string>
     <string name="materials_sold">Materials sold</string>
     <string name="transaction">Transaction</string>
+    <string name="confirm">Confirm</string>
+    <string name="choose_the_student_that_acquire_the_material">Choose the student that acquire the material</string>
 </resources>

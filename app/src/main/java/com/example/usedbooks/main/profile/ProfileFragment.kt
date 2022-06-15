@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.example.usedbooks.adapters.MaterialeRecyclerAdapter
@@ -34,6 +35,10 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         val iv_foto_profilo = view.findViewById<ImageView>(R.id.iv_foto_profilo)
         //TODO(Cambiamento immagine profilo)
+        iv_foto_profilo.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToChangeFotoProfiloFragment("null"/*Database.getLoggedStudent().*/)
+            view.findNavController().navigate(action)
+        }
 
         val tv_nome_cliente = view.findViewById<TextView>(R.id.tv_nome_cliente)
         tv_nome_cliente.text = "${getString(R.string.hi)}, ${Database.getLoggedStudent().nome}"
@@ -58,7 +63,7 @@ class ProfileFragment : Fragment() {
                 if (m != null)
                     array.add(m)
             }
-            this.requireActivity().runOnUiThread {
+            pb_caricamento.post {
                 pb_caricamento.visibility = View.GONE
                 if (array.isEmpty()) {
                     tv_no_material.visibility = View.VISIBLE
@@ -84,7 +89,7 @@ class ProfileFragment : Fragment() {
                 if (m != null)
                     array2.add(m)
             }
-            this.requireActivity().runOnUiThread {
+            pb_caricamento.post {
                 pb_caricamento2.visibility = View.GONE
                 if (array2.isEmpty()) {
                     recyclerView2.visibility = View.GONE

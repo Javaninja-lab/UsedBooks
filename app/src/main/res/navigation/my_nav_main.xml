@@ -51,6 +51,13 @@
                 android:name="materiale"
                 app:argType="com.example.usedbooks.dataClass.Materiale"/>
         </action>
+        <action
+            android:id="@+id/action_profileFragment_to_changeFotoProfiloFragment"
+            app:destination="@id/changeFotoProfiloFragment" >
+            <argument
+                android:name="actual_foto"
+                app:argType="string"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -90,5 +97,17 @@
         <argument
             android:name="materiale"
             app:argType="com.example.usedbooks.dataClass.Materiale"/>
+        <action
+            android:id="@+id/action_soldFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeFotoProfiloFragment"
+        android:name="com.example.usedbooks.main.profile.ChangeFotoProfiloFragment"
+        android:label="fragment_change_foto_profilo"
+        tools:layout="@layout/fragment_change_foto_profilo">
+        <argument
+            android:name="actual_foto"
+            app:argType="string" />
     </fragment>
 </navigation>

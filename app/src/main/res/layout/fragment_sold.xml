@@ -10,17 +10,24 @@
         android:id="@+id/tv_title_sold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/testtext"
+
+        android:text="@string/choose_the_student_that_acquire_the_material"
+        android:textAlignment="center"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/primaryStyleTextView"/>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat_sold"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_sold" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_sold"
+
+        tools:listitem="@layout/list_item_chat"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
