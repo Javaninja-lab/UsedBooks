@@ -70,7 +70,6 @@ class SingleChat : AppCompatActivity() {
             val message= messageBox.text.toString().trim()
             if(message.isEmpty()){
                 messageBox.error="Inserisci un messaggio"
-                return@setOnClickListener
             }
             else {
                 val messageObject = Messaggio(message, senderid)
