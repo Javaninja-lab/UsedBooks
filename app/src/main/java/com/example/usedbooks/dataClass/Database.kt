@@ -133,10 +133,10 @@ class Database {
 
     private fun addAnnuncio(materialeDaAggiungere: MaterialeDaAggiungere){
         val id = addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",materialeDaAggiungere.corso)
-        addPhotos(materialeDaAggiungere.photos!!,id)
+        addPhotosMateriale(materialeDaAggiungere.photos!!,id)
     }
 
-    private fun addPhotos(photos: ArrayList<Photo>, idMateriale: String){
+    private fun addPhotosMateriale(photos: ArrayList<Photo>, idMateriale: String){
         photos.forEach{
                 photo->
             var uri = Uri.parse(photo.localUri)
@@ -156,6 +156,48 @@ class Database {
                 Log.e(ContentValues.TAG, it.message?: "No message")
             }
         }
+    }
+
+    private fun addPhotoStudente(photo:Photo,idstudente:String){
+        var uri = Uri.parse(photo.localUri)
+        val uriimageRemote="image/studenti/${idstudente}/${uri.lastPathSegment}"
+        val imageRef = storageReference.child(uriimageRemote)
+        val uploadTask = imageRef.putFile(uri)
+        uploadTask.addOnSuccessListener {
+            Log.i(ContentValues.TAG, "Image uploaded $imageRef")
+            val downloadUrl = imageRef.downloadUrl
+            downloadUrl.addOnSuccessListener {
+                    remoteUri->
+                photo.remoteUri = uriimageRemote
+                updatePhotoDatabaseStudente(photo,idstudente)
+            }
+        }
+        uploadTask.addOnFailureListener{
+            Log.e(ContentValues.TAG, it.message?: "No message")
+        }
+    }
+
+    private fun updatePhotoDatabaseStudente(photo: Photo, idstudente: String) {
+        var photoCollection = database.collection("studenti").document(idstudente).collection("photos")
+        var handle = photoCollection.add(photo)
+        handle.addOnSuccessListener {
+            Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
+            photo.id=it.id
+            var photoCollection = database.collection("studenti").document(idstudente).collection("photos").document(photo.id).set(photo)
+        }
+        handle.addOnFailureListener{
+            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
+        }
+    }
+
+    private fun getPhotoStudente(Uri: String): Bitmap{
+        val imagereference = storageReference.child(Uri)
+        lateinit var  bitmap: Bitmap
+        val localfile : File = File.createTempFile("test","jpg")
+        val i=imagereference.getFile(localfile)
+        while (!i.isComplete){}
+        bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
+        return bitmap
     }
 
     private fun searchMateriale(corso: String): ArrayList<Materiale?> {
@@ -215,17 +257,9 @@ class Database {
             Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
         }
 
-        /*var photoCollection = database.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
-        var handle = photoCollection.add(photo)
-        handle.addOnSuccessListener {
-            Log.i(ContentValues.TAG, "successfully update photo metadata")
-            photo.id=it.id
-            var photoCollection = database.collection("studenti").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
-        }
-        handle.addOnFailureListener{
-            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
-        }*/
     }
+
+
 
 
     //return -1 se non trova il corso
@@ -412,6 +446,12 @@ class Database {
         }
         fun registerTransaction(idAcquirente:String, materiale: Materiale) {
             getIstance().registerTransaction(idAcquirente, materiale)
+        }
+        fun addPhotoStudente(photo:Photo,idstudente:String){
+            getIstance().addPhotoStudente(photo,idstudente)
+        }
+        private fun getPhotoStudente(Uri: String): Bitmap{
+            return getIstance().getPhotoStudente(Uri)
         }
     }
 }
