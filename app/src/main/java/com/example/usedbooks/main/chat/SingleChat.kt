@@ -68,15 +68,22 @@ class SingleChat : AppCompatActivity() {
 
         sendButton.setOnClickListener{
             val message= messageBox.text.toString().trim()
-            val messageObject = Messaggio(message, senderid)
-            mDbref.child("chats").child(senderRoom).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    mDbref.child("chats").child(receiverRoom).child("messages").push()
-                        .setValue(messageObject)
-                }
+            if(message.isEmpty()){
+                messageBox.error="Inserisci un messaggio"
+                return@setOnClickListener
+            }
+            else {
+                val messageObject = Messaggio(message, senderid)
+                mDbref.child("chats").child(senderRoom).child("messages").push()
+                    .setValue(messageObject).addOnSuccessListener {
+                        mDbref.child("chats").child(receiverRoom).child("messages").push()
+                            .setValue(messageObject)
+                    }
 
-            mDbref.child("users").child(receiverid).child(senderid).setValue(User(senderid,Database.getLoggedStudent().nome))
-            messageBox.setText("")
+                mDbref.child("users").child(receiverid).child(senderid)
+                    .setValue(User(senderid, Database.getLoggedStudent().nome))
+                messageBox.setText("")
+            }
         }
 
 
