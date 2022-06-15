@@ -6,7 +6,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import android.widget.Adapter
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -242,7 +244,24 @@ class Database {
         }
     }
 
+    private fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>) {
+        mDbref.child("users").child(getLoggedStudent().id).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for(postSnapshot in snapshot.children){
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if(getLoggedStudent().id != currentUser?.id) {
+                        userList.add(currentUser!!)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+            override fun onCancelled(error: DatabaseError) {
 
+            }
+
+        })
+    }
 
     private fun updatePhotoDatabaseMateriale(photo:Photo, idMateriale: String) {
 
@@ -385,13 +404,14 @@ class Database {
     }
 
     companion object {
-        private lateinit var istance : Database
-        private fun getIstance() : Database {
-            if(!this::istance.isInitialized)
+        private lateinit var istance: Database
+        private fun getIstance(): Database {
+            if (!this::istance.isInitialized)
                 istance = Database()
             return istance
         }
-        fun inizializateDatabase() : Boolean {
+
+        fun inizializateDatabase(): Boolean {
             getIstance()
             return this::istance.isInitialized
         }
@@ -399,59 +419,95 @@ class Database {
         fun setLoggedStudent(studente: Studente) {
             getIstance().setLoggedStudent(studente)
         }
-        fun getLoggedStudent() : Studente {
+
+        fun getLoggedStudent(): Studente {
             return getIstance().loggedStudente
         }
 
-        fun getStudenti() : ArrayList<Studente> {
+        fun getStudenti(): ArrayList<Studente> {
             return getIstance().getStudenti()
         }
-        fun getStudente(email : String) : Studente? {
+
+        fun getStudente(email: String): Studente? {
             return getIstance().getStudente(email)
         }
-        fun addStudente(name: String, surname: String, email: String, password: String) : Studente? {
+
+        fun addStudente(name: String, surname: String, email: String, password: String): Studente? {
             return getIstance().addStudente(name, surname, email, password)
         }
-        fun getLastMessage(studenteRichiesto : User) : Messaggio {
+
+        fun getLastMessage(studenteRichiesto: User): Messaggio {
             return getIstance().getLastMessage(studenteRichiesto)
         }
 
-        fun getMateriali() : ArrayList<Materiale> {
+        fun getMateriali(): ArrayList<Materiale> {
             return getIstance().getMateriali()
         }
-        fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double,longitudine : Double,stato : String ,NomeCorso : String): String{
-            return getIstance().addMateriale(nome, descrizione , tipologia,prezzo ,latitudine ,longitudine ,stato ,NomeCorso )
+
+        fun addMateriale(
+            nome: String,
+            descrizione: String,
+            tipologia: String,
+            prezzo: Double,
+            latitudine: Double,
+            longitudine: Double,
+            stato: String,
+            NomeCorso: String
+        ): String {
+            return getIstance().addMateriale(
+                nome,
+                descrizione,
+                tipologia,
+                prezzo,
+                latitudine,
+                longitudine,
+                stato,
+                NomeCorso
+            )
         }
 
-        fun addAnnuncio(materiale : MaterialeDaAggiungere) {
+        fun addAnnuncio(materiale: MaterialeDaAggiungere) {
             getIstance().addAnnuncio(materiale)
         }
-        fun getPhotoMateriale(uri : String) : Bitmap {
+
+        fun getPhotoMateriale(uri: String): Bitmap {
             return getIstance().getPhotoMateriale(uri)
         }
-        fun getMaterialiStudente(username: String) : ArrayList<Materiale?> {
+
+        fun getMaterialiStudente(username: String): ArrayList<Materiale?> {
             return getIstance().getMaterialiStudente(username)
         }
-        fun getUriPhotoMateriale(idMateriale: String): String{
+
+        fun getUriPhotoMateriale(idMateriale: String): String {
             return getIstance().getUriPhotosMateriale(idMateriale)
         }
+
         fun searchMateriale(corso: String): ArrayList<Materiale?> {
             return getIstance().searchMateriale(corso)
         }
+
         fun getStudenteFromId(id: String): Studente? {
             return getIstance().getStudenteFromId(id)
         }
-        fun getListUsersChat() : ArrayList<User>{
+
+        fun getListUsersChat(): ArrayList<User> {
             return getIstance().getListUsersChat()
         }
-        fun registerTransaction(idAcquirente:String, materiale: Materiale) {
+
+        fun registerTransaction(idAcquirente: String, materiale: Materiale) {
             getIstance().registerTransaction(idAcquirente, materiale)
         }
-        fun addPhotoStudente(photo:Photo,idstudente:String){
-            getIstance().addPhotoStudente(photo,idstudente)
+
+        fun addPhotoStudente(photo: Photo, idstudente: String) {
+            getIstance().addPhotoStudente(photo, idstudente)
         }
-        private fun getPhotoStudente(Uri: String): Bitmap{
+
+        fun getPhotoStudente(Uri: String): Bitmap {
             return getIstance().getPhotoStudente(Uri)
+        }
+
+        fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>) {
+            return getIstance().setUsersChat(userList, adapter)
         }
     }
 }

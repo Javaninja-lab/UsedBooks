@@ -23,10 +23,6 @@ abstract class Gestore {
             return md.digest(input.toByteArray(UTF_8)).toHex()
         }
 
-        fun checkHash(input: String, daCheck : String) : Boolean {
-            return getHash(input).equals(daCheck)
-        }
-
         fun setBitmap(materiale : Materiale, imageView: ImageView) {
             thread(start = true) {
                 val photoBitmap : Bitmap = Database.getPhotoMateriale(materiale.photos[0])

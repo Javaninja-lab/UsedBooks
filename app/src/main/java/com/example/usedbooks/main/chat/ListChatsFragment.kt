@@ -35,23 +35,8 @@ class ListChatsFragment : Fragment() {
         userRecyclerView.adapter=adapter
 
         //prelevo dati dal database realtime
+        Database.setUsersChat(userList, adapter)
 
-        mDbRef.child("users").child(Database.getLoggedStudent().id).addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                for(postSnapshot in snapshot.children){
-                    val currentUser = postSnapshot.getValue(User::class.java)
-                    if(Database.getLoggedStudent().id != currentUser?.id) {
-                        userList.add(currentUser!!)
-                    }
-                }
-                adapter.notifyDataSetChanged()
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
         return view
     }
 

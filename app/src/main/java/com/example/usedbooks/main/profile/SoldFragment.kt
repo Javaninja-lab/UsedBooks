@@ -42,23 +42,7 @@ class SoldFragment : Fragment() {
         userRecyclerView.layoutManager= LinearLayoutManager(this.context)
         userRecyclerView.adapter=adapter
 
-
-        mDbRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                for(postSnapshot in snapshot.children){
-                    val currentUser =postSnapshot.getValue(User::class.java)
-                    if(Database.getLoggedStudent().id != currentUser?.id) {
-                        userList.add(currentUser!!)
-                    }
-                }
-                adapter.notifyDataSetChanged()
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
+        Database.setUsersChat(userList, adapter)
 
         return layout
     }

@@ -79,9 +79,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(email : String) {
-        Database.setLoggedStudent(Database.getStudente(email)!!)
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+        if(context!=null) {
+            Database.setLoggedStudent(Database.getStudente(email)!!)
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 }
