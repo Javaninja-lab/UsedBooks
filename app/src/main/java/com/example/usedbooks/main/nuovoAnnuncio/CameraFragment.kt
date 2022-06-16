@@ -77,7 +77,7 @@ class CameraFragment : Fragment() {
 
             executor.execute {
                 try {
-                    val response = Database.getMaterialiStudente(Database.getLoggedStudent().id)
+                    val response = Database.getMaterialiStudente(Database.getLoggedStudent().id,false)
                     resultHandler.post {
 
                     }

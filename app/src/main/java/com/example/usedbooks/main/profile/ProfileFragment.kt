@@ -59,7 +59,7 @@ class ProfileFragment : Fragment() {
         pb_caricamento.progressDrawable = progressDrawable
 
         thread(start = true) {
-            for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)) {
+            for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id,true)) {
                 if (m != null)
                     array.add(m)
             }
@@ -85,7 +85,7 @@ class ProfileFragment : Fragment() {
         pb_caricamento2.progressDrawable = progressDrawable
 
         thread(start = true) {
-            for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id)) {
+            for (m in Database.getTransaction()) {
                 if (m != null)
                     array2.add(m)
             }

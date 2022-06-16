@@ -15,6 +15,7 @@ import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.main.chat.ListChatsFragmentDirections
 import com.example.usedbooks.main.profile.SoldFragmentDirections
+import java.time.LocalDateTime
 
 class UserSaleAdapter (private val userList: ArrayList<User>, private val materiale: Materiale) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.UserViewHolder {
@@ -40,6 +41,7 @@ class UserSaleAdapter (private val userList: ArrayList<User>, private val materi
             else {
                 Toast.makeText(it.context, "Errore", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

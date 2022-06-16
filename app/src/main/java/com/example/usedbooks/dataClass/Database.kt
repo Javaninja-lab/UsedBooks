@@ -21,6 +21,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Database {
     private var database = Firebase.firestore
@@ -44,7 +46,7 @@ class Database {
                     Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                         it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
                 }
-            if(materiale!=null)
+            if(materiale!=null && !materiale.stato.equals("venduto"))
                 dareturn.add(materiale)
         }
         return dareturn
@@ -59,7 +61,7 @@ class Database {
         return string;
     }
 
-    private fun getMaterialiStudente(username: String): ArrayList<Materiale?>{
+    private fun getMaterialiStudente(username: String, checkVendita : Boolean): ArrayList<Materiale?>{
 
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
         val i =database.collection("materiale").whereEqualTo("proprietario",username).get()
@@ -79,7 +81,12 @@ class Database {
                         Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                             it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
                     }
-                list.add(materiale)
+                if(checkVendita) {
+                    if(!materiale?.stato.equals("venduto"))
+                        list.add(materiale)
+                }
+                else
+                    list.add(materiale)
 
             }
         }
@@ -223,7 +230,7 @@ class Database {
                     Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                         it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
                 }
-            if(materiale!=null)
+            if(materiale!=null && !materiale.stato.equals("venduto"))
                 list.add(materiale)
         }
         return  list
@@ -392,8 +399,12 @@ class Database {
 
 
     fun registerTransaction(idAcquirente:String, materiale: Materiale) {
+        val current = LocalDateTime.now()
+
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+        val formatted = current.format(formatter)
         val transazione = hashMapOf(
-            "DataTrasazione" to System.currentTimeMillis(),
+            "DataTrasazione" to formatted,
             "idAcquirente" to idAcquirente,
             "idMateriale" to materiale.id,
             "idVenditore" to loggedStudente.utente?.id,
@@ -401,6 +412,56 @@ class Database {
         )
         database.collection("Transazioni")
             .add(transazione)
+        database.collection("materiale").document(materiale.id).update("stato","venduto")
+        database.collection("materiale").document(materiale.id).update("proprietario",idAcquirente)
+
+    }
+
+
+
+
+    fun getTransaction(): List<Materiale?>{
+        var listReturn = ArrayList<Materiale?>()
+        var listSupport=  getMaterialiStudente(Database.getLoggedStudent().id,false)
+        for (materiale in listSupport) {
+            if(materiale?.stato.equals("venduto")){
+                listReturn.add(materiale)
+            }
+        }
+        val h=database.collection("Transazioni").whereEqualTo("idVenditore",Database.getLoggedStudent().id).get()
+        while (!h.isComplete){}// questa fa schifo
+        val u :MutableList<DocumentSnapshot> = h.result.documents
+
+            for(z in u) {
+                val transazione = z["idMateriale"] as String
+                if(transazione != null) {
+                    val materiale= getMaterialeFromid(transazione)
+                    if(materiale != null)
+                        listReturn.add(materiale)
+                }
+            }
+
+        return listReturn
+
+    }
+
+    fun getMaterialeFromid(id:String): Materiale? {
+        var materiale: Materiale? = null
+        val i= database.collection("materiale").document(id).get()
+        while (!i.isComplete){}
+            val z : DocumentSnapshot = i.result
+            if(z.exists()) {
+                val  uri: ArrayList<String> = ArrayList()
+                uri.add(getUriPhotosMateriale(z.id))
+                val c= z.getGeoPoint("cordinate")
+                val materiale =
+                    c?.let {
+                        Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
+                            it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
+                    }
+            }
+
+        return materiale
     }
 
     companion object {
@@ -474,8 +535,8 @@ class Database {
             return getIstance().getPhotoMateriale(uri)
         }
 
-        fun getMaterialiStudente(username: String): ArrayList<Materiale?> {
-            return getIstance().getMaterialiStudente(username)
+        fun getMaterialiStudente(username: String,checkVendita: Boolean): ArrayList<Materiale?> {
+            return getIstance().getMaterialiStudente(username, checkVendita)
         }
 
         fun getUriPhotoMateriale(idMateriale: String): String {
@@ -508,6 +569,9 @@ class Database {
 
         fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>) {
             return getIstance().setUsersChat(userList, adapter)
+        }
+        fun getTransaction(): List<Materiale?> {
+            return getIstance().getTransaction()
         }
     }
 }
