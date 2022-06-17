@@ -422,14 +422,8 @@ class Database {
 
     fun getTransaction(): List<Materiale?>{
         var listReturn = ArrayList<Materiale?>()
-        var listSupport=  getMaterialiStudente(Database.getLoggedStudent().id,false)
-        for (materiale in listSupport) {
-            if(materiale?.stato.equals("venduto")){
-                listReturn.add(materiale)
-            }
-        }
         val h=database.collection("Transazioni").whereEqualTo("idVenditore",Database.getLoggedStudent().id).get()
-        while (!h.isComplete){}// questa fa schifo
+        while (!h.isComplete){}
         val u :MutableList<DocumentSnapshot> = h.result.documents
 
             for(z in u) {
@@ -440,6 +434,21 @@ class Database {
                         listReturn.add(materiale)
                 }
             }
+
+        val x=database.collection("Transazioni").whereEqualTo("idAcquirente",Database.getLoggedStudent().id).get()
+        while (!x.isComplete){}
+        val l :MutableList<DocumentSnapshot> = x.result.documents
+
+        for(c in l) {
+            val transazione = c["idMateriale"] as String
+            if(transazione != null) {
+                var materiale= getMaterialeFromid(transazione)
+                if(materiale != null) {
+                    materiale.stato="acquistato"
+                    listReturn.add(materiale)
+                }
+            }
+        }
 
         return listReturn
 
@@ -454,7 +463,7 @@ class Database {
                 val  uri: ArrayList<String> = ArrayList()
                 uri.add(getUriPhotosMateriale(z.id))
                 val c= z.getGeoPoint("cordinate")
-                val materiale =
+                materiale =
                     c?.let {
                         Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
                             it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
