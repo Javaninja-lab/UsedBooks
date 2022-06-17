@@ -7,18 +7,23 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +33,7 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 import com.example.usedbooks.dataClass.Photo
+import com.example.usedbooks.main.MainActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -35,6 +41,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.ArrayList
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 class CameraFragment : Fragment() {
 
@@ -65,33 +72,40 @@ class CameraFragment : Fragment() {
 
         materialeDaAggiungere = args.materialeProvvisorio
 
-        val btn_send_data = view.findViewById<Button>(R.id.btn_send_data)
-        btn_send_data.setOnClickListener {
-            Database.addAnnuncio(materialeDaAggiungere)
-        }
-
-        val resultHandler = Handler(Looper.getMainLooper())
-        val btn= view.findViewById<Button>(R.id.buttonTest)
-        btn.setOnClickListener {
-            val executor= Executors.newSingleThreadExecutor()
-
-            executor.execute {
-                try {
-                    val response = Database.getMaterialiStudente(Database.getLoggedStudent().id,false)
-                    resultHandler.post {
-
-                    }
-
-                } catch (e: Exception) {
-                    //val errorResult = Result.Error(e)
-                    //resultHandler.post { callback(errorResult) }
-                }
-            }
-        }
 
         val addImage = view.findViewById<Button>(R.id.addImage)
         addImage.setOnClickListener {
             takePhoto(this.requireContext())
+        }
+
+        val pb_caricamento = view.findViewById<ProgressBar>(R.id.pb_caricamento)
+        val progressDrawable: Drawable = pb_caricamento.getIndeterminateDrawable().mutate()
+        val typedValue = TypedValue()
+        context?.getTheme()?.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
+        val color = typedValue.data
+        progressDrawable.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+        pb_caricamento.progressDrawable = progressDrawable
+
+        val btn_send_data = view.findViewById<Button>(R.id.btn_send_data)
+        btn_send_data.setOnClickListener {
+            if(materialeDaAggiungere.photos != null && materialeDaAggiungere.photos?.isNotEmpty() == true){
+                thread(start = true) {
+                    btn_send_data.post {
+                        btn_send_data.visibility = View.GONE
+                        addImage.isEnabled = false
+                        gallery.isEnabled = false
+                        pb_caricamento.visibility = View.VISIBLE
+                    }
+                    Database.addAnnuncio(materialeDaAggiungere)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            } else {
+                val msg = "Carica almeno una foto"
+                btn_send_data.error = msg
+                Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+            }
         }
 
         return view
@@ -170,19 +184,6 @@ class CameraFragment : Fragment() {
         }
     }
 
-
-    /*private fun createImageFile(): File {
-        val timestamp= SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "Specimen_${timestamp}",
-            ".jpg",
-            imageDirectory
-        ).apply {
-            currentImgepath= absolutePath
-        }
-    }*/
-
     fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
     fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -192,40 +193,4 @@ class CameraFragment : Fragment() {
             materialeDaAggiungere.photos=photos
         }
     }
-
-    /*private fun uploadPhotos() {
-        photos.forEach{
-                photo->
-            var uri = Uri.parse(photo.localUri)
-            val imageRef = storageReference.child("image/${Database.getLoggedStudent().id}/${uri.lastPathSegment}")
-            val uploadTask = imageRef.putFile(uri)
-            uploadTask.addOnSuccessListener {
-                Log.i(ContentValues.TAG, "Image uploaded $imageRef")
-                val downloadUrl = imageRef.downloadUrl
-                downloadUrl.addOnSuccessListener {
-                        remoteUri->
-                    photo.remoteUri = remoteUri.toString()
-                    updatePhotoDatabase(photo)
-                }
-            }
-            uploadTask.addOnFailureListener{
-                Log.e(ContentValues.TAG, it.message?: "No message")
-            }
-        }
-    }*/
-
-    /*private fun updatePhotoDatabase(photo: Photo) {
-        var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos")
-        var handle = photoCollection.add(photo)
-        handle.addOnSuccessListener {
-            Log.i(ContentValues.TAG, "successfully update photo metadata")
-            photo.id=it.id
-            var photoCollection = firestore.collection("studenti").document(Database.getLoggedStudent().id).collection("photos").document(photo.id).set(photo)
-        }
-        handle.addOnFailureListener{
-            Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
-        }
-    }*/
-
-
 }

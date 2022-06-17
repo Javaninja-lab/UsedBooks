@@ -152,6 +152,7 @@ class Database {
             val uriimageRemote="image/materiali/${idMateriale}/${uri.lastPathSegment}"
             val imageRef = storageReference.child(uriimageRemote)
             val uploadTask = imageRef.putFile(uri)
+            while (!uploadTask.isComplete);
             uploadTask.addOnSuccessListener {
                 Log.i(ContentValues.TAG, "Image uploaded $imageRef")
                 val downloadUrl = imageRef.downloadUrl
@@ -172,6 +173,7 @@ class Database {
         val uriimageRemote="image/studenti/${idstudente}/${uri.lastPathSegment}"
         val imageRef = storageReference.child(uriimageRemote)
         val uploadTask = imageRef.putFile(uri)
+        while (uploadTask.isComplete);
         uploadTask.addOnSuccessListener {
             Log.i(ContentValues.TAG, "Image uploaded $imageRef")
             val downloadUrl = imageRef.downloadUrl
@@ -189,6 +191,7 @@ class Database {
     private fun updatePhotoDatabaseStudente(photo: Photo, idstudente: String) {
         var photoCollection = database.collection("studenti").document(idstudente).collection("photos")
         var handle = photoCollection.add(photo)
+        while (handle.isComplete);
         handle.addOnSuccessListener {
             Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
             photo.id=it.id

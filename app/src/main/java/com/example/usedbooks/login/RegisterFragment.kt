@@ -45,6 +45,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun addUserToDatabaseRealtime(id:String,nome:String){
+        //TODO: "Spostare la funzione all'interno della classe Database"
         mDbRef= FirebaseDatabase.getInstance().getReference()
         mDbRef.child("users").child(id).setValue(User(id,nome))
     }

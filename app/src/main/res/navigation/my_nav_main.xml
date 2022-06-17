@@ -43,16 +43,21 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_materialeFragment"
-            app:destination="@id/materialeFragment" />
+            app:destination="@id/materialeFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToSaveState="true"/>
         <action
             android:id="@+id/action_profileFragment_to_soldFragment"
-            app:destination="@id/soldFragment">
+            app:destination="@id/soldFragment"
+            >
             <argument
                 android:name="materiale"
                 app:argType="com.example.usedbooks.dataClass.Materiale"/>
         </action>
         <action
             android:id="@+id/action_profileFragment_to_changeFotoProfiloFragment"
+            app:popUpToSaveState="true"
+            app:popUpTo="@id/profileFragment"
             app:destination="@id/changeFotoProfiloFragment" >
             <argument
                 android:name="actual_foto"
@@ -66,6 +71,8 @@
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_materialeFragment"
+            app:popUpToSaveState="true"
+            app:popUpTo="@id/searchFragment"
             app:destination="@id/materialeFragment" />
     </fragment>
     <fragment
@@ -76,6 +83,9 @@
             android:name="materiale"
             app:argType="com.example.usedbooks.dataClass.Materiale"
             />
+        <action
+            android:id="@+id/action_materialeFragment_to_textChat"
+            app:destination="@id/textChat" />
     </fragment>
     <activity
         android:id="@+id/textChat"

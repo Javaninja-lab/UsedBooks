@@ -63,5 +63,6 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="@string/date_last_messagge"
-        android:layout_weight="15"/>
+        android:layout_weight="15"
+        android:textAlignment="viewEnd"/>
 </LinearLayout>
