@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.main.chat.ListChatsFragmentDirections
@@ -35,7 +36,7 @@ class UserAdapter(val userList: ArrayList<User>) :
 
         //holder.fotoProfilo.setImageBitmap()
         //TODO("Asseganre immagine alla chat")
-         val messaggio = Messaggio("ciao","1")  //Database.getLastMessage(currentUser)
+         val messaggio =  Database.getLastMessage(currentUser)//Messaggio("ciao","1")
         //TODO("Aggiungere data al messaggio")
         holder.dataMessaggio.text = messaggio.message
         holder.utlimoMessaggio.text = messaggio.message  //messaggio.message?.subSequence(0..32)
