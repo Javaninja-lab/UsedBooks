@@ -36,6 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearChat"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:layout_below="@id/ll_topbar" />
 
     <LinearLayout

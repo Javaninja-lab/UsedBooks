@@ -33,6 +33,7 @@ class MessageAdapter (val context:Context,val messageList: ArrayList<Messaggio>)
             val viewHolder = holder as ReceiveViewHolder
             holder.receiveMessage.text=currentMessage.message
         }
+
     }
 
     override fun getItemCount(): Int {

@@ -48,6 +48,7 @@ class SingleChat : AppCompatActivity() {
         chatRecyclerView.layoutManager= LinearLayoutManager(this)
         chatRecyclerView.adapter= messageAdapter
 
+
         //aggiungere i messaggi alla recyclervieew
         mDbref.child("chats").child(senderRoom).child("messages")
             .addValueEventListener(object : ValueEventListener{
@@ -58,6 +59,7 @@ class SingleChat : AppCompatActivity() {
                         messageList.add(message!!)
                     }
                     messageAdapter.notifyDataSetChanged()
+                    chatRecyclerView.scrollToPosition(messageList.size-1)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -65,6 +67,7 @@ class SingleChat : AppCompatActivity() {
                 }
 
             })
+
 
         sendButton.setOnClickListener{
             val message= messageBox.text.toString().trim()
