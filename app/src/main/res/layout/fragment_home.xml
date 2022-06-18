@@ -17,22 +17,11 @@
         android:textAlignment="center"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_lv_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
-
-        <ProgressBar
-            android:id="@+id/pb_caricamento"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
-            style="?android:attr/progressBarStyleLarge"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lv_home"

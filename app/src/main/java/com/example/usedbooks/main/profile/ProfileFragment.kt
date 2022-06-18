@@ -1,18 +1,16 @@
 package com.example.usedbooks.main.profile
 
 import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.R
 import com.example.usedbooks.adapters.MaterialeRecyclerAdapter
 import com.example.usedbooks.dataClass.Database
@@ -20,7 +18,6 @@ import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.login.LoginActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlin.concurrent.thread
 
 class ProfileFragment : Fragment() {
 
@@ -50,15 +47,9 @@ class ProfileFragment : Fragment() {
         val array = ArrayList<Materiale>()
         adapter.submitList(array)
 
-        val pb_caricamento = view.findViewById<ProgressBar>(R.id.pb_caricamento)
-        val progressDrawable: Drawable = pb_caricamento.indeterminateDrawable.mutate()
-        val typedValue = TypedValue()
-        requireContext().theme.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
-        val color = typedValue.data
-        progressDrawable.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-        pb_caricamento.progressDrawable = progressDrawable
-
-        thread(start = true) {
+        val cl_material_sale = view.findViewById<ConstraintLayout>(R.id.cl_material_sale)
+        val pb_caricamento = PersonalProgressBar(view.context, cl_material_sale)
+        pb_caricamento.caricamento {
             for (m in Database.getMaterialiStudente(Database.getLoggedStudent().id,true)) {
                 if (m != null)
                     array.add(m)
@@ -74,6 +65,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+
         val recyclerView2  = view.findViewById<RecyclerView>(R.id.lv_ad_venduti)
         val tv_no_material2 = view.findViewById<LinearLayout>(R.id.ll_ad_vendit)
         val adapter2 = MaterialeRecyclerAdapter("profile", false)
@@ -81,10 +73,10 @@ class ProfileFragment : Fragment() {
         val array2 = ArrayList<Materiale>()
         adapter2.submitList(array2)
 
-        val pb_caricamento2 = view.findViewById<ProgressBar>(R.id.pb_caricamento)
-        pb_caricamento2.progressDrawable = progressDrawable
+        val cl_materiale_transaction = view.findViewById<ConstraintLayout>(R.id.cl_materiale_transaction)
+        val pb_caricamento2 = PersonalProgressBar(view.context, cl_materiale_transaction)
 
-        thread(start = true) {
+        pb_caricamento2.caricamento {
             for (m in Database.getTransaction()) {
                 if (m != null)
                     array2.add(m)
