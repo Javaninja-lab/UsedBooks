@@ -386,14 +386,32 @@ class Database {
     fun getLastMessage(studenteRichiesto : User) : Messaggio {
         val senderRoom= Database.getLoggedStudent().id+studenteRichiesto.id
         val messageList= ArrayList<Messaggio>()
-        mDbref.child("chats").child(senderRoom).child("messages").get().addOnSuccessListener {
-            val k : MutableList<DataSnapshot> = it.children.toMutableList()
-            for(z in k) {
-                val messaggio = z.getValue(Messaggio::class.java)
-                if(messaggio != null)
-                    messageList.add(messaggio)
-            }
+        val snapshot= mDbref.child("chats").child(senderRoom).child("messages").get()
+        while (!snapshot.isComplete){}
+            val x = snapshot.result.children
+            Log.i("firebase", "Got value ${snapshot}")
+            for (doc in x) {
+                val message = doc.getValue(Messaggio::class.java)
+                messageList.add(message!!)
+
         }
+
+
+
+        /*addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                messageList.clear()
+                for (postSnapshot in snapshot.children) {
+                    val message = postSnapshot.getValue(Messaggio::class.java)
+                    messageList.add(message!!)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        val i=0*/
         return messageList.last()
     }
 
