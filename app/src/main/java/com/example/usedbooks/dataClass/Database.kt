@@ -421,29 +421,8 @@ class Database {
                 messageList.add(message!!)
 
         }
-
-
-
-        /*addValueEventListener( object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                messageList.clear()
-                for (postSnapshot in snapshot.children) {
-                    val message = postSnapshot.getValue(Messaggio::class.java)
-                    messageList.add(message!!)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-
-        val i=0*/
         return messageList.last()
     }
-
-    //prendere la data istantanea in timestamp
-
-
 
     fun registerTransaction(idAcquirente:String, materiale: Materiale) {
         val current = LocalDateTime.now()
@@ -463,9 +442,6 @@ class Database {
         database.collection("materiale").document(materiale.id).update("proprietario",idAcquirente)
 
     }
-
-
-
 
     fun getTransaction(): List<Materiale?>{
         var listReturn = ArrayList<Materiale?>()

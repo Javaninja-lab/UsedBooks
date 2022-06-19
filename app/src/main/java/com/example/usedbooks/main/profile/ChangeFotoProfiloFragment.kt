@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Photo
@@ -28,12 +26,10 @@ import java.io.ByteArrayOutputStream
 import java.util.ArrayList
 
 class ChangeFotoProfiloFragment : Fragment() {
-    val args = ChangeFotoProfiloFragmentArgs
-    private lateinit var string_photo : String
-    var strUri :String=""
-    var photos: ArrayList<Photo> = ArrayList<Photo>()
+    val photos: ArrayList<Photo> = ArrayList<Photo>()
     lateinit var immagineNuova: ImageView
     lateinit var immagineAttuale: ImageView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,24 +37,33 @@ class ChangeFotoProfiloFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_change_foto_profilo, container, false)
         immagineAttuale = view.findViewById(R.id.iv_foto_profilo_attuale)
         immagineNuova = view.findViewById(R.id.iv_foto_profilo_nuovo)
-        val gallery = view.findViewById<Button>(R.id.btn_image_gallery)
-        gallery.setOnClickListener {
+
+        val btn_image_gallery = view.findViewById<Button>(R.id.btn_image_gallery)
+        btn_image_gallery.setOnClickListener {
             startGallery.launch("image/*")
         }
-        val camera = view.findViewById<Button>(R.id.btn_image_camera)
-        camera.setOnClickListener {
+        val btn_image_camera = view.findViewById<Button>(R.id.btn_image_camera)
+        btn_image_camera.setOnClickListener {
             takePhoto(this.requireContext())
         }
 
-        val invio = view.findViewById<Button>(R.id.btn_image_confirm)
-        invio.setOnClickListener {
-            saveImage(photos)
-
+        val btn_image_confirm = view.findViewById<Button>(R.id.btn_image_confirm)
+        btn_image_confirm.setOnClickListener {
+            if(photos.isEmpty()) {
+                Toast.makeText(view.context, "Seleziona un'immagine", Toast.LENGTH_SHORT).show()
+            } else {
+                saveImage(photos)
+                activity?.onBackPressed()
+            }
         }
+
         val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
-        if(!uriImageStudent.equals(""))
+        if(uriImageStudent != "")
             immagineAttuale.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
-        val x=0
+        else {
+            immagineAttuale.setImageResource(R.drawable.placeholder)
+        }
+
         return view
     }
 
@@ -76,13 +81,14 @@ class ChangeFotoProfiloFragment : Fragment() {
 
                 immagineNuova.setImageBitmap(data.extras?.get("data") as Bitmap)
                 val uri= getImageUri(this.requireContext(),data.extras?.get("data") as Bitmap)
-                Log.i("uri","${uri}")
+                Log.i("uri","$uri")
                 val photo = Photo(localUri = uri.toString())
                 photos.add(photo)
 
             }
         }
     }
+
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -95,14 +101,10 @@ class ChangeFotoProfiloFragment : Fragment() {
         //val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
         immagineNuova.setImageURI(it)
         val photo = Photo(localUri = it.toString())
-        Log.i("uri","${it.toString()}")
+        Log.i("uri", it.toString())
         photos.add(photo)
 
     }
-
-    private var uri: Uri?= null
-
-    private lateinit var currentImgepath: String
 
     private val requestMultiplePermissionLaucher= registerForActivityResult (ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
         var permissionGranted = false
@@ -139,9 +141,7 @@ class ChangeFotoProfiloFragment : Fragment() {
 
 
     private fun saveImage(photos: ArrayList<Photo>){
-        if(photos.isNotEmpty()) {
-           Database.addPhotoStudente(photos.get(0),Database.getLoggedStudent().id)
-        }
+        Database.addPhotoStudente(photos[0],Database.getLoggedStudent().id)
     }
 
 }

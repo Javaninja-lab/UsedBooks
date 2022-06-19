@@ -59,9 +59,6 @@
             app:popUpToSaveState="true"
             app:popUpTo="@id/profileFragment"
             app:destination="@id/changeFotoProfiloFragment" >
-            <argument
-                android:name="actual_foto"
-                app:argType="string"/>
         </action>
     </fragment>
     <fragment
@@ -116,8 +113,5 @@
         android:name="com.example.usedbooks.main.profile.ChangeFotoProfiloFragment"
         android:label="fragment_change_foto_profilo"
         tools:layout="@layout/fragment_change_foto_profilo">
-        <argument
-            android:name="actual_foto"
-            app:argType="string" />
     </fragment>
 </navigation>

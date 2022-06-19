@@ -35,11 +35,13 @@ class ProfileFragment : Fragment() {
         val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
         if(!uriImageStudent.equals(""))
             iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
+        else {
+            iv_foto_profilo.setImageResource(R.drawable.placeholder)
+        }
 
 
         iv_foto_profilo.setOnClickListener {
-            val action = ProfileFragmentDirections.actionProfileFragmentToChangeFotoProfiloFragment("null"/*Database.getLoggedStudent().*/)
-            view.findNavController().navigate(action)
+            view.findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangeFotoProfiloFragment())
         }
 
         val tv_nome_cliente = view.findViewById<TextView>(R.id.tv_nome_cliente)
