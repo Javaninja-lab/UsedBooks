@@ -31,7 +31,12 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         val iv_foto_profilo = view.findViewById<ImageView>(R.id.iv_foto_profilo)
-        //TODO(Cambiamento immagine profilo)
+
+        val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
+        if(!uriImageStudent.equals(""))
+            iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
+
+
         iv_foto_profilo.setOnClickListener {
             val action = ProfileFragmentDirections.actionProfileFragmentToChangeFotoProfiloFragment("null"/*Database.getLoggedStudent().*/)
             view.findNavController().navigate(action)

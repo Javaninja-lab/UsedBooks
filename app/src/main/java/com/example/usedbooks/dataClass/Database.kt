@@ -61,6 +61,30 @@ class Database {
         return string;
     }
 
+    private fun getUriPhotosStudente(idStudente: String) : String{
+        val x=  database.collection("studenti/"+idStudente+"/photos").get();
+        while(!x.isComplete){}
+        val y: MutableList<DocumentSnapshot> = x.result.documents;
+        if(y!=null && y.size>0){
+            val string= y[0]["remoteUri"].toString()
+            val t=0;
+            return string;
+        }
+        else
+            return ""
+    }
+
+    private fun deleteLastUriPhotosStudente(idstudente: String){
+        val x=  database.collection("studenti/"+idstudente+"/photos").get();
+        while(!x.isComplete){}
+        val y: MutableList<DocumentSnapshot> = x.result.documents;
+        if(y!=null && y.size>0) {
+            val idLastPhoto = y[0].id
+            database.collection("studenti/" + idstudente + "/photos").document(idLastPhoto).delete()
+        }
+
+    }
+
     private fun getMaterialiStudente(username: String, checkVendita : Boolean): ArrayList<Materiale?>{
 
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
@@ -140,6 +164,7 @@ class Database {
        return bitmap
    }
 
+
     private fun addAnnuncio(materialeDaAggiungere: MaterialeDaAggiungere){
         val id = addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",materialeDaAggiungere.corso)
         addPhotosMateriale(materialeDaAggiungere.photos!!,id)
@@ -169,6 +194,7 @@ class Database {
     }
 
     private fun addPhotoStudente(photo:Photo,idstudente:String){
+        deleteLastUriPhotosStudente(idstudente)
         var uri = Uri.parse(photo.localUri)
         val uriimageRemote="image/studenti/${idstudente}/${uri.lastPathSegment}"
         val imageRef = storageReference.child(uriimageRemote)
@@ -603,5 +629,9 @@ class Database {
         fun getTransaction(): List<Materiale?> {
             return getIstance().getTransaction()
         }
+        fun getUriPhotosStudente(idStudente: String) : String{
+            return getIstance().getUriPhotosStudente(idStudente)
+        }
+
     }
 }
