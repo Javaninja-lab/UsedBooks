@@ -15,7 +15,7 @@ import com.example.usedbooks.dataClass.Materiale
 import kotlin.concurrent.thread
 
 
-class PersonalProgressBar(val contesto: Context, val layout : ConstraintLayout) : ProgressBar(contesto, null, android.R.attr.progressBarStyleLarge) {
+class PersonalProgressBar(contesto: Context, val layout : ConstraintLayout, tag : String? = null, dimension: Int = 500) : ProgressBar(contesto, null, android.R.attr.progressBarStyleLarge) {
     init {
         val progressDrawable: Drawable = this.indeterminateDrawable.mutate()
         val typedValue = TypedValue()
@@ -35,8 +35,13 @@ class PersonalProgressBar(val contesto: Context, val layout : ConstraintLayout) 
         set.connect(this.id, ConstraintSet.TOP, layout.id, ConstraintSet.TOP, 0)
         set.applyTo(layout)
 
-        this.layoutParams.height = 500
-        this.layoutParams.width = 500
+        this.layoutParams.height = dimension
+        this.layoutParams.width = dimension
+
+        if(tag != null) {
+            this.setTag(tag)
+        }
+
         this.requestLayout()
     }
 
@@ -46,17 +51,10 @@ class PersonalProgressBar(val contesto: Context, val layout : ConstraintLayout) 
         }
     }
 
-    fun caricamento(response : ArrayList<Materiale>, recyclerView : RecyclerView) {
-        thread(start = true) {
-            response.clear()
-            for (materiale in Database.getMateriali()) {
-                response.add(materiale)
-            }
-            this.post {
-                recyclerView.visibility = View.VISIBLE
-                this.visibility = View.GONE
-                recyclerView.adapter?.notifyDataSetChanged()
-            }
-        }
+    fun setUpConstraintTop(view: View, margin : Int = 0){
+        val set = ConstraintSet()
+        set.clone(layout)
+        set.connect(this.id, ConstraintSet.TOP, view.id, ConstraintSet.BOTTOM, margin)
+        set.applyTo(layout)
     }
 }

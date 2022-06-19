@@ -32,16 +32,16 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val layoutInflater = inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
 
         auth = FirebaseAuth.getInstance()
 
-        val btn = layoutInflater.findViewById<Button>(R.id.btn_Register)
+        val btn = view.findViewById<Button>(R.id.btn_Register)
         btn.setOnClickListener {
-            onSingUpClick()
+            onSingUpClick(view)
         }
 
-        return layoutInflater
+        return view
     }
 
     private fun addUserToDatabaseRealtime(id:String,nome:String){
@@ -50,13 +50,14 @@ class RegisterFragment : Fragment() {
         mDbRef.child("users").child(id).setValue(User(id,nome))
     }
 
-    private fun onSingUpClick() {
-        val name = view?.findViewById<EditText>(R.id.et_Name)!!.text.toString().trim()
-        val surname = view?.findViewById<EditText>(R.id.et_Surname)!!.text.toString().trim()
-        val uni = view?.findViewById<EditText>(R.id.et_University)!!.text.toString().trim()
-        val email = view?.findViewById<EditText>(R.id.et_email_login)!!.text.toString().trim()
-        val password = Gestore.getHash(view?.findViewById<EditText>(R.id.et_Password)!!.text.toString().trim())
-        val password2 = Gestore.getHash(view?.findViewById<EditText>(R.id.et_ConfirmPassword)!!.text.toString().trim())
+    private fun onSingUpClick(view : View){
+        val name = view.findViewById<EditText>(R.id.et_Name).text.toString().trim()
+        val surname = view.findViewById<EditText>(R.id.et_Surname).text.toString().trim()
+        val email = view.findViewById<EditText>(R.id.et_email_login).text.toString().trim()
+        val et_Password = view.findViewById<EditText>(R.id.et_Password)
+        val et_ConfirmPassword = view.findViewById<EditText>(R.id.et_ConfirmPassword)
+        val password = Gestore.getHash(et_Password.text.toString().trim())
+        val password2 = Gestore.getHash(et_ConfirmPassword.text.toString().trim())
 
         if(password.equals(password2)) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -75,7 +76,15 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
-        else
-            Toast.makeText(layoutInflater.context, R.string.password_confirmpassword_different, Toast.LENGTH_SHORT).show()
+        else {
+            val msg = getString(R.string.password_confirmpassword_different)
+            Toast.makeText(
+                layoutInflater.context,
+                msg,
+                Toast.LENGTH_SHORT
+            ).show()
+            et_Password.error = msg
+            et_ConfirmPassword.error = msg
+        }
     }
 }

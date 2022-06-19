@@ -5,25 +5,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.main.home.HomeFragmentDirections
 import com.example.usedbooks.main.profile.ProfileFragmentDirections
 import com.example.usedbooks.main.search.SearchFragmentDirections
+import kotlin.concurrent.thread
 
 open class MaterialeRecyclerAdapter(private val fragment: String, private val button : Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var items : ArrayList<Materiale>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val itemView : View
         val view : RecyclerView.ViewHolder = if(button){
-            MaterialeButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_with_button, parent, false))
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_with_button, parent, false)
+            MaterialeButtonViewHolder(itemView)
         } else {
-            MaterialeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_complete, parent, false))
+            itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_complete, parent, false)
+            MaterialeViewHolder(itemView)
         }
+        val pb_image = PersonalProgressBar(parent.context, itemView.findViewById(R.id.cl_image), "pb_image", 150)
         return view
     }
 
@@ -76,7 +83,14 @@ open class MaterialeRecyclerAdapter(private val fragment: String, private val bu
         fun bind(materiale: Materiale) {
             this.materiale = materiale
             val iv_foto_materiale = itemView.findViewById<ImageView>(R.id.iv_foto_materiale)
-            Gestore.setBitmap(materiale, iv_foto_materiale)
+            val pb_image = itemView.findViewWithTag<PersonalProgressBar>("pb_image")
+            pb_image.caricamento {
+                Gestore.setBitmap(materiale, iv_foto_materiale, false)
+                itemView.post {
+                    pb_image.visibility = View.GONE
+                    iv_foto_materiale.visibility = View.VISIBLE
+                }
+            }
             val tv_nome_materiale = itemView.findViewById<TextView>(R.id.tv_nome_materiale)
             tv_nome_materiale.setText(materiale.nome)
             val tv_nome_venditore = itemView.findViewById<TextView>(R.id.tv_nome_venditore)
@@ -94,7 +108,13 @@ open class MaterialeRecyclerAdapter(private val fragment: String, private val bu
         fun bind(materiale: Materiale) {
             this.materiale = materiale
             val iv_foto_materiale = itemView.findViewById<ImageView>(R.id.iv_foto_materiale)
-            Gestore.setBitmap(materiale, iv_foto_materiale)
+            thread(start = true) {
+                Gestore.setBitmap(materiale, iv_foto_materiale, false)
+                itemView.post {
+                    itemView.findViewWithTag<PersonalProgressBar>("pb_image").visibility = View.GONE
+                    iv_foto_materiale.visibility = View.VISIBLE
+                }
+            }
             val tv_nome_materiale = itemView.findViewById<TextView>(R.id.tv_nome_materiale)
             tv_nome_materiale.setText(materiale.nome)
             val tv_prezzo = itemView.findViewById<TextView>(R.id.tv_prezzo)

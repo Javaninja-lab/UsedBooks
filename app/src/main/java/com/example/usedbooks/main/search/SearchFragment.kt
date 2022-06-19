@@ -29,40 +29,61 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val layout = inflater.inflate(R.layout.fragment_search, container, false)
+        val view = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val recyclerView  = layout.findViewById<RecyclerView>(R.id.rv_search)
+        val recyclerView  = view.findViewById<RecyclerView>(R.id.rv_search)
         val adapter = MaterialeRecyclerAdapter("search", false)
         recyclerView?.adapter = adapter
         val response: ArrayList<Materiale> = ArrayList()
         adapter.submitList(response)
 
-        val cl_search = layout.findViewById<ConstraintLayout>(R.id.cl_search)
-        val pb_caricamento = PersonalProgressBar(layout.context, cl_search)
-        pb_caricamento.caricamento(response, recyclerView)
+        val bt_search = view.findViewById<Button>(R.id.bt_search)
+        val cl_search = view.findViewById<ConstraintLayout>(R.id.cl_search)
+        val tv_nessun_materiale = view.findViewById<View>(R.id.tv_nessun_materiale)
+        val pb_caricamento = PersonalProgressBar(view.context, cl_search)
+        pb_caricamento.caricamento {
+            response.clear()
+            for (materiale in Database.getMateriali()) {
+                response.add(materiale)
+            }
+            pb_caricamento.post {
+                pb_caricamento.visibility = View.GONE
+                if (response.isEmpty()) {
+                    tv_nessun_materiale.visibility = View.VISIBLE
+                    bt_search.isEnabled = false
+                } else {
+                    recyclerView.visibility = View.VISIBLE
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
 
-        val bt_search = layout.findViewById<Button>(R.id.bt_search)
         bt_search?.setOnClickListener {
             recyclerView.visibility = View.GONE
+            tv_nessun_materiale.visibility = View.GONE
             pb_caricamento.visibility = View.VISIBLE
-            val search = layout.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
+            val search = view.findViewById<EditText>(R.id.et_cerca_annunci)?.text.toString()
             response.clear()
 
-            thread(start = true) {
+            pb_caricamento.caricamento {
                 for (materiale in Database.searchMateriale(search)){
                     if(materiale!=null)
                         response.add(materiale)
                 }
                 recyclerView.post {
-                    recyclerView.visibility = View.VISIBLE
                     pb_caricamento.visibility = View.GONE
-                    if(response.size==0)
+                    if(response.isEmpty()) {
+                        tv_nessun_materiale.visibility = View.VISIBLE
                         Toast.makeText(context, "Nessun risultato", Toast.LENGTH_LONG).show()
-                    else
+                    }
+                    else {
+                        recyclerView.visibility = View.VISIBLE
+                        pb_caricamento.visibility = View.GONE
                         adapter.notifyDataSetChanged()
+                    }
                 }
             }
         }
-        return layout
+        return view
     }
 }

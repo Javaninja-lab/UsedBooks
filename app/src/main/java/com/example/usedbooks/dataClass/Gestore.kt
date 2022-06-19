@@ -23,8 +23,15 @@ abstract class Gestore {
             return md.digest(input.toByteArray(UTF_8)).toHex()
         }
 
-        fun setBitmap(materiale : Materiale, imageView: ImageView) {
-            thread(start = true) {
+        fun setBitmap(materiale : Materiale, imageView: ImageView, conThread: Boolean = true) {
+            if(conThread){
+                thread(start = true) {
+                    val photoBitmap : Bitmap = Database.getPhotoMateriale(materiale.photos[0])
+                    imageView.post {
+                        imageView.setImageBitmap(photoBitmap)
+                    }
+                }
+            } else {
                 val photoBitmap : Bitmap = Database.getPhotoMateriale(materiale.photos[0])
                 imageView.post {
                     imageView.setImageBitmap(photoBitmap)

@@ -64,6 +64,7 @@
             app:layout_constraintTop_toBottomOf="@id/et_email_login" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -71,16 +72,6 @@
             app:layout_constraintStart_toStartOf="@+id/et_password_login"
             app:layout_constraintTop_toBottomOf="@+id/et_password_login">
 
-                <ProgressBar
-                    android:id="@+id/pb_caricamento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible"/>
 
                 <Button
                     android:id="@+id/btn_Login"

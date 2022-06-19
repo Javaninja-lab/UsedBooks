@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.R
 import com.example.usedbooks.adapters.MaterialeRecyclerAdapter
+import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 
 
@@ -29,7 +30,22 @@ class HomeFragment : Fragment() {
 
         val pb_caricamento =
             PersonalProgressBar(view.context, view.findViewById(R.id.cl_lv_home))
-        pb_caricamento.caricamento(response, recyclerView)
+        pb_caricamento.caricamento {
+            response.clear()
+            for (materiale in Database.getMateriali()) {
+                response.add(materiale)
+            }
+            pb_caricamento.post {
+                pb_caricamento.visibility = View.GONE
+                if (response.isEmpty()) {
+                    val tv_nessun_materiale = view.findViewById<View>(R.id.tv_nessun_materiale)
+                    tv_nessun_materiale.visibility = View.VISIBLE
+                } else {
+                    recyclerView.visibility = View.VISIBLE
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
 
         return view
     }

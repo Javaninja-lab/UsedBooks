@@ -54,19 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ProgressBar
-            android:id="@+id/pb_caricamento"
-            android:visibility="gone"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
-            style="?android:attr/progressBarStyleLarge"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Button
             android:id="@+id/btn_send_data"
             android:layout_width="0dp"

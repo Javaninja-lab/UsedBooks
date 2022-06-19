@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.User
@@ -23,12 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 
 class MaterialeFragment : Fragment() {
-
     val args : MaterialeFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +41,15 @@ class MaterialeFragment : Fragment() {
         val tv_prezzo = view.findViewById<TextView>(R.id.tv_prezzo)
         tv_prezzo.setText(materiale.prezzo.toString())
         val iv_foto_materiale = view.findViewById<ImageView>(R.id.iv_foto_materiale)
-        Gestore.setBitmap(materiale, iv_foto_materiale)
+        val cl_image = view.findViewById<ConstraintLayout>(R.id.cl_image)
+        val pb_image = PersonalProgressBar(view.context, cl_image)
+        pb_image.caricamento {
+            Gestore.setBitmap(materiale, iv_foto_materiale, false)
+            pb_image.post {
+                pb_image.visibility = View.GONE
+                iv_foto_materiale.visibility = View.VISIBLE
+            }
+        }
 
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.mv_materiale) as SupportMapFragment?

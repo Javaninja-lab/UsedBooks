@@ -23,13 +23,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 import com.example.usedbooks.dataClass.Photo
@@ -78,13 +79,9 @@ class CameraFragment : Fragment() {
             takePhoto(this.requireContext())
         }
 
-        val pb_caricamento = view.findViewById<ProgressBar>(R.id.pb_caricamento)
-        val progressDrawable: Drawable = pb_caricamento.getIndeterminateDrawable().mutate()
-        val typedValue = TypedValue()
-        context?.getTheme()?.resolveAttribute(android.R.attr.colorPrimary, typedValue, true)
-        val color = typedValue.data
-        progressDrawable.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
-        pb_caricamento.progressDrawable = progressDrawable
+        val cl_button_invio = view.findViewById<ConstraintLayout>(R.id.cl_button_invio)
+        val pb_caricamento = PersonalProgressBar(view.context, cl_button_invio)
+        pb_caricamento.visibility = View.GONE
 
         val btn_send_data = view.findViewById<Button>(R.id.btn_send_data)
         btn_send_data.setOnClickListener {

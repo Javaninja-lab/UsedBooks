@@ -11,9 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.main.MainActivity
@@ -22,10 +24,10 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
-    companion object {
-        var fatto : Boolean = false
-    }
-
+    private lateinit var cl_login: ConstraintLayout
+    private lateinit var pb_login: PersonalProgressBar
+    private lateinit var btn_SingIn: Button
+    private lateinit var btn_Login: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +37,25 @@ class LoginFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        val btn_SingIn = layout.findViewById<Button>(R.id.btn_SingIn)
+        btn_SingIn = layout.findViewById<Button>(R.id.btn_SingIn)
         btn_SingIn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-        val btn_Login = layout.findViewById<Button>(R.id.btn_Login)
+
+        cl_login = layout.findViewById(R.id.cl_login)
+
+        pb_login = PersonalProgressBar(layout.context, cl_login, null, 100)
+        pb_login.visibility = View.GONE
+        pb_login.setUpConstraintTop(btn_SingIn, 50)
+
+        btn_Login = layout.findViewById(R.id.btn_Login)
         btn_Login.setOnClickListener {
-            onLoginClick()
+            btn_Login.isEnabled = false
+            btn_SingIn.isEnabled = false
+            pb_login.visibility = View.VISIBLE
+            pb_login.caricamento {
+                onLoginClick(layout)
+            }
         }
 
         return layout
@@ -50,40 +64,57 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        /*if (currentUser != null) {
-            login(currentUser.email!!)
-        }*/
+        if (currentUser != null && view != null) {
+            login(currentUser.email!!, requireView())
+        }
     }
 
-    private fun onLoginClick() {
-        val emailEditText = requireView().findViewById<EditText>(R.id.et_email_login)
-        val passwordEditText = requireView().findViewById<EditText>(R.id.et_password_login)
+    private fun onLoginClick(view : View) {
+        val emailEditText = view.findViewById<EditText>(R.id.et_email_login)
+        val passwordEditText = view.findViewById<EditText>(R.id.et_password_login)
         val email = emailEditText.text.toString().trim()
         val passwordNotHashed = passwordEditText.text.toString().trim()
         if (email.isEmpty()) {
-            emailEditText.error = "Enter email"
+            val msg = "Enter email"
+            emailEditText.error = msg
+            Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+            btn_Login.isEnabled = true
+            btn_SingIn.isEnabled = true
+            pb_login.visibility = View.GONE
             return
         }
         if (passwordNotHashed.isEmpty()) {
-            passwordEditText.error = "Enter password"
+            val msg = "Enter password"
+            passwordEditText.error = msg
+            Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+            btn_Login.isEnabled = true
+            btn_SingIn.isEnabled = true
+            pb_login.visibility = View.GONE
             return
         }
         val password = Gestore.getHash(passwordNotHashed)
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful) {
-                login(email)
+                login(email, view)
             } else {
-                Toast.makeText(emailEditText.context, "Credenziali errate", Toast.LENGTH_LONG).show()
+                Toast.makeText(view.context, "Credenziali errate", Toast.LENGTH_LONG).show()
             }
+            btn_Login.isEnabled = true
+            btn_SingIn.isEnabled = true
+            pb_login.visibility = View.GONE
         }
     }
 
-    private fun login(email : String) {
-        if(context!=null) {
+    private fun login(email : String, view : View) {
+        btn_Login.isEnabled = false
+        btn_SingIn.isEnabled = false
+        pb_login.visibility = View.VISIBLE
+        pb_login.caricamento {
             Database.setLoggedStudent(Database.getStudente(email)!!)
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(view.context, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
     }
 }
