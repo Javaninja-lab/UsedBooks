@@ -24,7 +24,6 @@ class SoldFragment : Fragment() {
     private lateinit var  userRecyclerView: RecyclerView
     private lateinit var userList: ArrayList<User>
     private lateinit var adapter: UserSaleAdapter
-    private lateinit var mDbRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +34,6 @@ class SoldFragment : Fragment() {
         materiale = args.materiale
 
         userList = ArrayList()
-        mDbRef = FirebaseDatabase.getInstance().getReference()
         adapter = UserSaleAdapter(userList, materiale)
 
         userRecyclerView = layout.findViewById(R.id.rv_chat_sold)

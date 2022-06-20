@@ -25,10 +25,10 @@
     <string name="name_of_client">Name of client</string>
     <string name="price">Price</string>
     <string name="name_of_vendor">Name of vendor</string>
-    <string name="add_annunce">Add annunce</string>
+    <string name="add_announce">Add announce</string>
     <string name="name_of_student">Name of student</string>
-    <string name="last_messagge">Last messagge...</string>
-    <string name="date_last_messagge">Date last messagge</string>
+    <string name="last_messagge">Last message</string>
+    <string name="date_last_messagge">Date last message</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -39,7 +39,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="password_confirmpassword_different">Password and Confirm password are different</string>
-    <string name="register_ok">Registration succesfull, please make login</string>
+    <string name="register_ok">Registration successfully, please make login</string>
     <string name="register_not_ok">Registration unsuccessful</string>
     <string name="type_a_message">Type a message</string>
     <string name="add_image">Add image</string>
@@ -63,4 +63,5 @@
     <string name="confirm">Confirm</string>
     <string name="choose_the_student_that_acquire_the_material">Choose the student that acquire the material</string>
     <string name="there_are_no_materials">There are no materials</string>
+    <string name="announcement">Announcement</string>
 </resources>

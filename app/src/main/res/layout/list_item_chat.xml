@@ -5,38 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/shape_item_listview">
 
-    <RelativeLayout
-        android:id="@+id/badge_layout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
-
-        <RelativeLayout
-            android:id="@+id/rl_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp">
-
-            <ImageView
-                android:id="@+id/iv_foto_profilo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/placeholder" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_number_notification_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/rl_image"
-            android:layout_alignRight="@id/rl_image"
-            android:background="@drawable/bg_new_notification"
-            android:gravity="center"
-            android:padding="3dp"
-            android:text="12"
-            android:textColor="#FFF"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_foto_profilo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:srcCompat="@drawable/placeholder"
+        android:layout_weight="3"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,12 +31,4 @@
                 android:layout_height="wrap_content"
                 android:text="@string/last_messagge"/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/tv_data_messaggio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="@string/date_last_messagge"
-        android:layout_weight="15"
-        android:textAlignment="viewEnd"/>
 </LinearLayout>

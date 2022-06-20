@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.usedbooks.R
 import com.example.usedbooks.customView.PersonalProgressBar
@@ -24,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 
 class MaterialeFragment : Fragment() {
-    val args : MaterialeFragmentArgs by navArgs()
+    private val args : MaterialeFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +36,12 @@ class MaterialeFragment : Fragment() {
         val materiale = args.materiale
 
         val tv_nome_materiale = view.findViewById<TextView>(R.id.tv_nome_materiale)
-        tv_nome_materiale.setText(materiale.nome)
+        tv_nome_materiale.text = "${tv_nome_materiale.text}: ${materiale.nome}"
         val tv_nome_venditore = view.findViewById<TextView>(R.id.tv_nome_venditore)
-        tv_nome_venditore.setText(materiale.proprietario)
+        tv_nome_venditore.text = "${tv_nome_venditore.text}: ${Database.getStudenteFromId(materiale.proprietario)?.nome}"
         val tv_prezzo = view.findViewById<TextView>(R.id.tv_prezzo)
-        tv_prezzo.setText(materiale.prezzo.toString())
+        tv_prezzo.text = "${tv_prezzo.text}: ${materiale.prezzo}"
+
         val iv_foto_materiale = view.findViewById<ImageView>(R.id.iv_foto_materiale)
         val cl_image = view.findViewById<ConstraintLayout>(R.id.cl_image)
         val pb_image = PersonalProgressBar(view.context, cl_image)
@@ -62,13 +64,12 @@ class MaterialeFragment : Fragment() {
 
         val btnContact = view.findViewById<Button>(R.id.btn_contact)
         btnContact.setOnClickListener {
-                var mDbRef: DatabaseReference= FirebaseDatabase.getInstance().getReference()
-                var NomeProprietario = Database.getStudenteFromId(materiale.proprietario)?.nome
-                mDbRef.child("users").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
+            val mDbRef: DatabaseReference= FirebaseDatabase.getInstance().reference
+            val NomeProprietario = Database.getStudenteFromId(materiale.proprietario)?.nome
+            mDbRef.child("users").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
                     User(materiale.proprietario,NomeProprietario)
-                )
-            //TODO andare al fragment ListChatFragment
-
+            )
+            view.findNavController().navigate(R.id.action_materialeFragment_to_chatFragment)
         }
         return view
     }

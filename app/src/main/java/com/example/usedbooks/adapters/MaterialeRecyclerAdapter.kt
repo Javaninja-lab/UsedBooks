@@ -82,23 +82,7 @@ open class MaterialeRecyclerAdapter(private val fragment: String, private val bu
         lateinit var materiale : Materiale
         fun bind(materiale: Materiale) {
             this.materiale = materiale
-            val iv_foto_materiale = itemView.findViewById<ImageView>(R.id.iv_foto_materiale)
-            val pb_image = itemView.findViewWithTag<PersonalProgressBar>("pb_image")
-            pb_image.caricamento {
-                Gestore.setBitmap(materiale, iv_foto_materiale, false)
-                itemView.post {
-                    pb_image.visibility = View.GONE
-                    iv_foto_materiale.visibility = View.VISIBLE
-                }
-            }
-            val tv_nome_materiale = itemView.findViewById<TextView>(R.id.tv_nome_materiale)
-            tv_nome_materiale.setText(materiale.nome)
-            val tv_nome_venditore = itemView.findViewById<TextView>(R.id.tv_nome_venditore)
-            tv_nome_venditore.setText(materiale.proprietario)
-            val tv_prezzo = itemView.findViewById<TextView>(R.id.tv_prezzo)
-            tv_prezzo.setText(materiale.prezzo.toString())
-            val tv_state_material = itemView.findViewById<TextView>(R.id.tv_state_material)
-            tv_state_material.setText(materiale.stato)
+            Gestore.bindMaterialViewHolder(materiale, itemView, false)
         }
     }
 
@@ -107,23 +91,7 @@ open class MaterialeRecyclerAdapter(private val fragment: String, private val bu
 
         fun bind(materiale: Materiale) {
             this.materiale = materiale
-            val iv_foto_materiale = itemView.findViewById<ImageView>(R.id.iv_foto_materiale)
-            thread(start = true) {
-                Gestore.setBitmap(materiale, iv_foto_materiale, false)
-                itemView.post {
-                    itemView.findViewWithTag<PersonalProgressBar>("pb_image").visibility = View.GONE
-                    iv_foto_materiale.visibility = View.VISIBLE
-                }
-            }
-            val tv_nome_materiale = itemView.findViewById<TextView>(R.id.tv_nome_materiale)
-            tv_nome_materiale.setText(materiale.nome)
-            val tv_prezzo = itemView.findViewById<TextView>(R.id.tv_prezzo)
-            tv_prezzo.setText(materiale.prezzo.toString())
-            val btn_sold = itemView.findViewById<Button>(R.id.btn_sold)
-            btn_sold.setOnClickListener {
-                val action = ProfileFragmentDirections.actionProfileFragmentToSoldFragment(materiale)
-                it.findNavController().navigate(action)
-            }
+            Gestore.bindMaterialViewHolder(materiale, itemView, true)
         }
     }
 }

@@ -351,7 +351,7 @@ class Database {
         loggedStudente = studente
     }
 
-    fun getLastMessage(studenteRichiesto : User) : Messaggio {
+    fun getLastMessage(studenteRichiesto : User) : Messaggio? {
         val senderRoom= Database.getLoggedStudent().id+studenteRichiesto.id
         val messageList= ArrayList<Messaggio>()
         val snapshot= mDbref.child("chats").child(senderRoom).child("messages").get()
@@ -362,7 +362,10 @@ class Database {
                 val message = doc.getValue(Messaggio::class.java)
                 messageList.add(message!!)
         }
-        return messageList.last()
+        return if(messageList.isEmpty())
+            null
+        else
+            messageList[messageList.size-1]
     }
 
     fun registerTransaction(idAcquirente:String, materiale: Materiale) {
@@ -458,7 +461,7 @@ class Database {
             getIstance().addStudente(name, surname, email, password)
         }
 
-        fun getLastMessage(studenteRichiesto: User): Messaggio {
+        fun getLastMessage(studenteRichiesto: User): Messaggio? {
             return getIstance().getLastMessage(studenteRichiesto)
         }
 
