@@ -31,6 +31,7 @@ class DatiFragment : Fragment() {
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
 
         val adapter : ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, Database.getAllCorsi())
+        //val adapter = SpinnerAdapter(this.context!!, R.layout.spinner_corsi_riga, Database.getAllCorsi())
         sp_corsi.adapter = adapter
 
         bt_invio_dati.setOnClickListener {
