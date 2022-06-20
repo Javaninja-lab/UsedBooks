@@ -25,14 +25,24 @@ class UserSaleAdapter (private val userList: ArrayList<User>, private val materi
 
     override fun onBindViewHolder(holder: UserAdapter.UserViewHolder, position: Int) {
         val currentUser = userList[position]
-        holder.mittente.text = currentUser.username
+        holder.tv_nome_studente.text = currentUser.username
 
-        //holder.fotoProfilo.setImageBitmap()
-        //TODO("Asseganre immagine alla chat")
+        if(currentUser.id != null) {
+            val uriImageStudent = Database.getUriPhotosStudente(currentUser.id)
+            if (!uriImageStudent.equals(""))
+                holder.iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
+            else {
+                holder.iv_foto_profilo.setImageResource(R.drawable.placeholder)
+            }
+        }
+        else {
+            holder.iv_foto_profilo.setImageResource(R.drawable.placeholder)
+        }
+
         val messaggio = Messaggio("ciao","1")  //Database.getLastMessage(currentUser)
         //TODO("Aggiungere data al messaggio")
-        holder.dataMessaggio.text = messaggio.message
-        holder.utlimoMessaggio.text = messaggio.message  //messaggio.message?.subSequence(0..32)
+        holder.tv_data_messaggio.text = messaggio.message
+        holder.tv_ultimo_messaggio.text = messaggio.message  //messaggio.message?.subSequence(0..32)
         holder.itemView.setOnClickListener {
             if(currentUser.id!=null) {
                 Database.registerTransaction(currentUser.id, materiale)

@@ -193,9 +193,9 @@ class Database {
         }
     }
 
-    private fun addPhotoStudente(photo:Photo,idstudente:String){
+    private fun addPhotoStudente(photo:Photo, idstudente:String){
         deleteLastUriPhotosStudente(idstudente)
-        var uri = Uri.parse(photo.localUri)
+        val uri = Uri.parse(photo.localUri)
         val uriimageRemote="image/studenti/${idstudente}/${uri.lastPathSegment}"
         val imageRef = storageReference.child(uriimageRemote)
         val uploadTask = imageRef.putFile(uri)
@@ -215,8 +215,8 @@ class Database {
     }
 
     private fun updatePhotoDatabaseStudente(photo: Photo, idstudente: String) {
-        var photoCollection = database.collection("studenti").document(idstudente).collection("photos")
-        var handle = photoCollection.add(photo)
+        val photoCollection = database.collection("studenti").document(idstudente).collection("photos")
+        val handle = photoCollection.add(photo)
         while (handle.isComplete);
         handle.addOnSuccessListener {
             Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)

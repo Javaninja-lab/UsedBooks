@@ -31,10 +31,9 @@ class ListChatsFragment : Fragment() {
         adapter = UserAdapter(userList)
 
         userRecyclerView = view.findViewById(R.id.RecyclerViewChat)
-        userRecyclerView.layoutManager= LinearLayoutManager(this.context)
-        userRecyclerView.adapter=adapter
+        userRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        userRecyclerView.adapter = adapter
 
-        //prelevo dati dal database realtime
         Database.setUsersChat(userList, adapter)
 
         return view

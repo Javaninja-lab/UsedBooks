@@ -26,17 +26,17 @@ import java.io.ByteArrayOutputStream
 import java.util.ArrayList
 
 class ChangeFotoProfiloFragment : Fragment() {
-    val photos: ArrayList<Photo> = ArrayList<Photo>()
-    lateinit var immagineNuova: ImageView
-    lateinit var immagineAttuale: ImageView
+    private val photos: ArrayList<Photo> = ArrayList<Photo>()
+    private lateinit var iv_foto_profilo_nuovo: ImageView
+    private lateinit var iv_foto_profilo_attuale: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_change_foto_profilo, container, false)
-        immagineAttuale = view.findViewById(R.id.iv_foto_profilo_attuale)
-        immagineNuova = view.findViewById(R.id.iv_foto_profilo_nuovo)
+        iv_foto_profilo_attuale = view.findViewById(R.id.iv_foto_profilo_attuale)
+        iv_foto_profilo_nuovo = view.findViewById(R.id.iv_foto_profilo_nuovo)
 
         val btn_image_gallery = view.findViewById<Button>(R.id.btn_image_gallery)
         btn_image_gallery.setOnClickListener {
@@ -44,7 +44,7 @@ class ChangeFotoProfiloFragment : Fragment() {
         }
         val btn_image_camera = view.findViewById<Button>(R.id.btn_image_camera)
         btn_image_camera.setOnClickListener {
-            takePhoto(this.requireContext())
+            takePhoto(view.context)
         }
 
         val btn_image_confirm = view.findViewById<Button>(R.id.btn_image_confirm)
@@ -59,9 +59,9 @@ class ChangeFotoProfiloFragment : Fragment() {
 
         val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
         if(uriImageStudent != "")
-            immagineAttuale.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
+            iv_foto_profilo_attuale.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
         else {
-            immagineAttuale.setImageResource(R.drawable.placeholder)
+            iv_foto_profilo_attuale.setImageResource(R.drawable.placeholder)
         }
 
         return view
@@ -76,15 +76,12 @@ class ChangeFotoProfiloFragment : Fragment() {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
-
             if(data!=null) {
-
-                immagineNuova.setImageBitmap(data.extras?.get("data") as Bitmap)
+                iv_foto_profilo_nuovo.setImageBitmap(data.extras?.get("data") as Bitmap)
                 val uri= getImageUri(this.requireContext(),data.extras?.get("data") as Bitmap)
                 Log.i("uri","$uri")
                 val photo = Photo(localUri = uri.toString())
                 photos.add(photo)
-
             }
         }
     }
@@ -99,7 +96,7 @@ class ChangeFotoProfiloFragment : Fragment() {
 
     val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         //val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
-        immagineNuova.setImageURI(it)
+        iv_foto_profilo_nuovo.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         Log.i("uri", it.toString())
         photos.add(photo)
@@ -142,6 +139,7 @@ class ChangeFotoProfiloFragment : Fragment() {
 
     private fun saveImage(photos: ArrayList<Photo>){
         Database.addPhotoStudente(photos[0],Database.getLoggedStudent().id)
+        Toast.makeText(iv_foto_profilo_attuale.context, "Image saved, please wait some time to update the image", Toast.LENGTH_SHORT).show()
     }
 
 }
