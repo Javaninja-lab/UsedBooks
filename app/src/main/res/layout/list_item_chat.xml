@@ -9,6 +9,7 @@
         android:id="@+id/iv_foto_profilo"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:background="@drawable/bg_image_profile"
         app:srcCompat="@drawable/placeholder"
         android:layout_weight="3"/>
     <LinearLayout

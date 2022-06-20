@@ -41,7 +41,9 @@ class ChangeFotoProfiloFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_change_foto_profilo, container, false)
         iv_foto_profilo_attuale = view.findViewById(R.id.iv_foto_profilo_attuale)
+        iv_foto_profilo_attuale.clipToOutline = true
         iv_foto_profilo_nuovo = view.findViewById(R.id.iv_foto_profilo_nuovo)
+        iv_foto_profilo_nuovo.clipToOutline = true
 
         val btn_image_gallery = view.findViewById<Button>(R.id.btn_image_gallery)
         btn_image_gallery.setOnClickListener {

@@ -324,7 +324,6 @@ class Database {
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
-
         while(!s.isComplete);
         id=s.result.id
         return id
@@ -383,6 +382,13 @@ class Database {
         database.collection("materiale").document(materiale.id).update("stato","venduto")
         database.collection("materiale").document(materiale.id).update("proprietario",idAcquirente)
 
+    }
+
+    fun getAllCorsi() : ArrayList<String> {
+        //TODO: "Ottenere tutti i corsi"
+        val arrayList = ArrayList<String>()
+        arrayList.add("logica")
+        return arrayList
     }
 
     fun getTransaction(): List<Materiale?>{
@@ -510,5 +516,8 @@ class Database {
             return getIstance().getUriPhotosStudente(idStudente)
         }
 
+        fun getAllCorsi() : ArrayList<String> {
+            return getIstance().getAllCorsi()
+        }
     }
 }

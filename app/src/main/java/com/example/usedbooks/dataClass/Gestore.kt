@@ -67,6 +67,7 @@ abstract class Gestore {
             } else {
                 holder.iv_foto_profilo.setImageResource(R.drawable.placeholder)
             }
+            holder.iv_foto_profilo.clipToOutline = true
 
             val messaggio = Database.getLastMessage(currentUser)
             if (messaggio != null) {

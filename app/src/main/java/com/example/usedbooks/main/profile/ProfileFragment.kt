@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
 
         Gestore.getProfileImage(iv_foto_profilo, Database.getLoggedStudent().id)
 
-
+        iv_foto_profilo.clipToOutline = true
         iv_foto_profilo.setOnClickListener {
             view.findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangeFotoProfiloFragment())
         }

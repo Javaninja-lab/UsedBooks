@@ -38,6 +38,7 @@ class SingleChat : AppCompatActivity() {
         tv_nome_contatto.text = "${tv_nome_contatto.text}: $name"
         val iv_foto_profilo = findViewById<ImageView>(R.id.iv_foto_profilo)
         Gestore.getProfileImage(iv_foto_profilo, receiverid!!)
+        iv_foto_profilo.clipToOutline = true
 
         val senderRoom= receiverid+senderid
         val receiverRoom= senderid+receiverid

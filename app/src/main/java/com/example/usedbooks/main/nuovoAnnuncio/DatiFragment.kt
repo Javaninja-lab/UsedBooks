@@ -1,21 +1,17 @@
 package com.example.usedbooks.main.nuovoAnnuncio
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.navigation.findNavController
+import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
+import com.example.usedbooks.dataClass.Corso
 import com.example.usedbooks.dataClass.Database
-import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
-import com.example.usedbooks.main.home.HomeFragmentDirections
+
 
 class DatiFragment : Fragment() {
 
@@ -31,14 +27,17 @@ class DatiFragment : Fragment() {
         val et_descrizione_new_annuncio = view.findViewById<EditText>(R.id.et_descrizione_new_annuncio)
         val et_tipologia_new_annuncio = view.findViewById<EditText>(R.id.et_tipologia_new_annuncio)
         val et_prezzo_new_annuncio = view.findViewById<EditText>(R.id.et_prezzo_new_annuncio)
-        val et_corso_new_annuncio = view.findViewById<EditText>(R.id.et_corso_new_annuncio)
+        val sp_corsi = view.findViewById<Spinner>(R.id.sp_corsi)
         val bt_invio_dati = view.findViewById<Button>(R.id.bt_invio_dati)
+
+        val adapter : ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_spinner_dropdown_item, Database.getAllCorsi())
+        sp_corsi.adapter = adapter
 
         bt_invio_dati.setOnClickListener {
             val title : String = et_title_new_annuncio.text.toString()
             val descrizione : String = et_descrizione_new_annuncio.text.toString()
             val tipologia : String = et_tipologia_new_annuncio.text.toString()
-            val corso : String = et_corso_new_annuncio.text.toString()
+            val corso : String = sp_corsi.selectedItem.toString()
             val prezzo : Double = if (et_prezzo_new_annuncio.text.toString().isEmpty()) (-1.0) else (et_prezzo_new_annuncio.text.toString().toDouble());
 
             if(!title.isEmpty() && !descrizione.isEmpty() && !tipologia.isEmpty() && !corso.isEmpty() && prezzo > 0) {
