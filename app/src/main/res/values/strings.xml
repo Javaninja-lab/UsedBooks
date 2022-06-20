@@ -39,7 +39,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="password_confirmpassword_different">Password and Confirm password are different</string>
-    <string name="register_ok">Registration succesfull</string>
+    <string name="register_ok">Registration succesfull, please make login</string>
     <string name="register_not_ok">Registration unsuccessful</string>
     <string name="type_a_message">Type a message</string>
     <string name="add_image">Add image</string>

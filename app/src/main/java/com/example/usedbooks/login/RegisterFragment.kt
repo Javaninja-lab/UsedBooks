@@ -21,12 +21,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class RegisterFragment : Fragment() {
-    private lateinit var mDbRef: DatabaseReference
     private lateinit var auth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,12 +39,6 @@ class RegisterFragment : Fragment() {
         return view
     }
 
-    private fun addUserToDatabaseRealtime(id:String,nome:String){
-        //TODO: "Spostare la funzione all'interno della classe Database"
-        mDbRef= FirebaseDatabase.getInstance().getReference()
-        mDbRef.child("users").child(id).setValue(User(id,nome))
-    }
-
     private fun onSingUpClick(view : View){
         val name = view.findViewById<EditText>(R.id.et_Name).text.toString().trim()
         val surname = view.findViewById<EditText>(R.id.et_Surname).text.toString().trim()
@@ -62,13 +51,9 @@ class RegisterFragment : Fragment() {
         if(password.equals(password2)) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 if(it.isSuccessful) {
-                    val studente = Database.addStudente(name, surname, email, password)
-                    Database.setLoggedStudent(studente!!)
-                    addUserToDatabaseRealtime(studente.id, "$name $surname")
+                    Database.addStudente(name, surname, email, password)
                     Toast.makeText(layoutInflater.context, R.string.register_ok, Toast.LENGTH_LONG).show()
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    activity?.onBackPressed()
                 }
                 else {
                     Toast.makeText(layoutInflater.context, R.string.register_not_ok, Toast.LENGTH_LONG).show()

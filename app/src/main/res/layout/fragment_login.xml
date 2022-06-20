@@ -36,8 +36,6 @@
             android:hint="@string/email_address"
             android:inputType="textEmailAddress"
 
-            android:text="1@1.com"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,8 +53,6 @@
 
             android:hint="@string/password"
             android:inputType="textPassword"
-
-            android:text="1"
 
             app:layout_constraintEnd_toEndOf="@id/et_email_login"
             app:layout_constraintHorizontal_bias="0.0"

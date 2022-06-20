@@ -81,8 +81,8 @@
             app:argType="com.example.usedbooks.dataClass.Materiale"
             />
         <action
-            android:id="@+id/action_materialeFragment_to_textChat"
-            app:destination="@id/textChat" />
+            android:id="@+id/action_materialeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <activity
         android:id="@+id/textChat"
@@ -112,6 +112,5 @@
         android:id="@+id/changeFotoProfiloFragment"
         android:name="com.example.usedbooks.main.profile.ChangeFotoProfiloFragment"
         android:label="fragment_change_foto_profilo"
-        tools:layout="@layout/fragment_change_foto_profilo">
-    </fragment>
+        tools:layout="@layout/fragment_change_foto_profilo"/>
 </navigation>

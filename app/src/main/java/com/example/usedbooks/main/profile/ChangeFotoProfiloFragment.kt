@@ -18,8 +18,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.example.usedbooks.R
+import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Photo
 import java.io.ByteArrayOutputStream
@@ -29,6 +31,8 @@ class ChangeFotoProfiloFragment : Fragment() {
     private val photos: ArrayList<Photo> = ArrayList<Photo>()
     private lateinit var iv_foto_profilo_nuovo: ImageView
     private lateinit var iv_foto_profilo_attuale: ImageView
+    private lateinit var btn_image_confirm : Button
+    private lateinit var pb_upload_foto : PersonalProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,13 +51,12 @@ class ChangeFotoProfiloFragment : Fragment() {
             takePhoto(view.context)
         }
 
-        val btn_image_confirm = view.findViewById<Button>(R.id.btn_image_confirm)
+        btn_image_confirm = view.findViewById<Button>(R.id.btn_image_confirm)
         btn_image_confirm.setOnClickListener {
             if(photos.isEmpty()) {
                 Toast.makeText(view.context, "Seleziona un'immagine", Toast.LENGTH_SHORT).show()
             } else {
                 saveImage(photos)
-                activity?.onBackPressed()
             }
         }
 
@@ -63,6 +66,10 @@ class ChangeFotoProfiloFragment : Fragment() {
         else {
             iv_foto_profilo_attuale.setImageResource(R.drawable.placeholder)
         }
+
+        val cl_foto_profilo_nuovo = view.findViewById<ConstraintLayout>(R.id.cl_foto_profilo_nuovo)
+        pb_upload_foto = PersonalProgressBar(view.context, cl_foto_profilo_nuovo, null, 100)
+        pb_upload_foto.visibility = View.GONE
 
         return view
     }
@@ -95,12 +102,10 @@ class ChangeFotoProfiloFragment : Fragment() {
     }
 
     val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        //val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
         iv_foto_profilo_nuovo.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         Log.i("uri", it.toString())
         photos.add(photo)
-
     }
 
     private val requestMultiplePermissionLaucher= registerForActivityResult (ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
@@ -137,9 +142,16 @@ class ChangeFotoProfiloFragment : Fragment() {
     fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
-    private fun saveImage(photos: ArrayList<Photo>){
-        Database.addPhotoStudente(photos[0],Database.getLoggedStudent().id)
-        Toast.makeText(iv_foto_profilo_attuale.context, "Image saved, please wait some time to update the image", Toast.LENGTH_SHORT).show()
+    private fun saveImage(photos: ArrayList<Photo>) {
+        pb_upload_foto.visibility = View.VISIBLE
+        btn_image_confirm.visibility = View.GONE
+        btn_image_confirm.isEnabled = false
+        pb_upload_foto.caricamento {
+            Database.addPhotoStudente(photos[0], Database.getLoggedStudent().id)
+            pb_upload_foto.post {
+                activity?.onBackPressed()
+            }
+        }
     }
 
 }

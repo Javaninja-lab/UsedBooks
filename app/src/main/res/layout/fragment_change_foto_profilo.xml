@@ -55,17 +55,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_foto_profilo_nuovo" />
 
-    <Button
-        android:id="@+id/btn_image_confirm"
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_foto_profilo_nuovo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="@string/confirm"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_image_gallery"
         app:layout_constraintStart_toStartOf="@+id/btn_image_camera"
-        app:layout_constraintTop_toBottomOf="@+id/btn_image_camera" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_image_camera">
+
+
+        <Button
+            android:id="@+id/btn_image_confirm"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/confirm"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,21 +1,16 @@
 package com.example.usedbooks.dataClass
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
-import android.widget.Adapter
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.usedbooks.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -26,18 +21,17 @@ import java.time.format.DateTimeFormatter
 
 class Database {
     private var database = Firebase.firestore
-    private var storageReference = FirebaseStorage.getInstance().getReference()
+    private var storageReference = FirebaseStorage.getInstance().reference
     private lateinit var loggedStudente: Studente
-    private var mDbref= FirebaseDatabase.getInstance().getReference()
+    private var mDbref= FirebaseDatabase.getInstance().reference
 
     private fun getMateriali() : ArrayList<Materiale> {
         val dareturn = ArrayList<Materiale>()
         val i = database.collection("materiale").get()
-        while (!i.isComplete){}// questa fa schifo
+        while (!i.isComplete);
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
-
             val  uri: ArrayList<String> = ArrayList()
             uri.add(getUriPhotosMateriale(z.id))
             val c= z.getGeoPoint("cordinate")
@@ -53,34 +47,31 @@ class Database {
     }
 
     private fun getUriPhotosMateriale(idMateriale: String) : String{
-        val x=  database.collection("materiale/"+idMateriale+"/photos").get();
-        while(!x.isComplete){}
+        val x=  database.collection("materiale/$idMateriale/photos").get();
+        while(!x.isComplete);
         val y: MutableList<DocumentSnapshot> = x.result.documents;
         val string= y[0]["remoteUri"].toString()
-        val t=0;
         return string;
     }
 
     private fun getUriPhotosStudente(idStudente: String) : String{
-        val x=  database.collection("studenti/"+idStudente+"/photos").get();
-        while(!x.isComplete){}
-        val y: MutableList<DocumentSnapshot> = x.result.documents;
-        if(y!=null && y.size>0){
+        val x = database.collection("studenti/$idStudente/photos").get();
+        while(!x.isComplete);
+        val y: MutableList<DocumentSnapshot> = x.result.documents
+        return if(y.size>0){
             val string= y[0]["remoteUri"].toString()
-            val t=0;
-            return string;
-        }
-        else
-            return ""
+            string
+        } else
+            ""
     }
 
     private fun deleteLastUriPhotosStudente(idstudente: String){
-        val x=  database.collection("studenti/"+idstudente+"/photos").get();
-        while(!x.isComplete){}
+        val x=  database.collection("studenti/$idstudente/photos").get();
+        while(!x.isComplete);
         val y: MutableList<DocumentSnapshot> = x.result.documents;
-        if(y!=null && y.size>0) {
+        if(y.size>0) {
             val idLastPhoto = y[0].id
-            database.collection("studenti/" + idstudente + "/photos").document(idLastPhoto).delete()
+            database.collection("studenti/$idstudente/photos").document(idLastPhoto).delete()
         }
 
     }
@@ -89,7 +80,7 @@ class Database {
 
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
         val i =database.collection("materiale").whereEqualTo("proprietario",username).get()
-        while (!i.isComplete){}// questa fa schifo
+        while (!i.isComplete);
         val k :MutableList<DocumentSnapshot> = i.result.documents
         if(k.size==0)
             return list
@@ -111,14 +102,13 @@ class Database {
                 }
                 else
                     list.add(materiale)
-
             }
         }
         return list
 
     }
 
-    private fun addStudente(name: String,surname: String,email: String,password: String) : Studente?{
+    private fun addStudente(name: String,surname: String,email: String,password: String) {
         val studente = hashMapOf(
             "cognome" to surname,
             "nome" to name,
@@ -133,37 +123,27 @@ class Database {
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
-        //TODO("Implementare controllo se l'add è andata correttamente e restituire lo studente appena aggiunto")
-        return Studente("0",name, surname, email, User("0", "Prova"))
     }
 
     //return -1 se non trova il corso
     private fun getCorsoId(nome: String): String{
         val i=database.collection("Corso").whereEqualTo("nome",nome).get()
-        while (!i.isComplete){}// questa fa schifo
+        while (!i.isComplete);
         val k :MutableList<DocumentSnapshot> = i.result.documents
-        if(k.size==0)
-            return "-1"
-        else
-        {
-            return k[0].id
+        return if(k.size==0)
+            "-1"
+        else {
+            k[0].id
         }
     }
 
-
-
-   private fun getPhotoMateriale(Uri: String): Bitmap{
-       val imagereference = storageReference.child(Uri)
-       lateinit var  bitmap: Bitmap
-       val localfile : File = File.createTempFile("test","jpg")
-       val i=imagereference.getFile(localfile)
-       while (!i.isComplete){}
-       bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
-
-       val z=0
-       return bitmap
-   }
-
+    private fun getPhotoMateriale(Uri: String): Bitmap {
+        val imagereference = storageReference.child(Uri)
+        val localfile: File = File.createTempFile("test", "jpg")
+        val i = imagereference.getFile(localfile)
+        while (!i.isComplete);
+        return BitmapFactory.decodeFile(localfile.absolutePath)
+    }
 
     private fun addAnnuncio(materialeDaAggiungere: MaterialeDaAggiungere){
         val id = addMateriale(materialeDaAggiungere.nome,materialeDaAggiungere.descrizione, materialeDaAggiungere.tipologia,materialeDaAggiungere.prezzo,materialeDaAggiungere.latitudine,materialeDaAggiungere.longitudine, "Vendita",materialeDaAggiungere.corso)
@@ -173,7 +153,7 @@ class Database {
     private fun addPhotosMateriale(photos: ArrayList<Photo>, idMateriale: String){
         photos.forEach{
                 photo->
-            var uri = Uri.parse(photo.localUri)
+            val uri = Uri.parse(photo.localUri)
             val uriimageRemote="image/materiali/${idMateriale}/${uri.lastPathSegment}"
             val imageRef = storageReference.child(uriimageRemote)
             val uploadTask = imageRef.putFile(uri)
@@ -182,7 +162,6 @@ class Database {
                 Log.i(ContentValues.TAG, "Image uploaded $imageRef")
                 val downloadUrl = imageRef.downloadUrl
                 downloadUrl.addOnSuccessListener {
-                        remoteUri->
                     photo.remoteUri = uriimageRemote
                     updatePhotoDatabaseMateriale(photo,idMateriale)
                 }
@@ -199,15 +178,12 @@ class Database {
         val uriimageRemote="image/studenti/${idstudente}/${uri.lastPathSegment}"
         val imageRef = storageReference.child(uriimageRemote)
         val uploadTask = imageRef.putFile(uri)
-        while (uploadTask.isComplete);
+        while (!uploadTask.isComplete);
         uploadTask.addOnSuccessListener {
             Log.i(ContentValues.TAG, "Image uploaded $imageRef")
-            val downloadUrl = imageRef.downloadUrl
-            downloadUrl.addOnSuccessListener {
-                    remoteUri->
-                photo.remoteUri = uriimageRemote
-                updatePhotoDatabaseStudente(photo,idstudente)
-            }
+            imageRef.downloadUrl
+            photo.remoteUri = uriimageRemote
+            updatePhotoDatabaseStudente(photo,idstudente)
         }
         uploadTask.addOnFailureListener{
             Log.e(ContentValues.TAG, it.message?: "No message")
@@ -217,11 +193,11 @@ class Database {
     private fun updatePhotoDatabaseStudente(photo: Photo, idstudente: String) {
         val photoCollection = database.collection("studenti").document(idstudente).collection("photos")
         val handle = photoCollection.add(photo)
-        while (handle.isComplete);
+        while (!handle.isComplete);
         handle.addOnSuccessListener {
             Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
             photo.id=it.id
-            var photoCollection = database.collection("studenti").document(idstudente).collection("photos").document(photo.id).set(photo)
+            database.collection("studenti").document(idstudente).collection("photos").document(photo.id).set(photo)
         }
         handle.addOnFailureListener{
             Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
@@ -233,7 +209,7 @@ class Database {
         lateinit var  bitmap: Bitmap
         val localfile : File = File.createTempFile("test","jpg")
         val i=imagereference.getFile(localfile)
-        while (!i.isComplete){}
+        while (!i.isComplete);
         bitmap= BitmapFactory.decodeFile(localfile.absolutePath)
         return bitmap
     }
@@ -241,13 +217,13 @@ class Database {
     private fun searchMateriale(corso: String): ArrayList<Materiale?> {
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
         val h =database.collection("Corso").whereEqualTo("nome",corso).get()
-        while (!h.isComplete){}// questa fa schifo
+        while (!h.isComplete);
         val u :MutableList<DocumentSnapshot> = h.result.documents
         if(u.isEmpty())
             return list
         val idCorso = u[0].id
         val i = database.collection("materiale").whereEqualTo("idCorso", idCorso).get()
-        while (!i.isComplete){}// questa fa schifo
+        while (!i.isComplete);
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
@@ -268,15 +244,14 @@ class Database {
     //crea una funzione che restituisce lo studente dal database passando l'id dello studente
     private fun getStudenteFromId(id: String): Studente?{
         val i=database.collection("studenti").document(id).get()
-        while (!i.isComplete){}// questa fa schifo
+        while (!i.isComplete);
         val k = i.result
-        if(k==null)
-            return null
-        else
-        {
+        return if(k==null)
+            null
+        else {
             val studente =
-                    Studente(k.id,k["nome"].toString(),k["cognome"].toString(),k["email"].toString(),User(k["idUtente"].toString(),k["username"].toString()))
-            return studente
+                Studente(k.id,k["nome"].toString(),k["cognome"].toString(),k["email"].toString(),User(k["idUtente"].toString(),k["username"].toString()))
+            studente
         }
     }
 
@@ -295,18 +270,16 @@ class Database {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
         })
     }
 
     private fun updatePhotoDatabaseMateriale(photo:Photo, idMateriale: String) {
-
-        var photoCollection = database.collection("materiale").document(idMateriale).collection("photos")
-        var handle = photoCollection.add(photo)
+        val photoCollection = database.collection("materiale").document(idMateriale).collection("photos")
+        val handle = photoCollection.add(photo)
         handle.addOnSuccessListener {
             Log.i(ContentValues.TAG, "successfully update photo metadata with"+it.id)
             photo.id=it.id
-            var photoCollection = database.collection("materiale").document(idMateriale).collection("photos").document(photo.id).set(photo)
+            database.collection("materiale").document(idMateriale).collection("photos").document(photo.id).set(photo)
         }
         handle.addOnFailureListener{
             Log.e(ContentValues.TAG, "error updating photo data: ${it.message}")
@@ -314,14 +287,11 @@ class Database {
 
     }
 
-
-
-
     //return -1 se non trova il corso
     private fun addMateriale(nome : String, descrizione : String, tipologia: String,prezzo : Double,latitudine : Double?,longitudine : Double?,stato : String ,NomeCorso : String ): String{
         val c = GeoPoint(latitudine!!,longitudine!!)
         val corso=getCorsoId(NomeCorso)
-        if(corso.equals("-1"))
+        if(corso == "-1")
             return "-1"
         val materiale = hashMapOf(
             "cordinate" to c,
@@ -343,16 +313,15 @@ class Database {
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
 
-        while(!s.isComplete){}
+        while(!s.isComplete);
         id=s.result.id
-        var i=0
         return id
     }
 
     private fun getStudenti() : ArrayList<Studente> {
         val list : ArrayList<Studente> = ArrayList()
         val i = database.collection("studenti").get()
-        while (!i.isComplete); // questa fa schifo
+        while (!i.isComplete);
         val k : MutableList<DocumentSnapshot> = i.result.documents
         for(z in k) {
             val utente = User(z.id, z["password"].toString())
@@ -364,7 +333,7 @@ class Database {
 
     private fun getStudente(username : String) : Studente? {
         val i = database.collection("studenti").whereEqualTo("email",username).get()
-        while (!i.isComplete); // questa fa schifo
+        while (!i.isComplete);
         val k : MutableList<DocumentSnapshot> = i.result.documents
         return if(k.size == 0)
             null
@@ -378,33 +347,6 @@ class Database {
         }
     }
 
-    private fun getListUsersChat() : ArrayList<User> {
-        val userList: ArrayList<User> = ArrayList()
-        val mDbRef= FirebaseDatabase.getInstance().getReference()
-        val i= mDbRef.child("users").child(Database.getLoggedStudent().id)
-        val z=0
-            i.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                for(postSnapshot in snapshot.children){
-                    val currentUser =postSnapshot.getValue(User::class.java)
-                    if(Database.getLoggedStudent()!!.id != currentUser?.id) {
-                        userList.add(currentUser!!)
-                    }
-                }
-
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-
-        return userList
-    }
-
-
-
     fun setLoggedStudent(studente: Studente) {
         loggedStudente = studente
     }
@@ -413,20 +355,18 @@ class Database {
         val senderRoom= Database.getLoggedStudent().id+studenteRichiesto.id
         val messageList= ArrayList<Messaggio>()
         val snapshot= mDbref.child("chats").child(senderRoom).child("messages").get()
-        while (!snapshot.isComplete){}
+        while (!snapshot.isComplete);
             val x = snapshot.result.children
             Log.i("firebase", "Got value ${snapshot}")
             for (doc in x) {
                 val message = doc.getValue(Messaggio::class.java)
                 messageList.add(message!!)
-
         }
         return messageList.last()
     }
 
     fun registerTransaction(idAcquirente:String, materiale: Materiale) {
         val current = LocalDateTime.now()
-
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
         val formatted = current.format(formatter)
         val transazione = hashMapOf(
@@ -444,60 +384,53 @@ class Database {
     }
 
     fun getTransaction(): List<Materiale?>{
-        var listReturn = ArrayList<Materiale?>()
-        val h=database.collection("Transazioni").whereEqualTo("idVenditore",Database.getLoggedStudent().id).get()
-        while (!h.isComplete){}
+        val listReturn = ArrayList<Materiale?>()
+        val h = database.collection("Transazioni").whereEqualTo("idVenditore",Database.getLoggedStudent().id).get()
+        while (!h.isComplete);
         val u :MutableList<DocumentSnapshot> = h.result.documents
+        for(z in u) {
+            val transazione = z["idMateriale"] as String
+            val materiale= getMaterialeFromid(transazione)
+            if(materiale != null)
+                listReturn.add(materiale)
+        }
 
-            for(z in u) {
-                val transazione = z["idMateriale"] as String
-                if(transazione != null) {
-                    val materiale= getMaterialeFromid(transazione)
-                    if(materiale != null)
-                        listReturn.add(materiale)
-                }
-            }
-
-        val x=database.collection("Transazioni").whereEqualTo("idAcquirente",Database.getLoggedStudent().id).get()
-        while (!x.isComplete){}
+        val x = database.collection("Transazioni").whereEqualTo("idAcquirente",Database.getLoggedStudent().id).get()
+        while (!x.isComplete);
         val l :MutableList<DocumentSnapshot> = x.result.documents
-
         for(c in l) {
             val transazione = c["idMateriale"] as String
-            if(transazione != null) {
-                var materiale= getMaterialeFromid(transazione)
-                if(materiale != null) {
-                    materiale.stato="acquistato"
-                    listReturn.add(materiale)
-                }
+            val materiale= getMaterialeFromid(transazione)
+            if(materiale != null) {
+                materiale.stato="acquistato"
+                listReturn.add(materiale)
             }
         }
 
         return listReturn
-
     }
 
     fun getMaterialeFromid(id:String): Materiale? {
         var materiale: Materiale? = null
         val i= database.collection("materiale").document(id).get()
-        while (!i.isComplete){}
-            val z : DocumentSnapshot = i.result
-            if(z.exists()) {
-                val  uri: ArrayList<String> = ArrayList()
-                uri.add(getUriPhotosMateriale(z.id))
-                val c= z.getGeoPoint("cordinate")
-                materiale =
-                    c?.let {
-                        Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
-                            it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
-                    }
-            }
-
+        while (!i.isComplete);
+        val z : DocumentSnapshot = i.result
+        if(z.exists()) {
+            val uri: ArrayList<String> = ArrayList()
+            uri.add(getUriPhotosMateriale(z.id))
+            val c= z.getGeoPoint("cordinate")
+            materiale =
+                c?.let {
+                    Materiale(z.id,z["nome"].toString(),z["descrizione"].toString(),z["tipologia"].toString(),z["prezzo"].toString().toDouble(),
+                        it.latitude,it.longitude,z["stato"].toString(),z["idCorso"].toString(), z["proprietario"].toString(),uri)
+                }
+        }
         return materiale
     }
 
     companion object {
         private lateinit var istance: Database
+
         private fun getIstance(): Database {
             if (!this::istance.isInitialized)
                 istance = Database()
@@ -517,16 +450,12 @@ class Database {
             return getIstance().loggedStudente
         }
 
-        fun getStudenti(): ArrayList<Studente> {
-            return getIstance().getStudenti()
-        }
-
         fun getStudente(email: String): Studente? {
             return getIstance().getStudente(email)
         }
 
-        fun addStudente(name: String, surname: String, email: String, password: String): Studente? {
-            return getIstance().addStudente(name, surname, email, password)
+        fun addStudente(name: String, surname: String, email: String, password: String) {
+            getIstance().addStudente(name, surname, email, password)
         }
 
         fun getLastMessage(studenteRichiesto: User): Messaggio {
@@ -535,28 +464,6 @@ class Database {
 
         fun getMateriali(): ArrayList<Materiale> {
             return getIstance().getMateriali()
-        }
-
-        fun addMateriale(
-            nome: String,
-            descrizione: String,
-            tipologia: String,
-            prezzo: Double,
-            latitudine: Double,
-            longitudine: Double,
-            stato: String,
-            NomeCorso: String
-        ): String {
-            return getIstance().addMateriale(
-                nome,
-                descrizione,
-                tipologia,
-                prezzo,
-                latitudine,
-                longitudine,
-                stato,
-                NomeCorso
-            )
         }
 
         fun addAnnuncio(materiale: MaterialeDaAggiungere) {
@@ -571,20 +478,12 @@ class Database {
             return getIstance().getMaterialiStudente(username, checkVendita)
         }
 
-        fun getUriPhotoMateriale(idMateriale: String): String {
-            return getIstance().getUriPhotosMateriale(idMateriale)
-        }
-
         fun searchMateriale(corso: String): ArrayList<Materiale?> {
             return getIstance().searchMateriale(corso)
         }
 
         fun getStudenteFromId(id: String): Studente? {
             return getIstance().getStudenteFromId(id)
-        }
-
-        fun getListUsersChat(): ArrayList<User> {
-            return getIstance().getListUsersChat()
         }
 
         fun registerTransaction(idAcquirente: String, materiale: Materiale) {
