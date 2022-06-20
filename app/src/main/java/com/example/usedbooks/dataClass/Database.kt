@@ -385,9 +385,13 @@ class Database {
     }
 
     fun getAllCorsi() : ArrayList<String> {
-        //TODO: "Ottenere tutti i corsi"
+        val i=database.collection("Corso").get()
+        while (!i.isComplete);
+        val k : MutableList<DocumentSnapshot> = i.result.documents
         val arrayList = ArrayList<String>()
-        arrayList.add("logica")
+        for (doc in k) {
+            arrayList.add(doc["nome"].toString())
+        }
         return arrayList
     }
 
