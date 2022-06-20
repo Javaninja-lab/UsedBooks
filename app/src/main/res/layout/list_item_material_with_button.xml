@@ -63,7 +63,7 @@
     <Button
         android:id="@+id/btn_sold"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
         android:text="@string/sold"
         app:layout_constraintBottom_toBottomOf="@+id/ll_information_materiale"

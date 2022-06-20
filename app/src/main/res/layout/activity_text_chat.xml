@@ -7,10 +7,12 @@
     tools:context=".main.chat.SingleChat">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ll_topbar"
+        android:id="@+id/cl_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -24,7 +26,7 @@
             android:id="@+id/tv_nome_contatto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/testtext"
+            android:text="@string/name_of_student"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_foto_profilo"
@@ -36,9 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearChat"
+        android:layout_below="@id/cl_topbar"
         android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:layout_below="@id/ll_topbar" />
+        android:transcriptMode="alwaysScroll" />
 
     <LinearLayout
         android:id="@+id/linearChat"
@@ -64,7 +66,7 @@
             style="@style/primaryStyleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:text="@string/send" />
     </LinearLayout>

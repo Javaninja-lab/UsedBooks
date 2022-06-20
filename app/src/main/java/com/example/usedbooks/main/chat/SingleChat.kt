@@ -1,9 +1,11 @@
 package com.example.usedbooks.main.chat
 
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.adapters.MessageAdapter
+import com.example.usedbooks.dataClass.Gestore
 import com.google.firebase.database.*
 
 class SingleChat : AppCompatActivity() {
@@ -24,20 +27,20 @@ class SingleChat : AppCompatActivity() {
         setContentView(R.layout.activity_text_chat)
 
 
-        val name : String = args.nameVendor
-        val receiverid : String = args.id
+        val vendor = args.vendor
+        val name = vendor.username
+        val receiverid = vendor.id
+        val senderid= Database.getLoggedStudent().id
 
-        val senderid= Database.getLoggedStudent()!!.id
-
-        val mDbref= FirebaseDatabase.getInstance().getReference()
+        val mDbref= FirebaseDatabase.getInstance().reference
 
         val tv_nome_contatto = findViewById<TextView>(R.id.tv_nome_contatto)
-        tv_nome_contatto.setText(name)
+        tv_nome_contatto.text = "${tv_nome_contatto.text}: $name"
+        val iv_foto_profilo = findViewById<ImageView>(R.id.iv_foto_profilo)
+        Gestore.getProfileImage(iv_foto_profilo, receiverid!!)
 
-        //codice univoco della stanza
         val senderRoom= receiverid+senderid
         val receiverRoom= senderid+receiverid
-
 
         val chatRecyclerView = findViewById<RecyclerView>(R.id.RelativeChat)
         val messageBox = findViewById<EditText>(R.id.mb_messaggio)
@@ -47,7 +50,6 @@ class SingleChat : AppCompatActivity() {
 
         chatRecyclerView.layoutManager= LinearLayoutManager(this)
         chatRecyclerView.adapter= messageAdapter
-
 
         //aggiungere i messaggi alla recyclervieew
         mDbref.child("chats").child(senderRoom).child("messages")
@@ -68,7 +70,6 @@ class SingleChat : AppCompatActivity() {
 
             })
 
-
         sendButton.setOnClickListener{
             val message= messageBox.text.toString().trim()
             if(message.isEmpty()){
@@ -82,7 +83,7 @@ class SingleChat : AppCompatActivity() {
                             .setValue(messageObject)
                     }
 
-                mDbref.child("users").child(receiverid).child(senderid)
+                mDbref.child("users").child(receiverid!!).child(senderid)
                     .setValue(User(senderid, Database.getLoggedStudent().nome))
                 messageBox.setText("")
             }

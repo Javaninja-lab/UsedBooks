@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import com.example.usedbooks.R
 import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.Photo
 import java.io.ByteArrayOutputStream
 import java.util.ArrayList
@@ -60,12 +61,7 @@ class ChangeFotoProfiloFragment : Fragment() {
             }
         }
 
-        val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
-        if(uriImageStudent != "")
-            iv_foto_profilo_attuale.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
-        else {
-            iv_foto_profilo_attuale.setImageResource(R.drawable.placeholder)
-        }
+        Gestore.getProfileImage(iv_foto_profilo_attuale, Database.getLoggedStudent().id)
 
         val cl_foto_profilo_nuovo = view.findViewById<ConstraintLayout>(R.id.cl_foto_profilo_nuovo)
         pb_upload_foto = PersonalProgressBar(view.context, cl_foto_profilo_nuovo, null, 100)

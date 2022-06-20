@@ -14,6 +14,7 @@ import com.example.usedbooks.customView.PersonalProgressBar
 import com.example.usedbooks.R
 import com.example.usedbooks.adapters.MaterialeRecyclerAdapter
 import com.example.usedbooks.dataClass.Database
+import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.login.LoginActivity
 import com.google.firebase.auth.ktx.auth
@@ -28,12 +29,7 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         val iv_foto_profilo = view.findViewById<ImageView>(R.id.iv_foto_profilo)
 
-        val uriImageStudent= Database.getUriPhotosStudente(Database.getLoggedStudent().id)
-        if(!uriImageStudent.equals(""))
-            iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
-        else {
-            iv_foto_profilo.setImageResource(R.drawable.placeholder)
-        }
+        Gestore.getProfileImage(iv_foto_profilo, Database.getLoggedStudent().id)
 
 
         iv_foto_profilo.setOnClickListener {
@@ -107,5 +103,4 @@ class ProfileFragment : Fragment() {
 
         return view
     }
-
 }

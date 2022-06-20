@@ -1,5 +1,5 @@
 package com.example.usedbooks.dataClass
 
-class User (val id : String?, val username: String?) {
-    constructor() : this(null, null)
-}
+import java.io.Serializable
+
+class User (val id : String? = null, val username: String? = null) : Serializable

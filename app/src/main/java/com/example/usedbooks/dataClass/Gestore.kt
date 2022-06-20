@@ -43,6 +43,16 @@ abstract class Gestore {
             }
         }
 
+        fun getProfileImage(iv_foto_profilo: ImageView, userid: String) {
+            val uriImageStudent = Database.getUriPhotosStudente(userid)
+            if (!uriImageStudent.equals(""))
+                iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
+            else {
+                iv_foto_profilo.setImageResource(R.drawable.placeholder)
+            }
+        }
+
+
         fun bindUserAdapter(
             position: Int,
             holder: UserAdapter.UserViewHolder,
@@ -53,12 +63,7 @@ abstract class Gestore {
             holder.tv_nome_studente.text = "${holder.tv_nome_studente.text}: ${currentUser.username}"
 
             if (currentUser.id != null) {
-                val uriImageStudent = Database.getUriPhotosStudente(currentUser.id)
-                if (!uriImageStudent.equals(""))
-                    holder.iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
-                else {
-                    holder.iv_foto_profilo.setImageResource(R.drawable.placeholder)
-                }
+                getProfileImage(holder.iv_foto_profilo, currentUser.id)
             } else {
                 holder.iv_foto_profilo.setImageResource(R.drawable.placeholder)
             }

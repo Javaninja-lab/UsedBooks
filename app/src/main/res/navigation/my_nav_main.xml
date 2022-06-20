@@ -29,11 +29,8 @@
             android:id="@+id/action_chatFragment_to_textChat"
             app:destination="@id/textChat" >
             <argument
-                android:name="name_vendor"
-                app:argType="string"/>
-            <argument
-                android:name="id"
-                app:argType="string"/>
+                android:name="vendor"
+                app:argType="com.example.usedbooks.dataClass.User"/>
         </action>
     </fragment>
     <fragment
@@ -90,11 +87,8 @@
         android:label="activity_text_chat"
         tools:layout="@layout/activity_text_chat">
         <argument
-            android:name="name_vendor"
-            app:argType="string"/>
-        <argument
-            android:name="id"
-            app:argType="string"/>
+            android:name="vendor"
+            app:argType="com.example.usedbooks.dataClass.User"/>
     </activity>
     <fragment
         android:id="@+id/soldFragment"

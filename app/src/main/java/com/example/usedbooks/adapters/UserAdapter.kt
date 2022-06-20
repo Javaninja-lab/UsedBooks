@@ -23,15 +23,14 @@ class UserAdapter(val userList: ArrayList<User>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list_item_chat,parent,false)// da vedere se funziona
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.list_item_chat,parent,false)
         return UserViewHolder(view)
     }
 
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         Gestore.bindUserAdapter(position, holder, userList) {
-            val action = ListChatsFragmentDirections.actionChatFragmentToTextChat(
-                userList[position].username!!, userList[position].id!!)
+            val action = ListChatsFragmentDirections.actionChatFragmentToTextChat(userList[position])
             holder.itemView.findNavController().navigate(action)
         }
     }
