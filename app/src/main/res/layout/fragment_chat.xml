@@ -13,10 +13,17 @@
         style="@style/primaryStyleTextView"
         android:textAlignment="center"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerViewChat"
+        android:id="@+id/rv_chats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="55dp"
         tools:listitem="@layout/list_item_chat"/>
+    <TextView
+        android:id="@+id/tv_no_chats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/no_chats"
+        />
 </LinearLayout>

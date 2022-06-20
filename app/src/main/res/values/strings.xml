@@ -64,4 +64,5 @@
     <string name="choose_the_student_that_acquire_the_material">Choose the student that acquire the material</string>
     <string name="there_are_no_materials">There are no materials</string>
     <string name="announcement">Announcement</string>
+    <string name="no_chats">There are no chats</string>
 </resources>

@@ -5,7 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.usedbooks.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -255,7 +258,11 @@ class Database {
         }
     }
 
-    private fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>) {
+    private fun setUsersChat(
+        userList: ArrayList<User>,
+        adapter: RecyclerView.Adapter<*>,
+        view: View
+    ) {
         mDbref.child("users").child(getLoggedStudent().id).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
@@ -265,7 +272,12 @@ class Database {
                         userList.add(currentUser!!)
                     }
                 }
-                adapter.notifyDataSetChanged()
+                if(userList.isEmpty()) {
+                    view.findViewById<TextView>(R.id.rv_chats).visibility = View.GONE
+                    view.findViewById<TextView>(R.id.tv_no_chats).visibility = View.VISIBLE
+                } else {
+                    adapter.notifyDataSetChanged()
+                }
             }
             override fun onCancelled(error: DatabaseError) {
 
@@ -316,19 +328,6 @@ class Database {
         while(!s.isComplete);
         id=s.result.id
         return id
-    }
-
-    private fun getStudenti() : ArrayList<Studente> {
-        val list : ArrayList<Studente> = ArrayList()
-        val i = database.collection("studenti").get()
-        while (!i.isComplete);
-        val k : MutableList<DocumentSnapshot> = i.result.documents
-        for(z in k) {
-            val utente = User(z.id, z["password"].toString())
-            val studente = Studente(z.id, z["nome"].toString(),z["cognome"].toString(),z["email"].toString(),utente)
-            list.add(studente)
-        }
-        return list
     }
 
     private fun getStudente(username : String) : Studente? {
@@ -501,8 +500,8 @@ class Database {
             return getIstance().getPhotoStudente(Uri)
         }
 
-        fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>) {
-            return getIstance().setUsersChat(userList, adapter)
+        fun setUsersChat(userList : ArrayList<User>, adapter : RecyclerView.Adapter<*>, view : View) {
+            return getIstance().setUsersChat(userList, adapter, view)
         }
         fun getTransaction(): List<Materiale?> {
             return getIstance().getTransaction()

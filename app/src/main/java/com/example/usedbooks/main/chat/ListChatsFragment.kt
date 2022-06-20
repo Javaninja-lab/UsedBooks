@@ -30,11 +30,11 @@ class ListChatsFragment : Fragment() {
         mDbRef = FirebaseDatabase.getInstance().getReference()
         adapter = UserAdapter(userList)
 
-        userRecyclerView = view.findViewById(R.id.RecyclerViewChat)
+        userRecyclerView = view.findViewById(R.id.rv_chats)
         userRecyclerView.layoutManager = LinearLayoutManager(view.context)
         userRecyclerView.adapter = adapter
 
-        Database.setUsersChat(userList, adapter)
+        Database.setUsersChat(userList, adapter, view)
 
         return view
     }

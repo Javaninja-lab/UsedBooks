@@ -40,7 +40,7 @@ class SoldFragment : Fragment() {
         userRecyclerView.layoutManager= LinearLayoutManager(this.context)
         userRecyclerView.adapter=adapter
 
-        Database.setUsersChat(userList, adapter)
+        Database.setUsersChat(userList, adapter, layout)
 
         return layout
     }
