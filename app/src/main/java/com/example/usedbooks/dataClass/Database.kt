@@ -273,7 +273,7 @@ class Database {
                     }
                 }
                 if(userList.isEmpty()) {
-                    view.findViewById<TextView>(R.id.rv_chats).visibility = View.GONE
+                    view.findViewById<RecyclerView>(R.id.rv_chats).visibility = View.GONE
                     view.findViewById<TextView>(R.id.tv_no_chats).visibility = View.VISIBLE
                 } else {
                     adapter.notifyDataSetChanged()

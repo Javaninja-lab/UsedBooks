@@ -25,5 +25,6 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="@string/no_chats"
+        android:textAlignment="center"
         />
 </LinearLayout>

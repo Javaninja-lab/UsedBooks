@@ -31,9 +31,11 @@ class RegisterFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        val btn = view.findViewById<Button>(R.id.btn_Register)
-        btn.setOnClickListener {
+        val btn_Register = view.findViewById<Button>(R.id.btn_Register)
+        btn_Register.setOnClickListener {
+            btn_Register.isEnabled = false
             onSingUpClick(view)
+            btn_Register.isEnabled = true
         }
 
         return view
