@@ -14,6 +14,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/primaryStyleEditText</item>
+        <item name="logo">@drawable/logo</item>
     </style>
 
     <style name="primaryStyleEditText" parent="@android:style/Widget.EditText">

@@ -63,10 +63,10 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
+        /*val currentUser = auth.currentUser
         if (currentUser != null && view != null) {
             login(currentUser.email!!, requireView())
-        }
+        }*/
     }
 
     private fun onLoginClick(view : View) {
