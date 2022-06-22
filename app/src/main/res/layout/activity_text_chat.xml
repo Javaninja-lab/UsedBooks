@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -23,7 +23,8 @@
             android:background="@drawable/bg_image_profile"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/image_profile" />
 
         <TextView
             android:id="@+id/tv_nome_contatto"
@@ -62,7 +63,10 @@
             android:layout_height="50dp"
             android:layout_weight="100"
             android:hint="@string/type_a_message"
-            android:imeOptions="actionSend" />
+            android:imeOptions="actionSend"
+            android:autofillHints="MESSAGE"
+            android:inputType="textAutoCorrect"
+            />
 
         <Button
             android:id="@+id/invioButton"

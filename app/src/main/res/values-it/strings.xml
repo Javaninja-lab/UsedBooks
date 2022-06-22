@@ -57,4 +57,10 @@
     <string name="there_are_no_materials">Non ci sono materiali</string>
     <string name="announcement">Annuncio</string>
     <string name="no_chats">Non ci sono chat</string>
+    <string name="no_message">Non ci sono ancora messaggi</string>
+    <string name="image_profile">Immagine profilo</string>
+    <string name="old_image_profile">Vecchia immagine profilo</string>
+    <string name="new_image_profile">Nuova immagine profilo</string>
+    <string name="logo_image">Immagine Logo</string>
+    <string name="image_of_announcement">Immagine dell\'annuncio</string>
 </resources>

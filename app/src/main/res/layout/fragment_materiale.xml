@@ -30,17 +30,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/iv_foto_materiale"
-            android:layout_width="298dp"
-            android:layout_height="365dp"
 
-            android:src="@drawable/test"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            <ImageView
+                android:id="@+id/iv_foto_materiale"
+                android:layout_width="298dp"
+                android:layout_height="365dp"
+
+                android:src="@drawable/test"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/image_of_announcement" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -55,14 +56,34 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_image" />
 
         <TextView
+            android:id="@+id/tv_tipolgy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/typology"
+            app:layout_constraintEnd_toEndOf="@+id/cl_image"
+            app:layout_constraintStart_toStartOf="@+id/cl_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_nome_materiale" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/description"
+            app:layout_constraintEnd_toEndOf="@+id/cl_image"
+            app:layout_constraintStart_toStartOf="@+id/cl_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_tipolgy" />
+
+        <TextView
             android:id="@+id/tv_nome_venditore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/name_of_vendor"
-            app:layout_constraintEnd_toEndOf="@id/tv_nome_materiale"
-            app:layout_constraintStart_toStartOf="@id/tv_nome_materiale"
-            app:layout_constraintTop_toBottomOf="@id/tv_nome_materiale" />
+            app:layout_constraintEnd_toEndOf="@+id/cl_image"
+            app:layout_constraintStart_toStartOf="@+id/cl_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
         <TextView
             android:id="@+id/tv_prezzo"
@@ -80,8 +101,8 @@
             android:layout_width="wrap_content"
             android:layout_height="450dp"
             android:layout_marginTop="48dp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_nome_materiale"
-            app:layout_constraintStart_toStartOf="@+id/tv_nome_materiale"
+            app:layout_constraintEnd_toEndOf="@+id/cl_image"
+            app:layout_constraintStart_toStartOf="@+id/cl_image"
             app:layout_constraintTop_toBottomOf="@id/tv_prezzo" />
 
         <Button

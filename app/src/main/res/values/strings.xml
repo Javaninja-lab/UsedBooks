@@ -65,4 +65,9 @@
     <string name="no_chats">There are no chats</string>
     <string name="action_sign_in">Sing in or register</string>
     <string name="no_message">There are no messages yet</string>
+    <string name="image_profile">Image Profile</string>
+    <string name="old_image_profile">Old Image Profile</string>
+    <string name="new_image_profile">New Image Profile</string>
+    <string name="logo_image">Logo Image</string>
+    <string name="image_of_announcement">Image of Announcement</string>
 </resources>

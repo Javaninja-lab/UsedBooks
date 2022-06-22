@@ -40,7 +40,11 @@ class MaterialeFragment : Fragment() {
         val tv_nome_venditore = view.findViewById<TextView>(R.id.tv_nome_venditore)
         tv_nome_venditore.text = "${tv_nome_venditore.text}: ${Database.getStudenteFromId(materiale.proprietario)?.nome}"
         val tv_prezzo = view.findViewById<TextView>(R.id.tv_prezzo)
-        tv_prezzo.text = "${tv_prezzo.text}: ${materiale.prezzo}"
+        tv_prezzo.text = "${tv_prezzo.text}: ${materiale.prezzo}$"
+        val tv_tipolgy = view.findViewById<TextView>(R.id.tv_tipolgy)
+        tv_tipolgy.text = "${tv_tipolgy.text}: ${materiale.tipologia}"
+        val tv_description = view.findViewById<TextView>(R.id.tv_description)
+        tv_description.text = "${tv_description.text}: ${materiale.descrizione}"
 
         val iv_foto_materiale = view.findViewById<ImageView>(R.id.iv_foto_materiale)
         val cl_image = view.findViewById<ConstraintLayout>(R.id.cl_image)
@@ -65,9 +69,9 @@ class MaterialeFragment : Fragment() {
         val btnContact = view.findViewById<Button>(R.id.btn_contact)
         btnContact.setOnClickListener {
             val mDbRef: DatabaseReference= FirebaseDatabase.getInstance().reference
-            val NomeProprietario = Database.getStudenteFromId(materiale.proprietario)?.nome
+            val nomeProprietario = Database.getStudenteFromId(materiale.proprietario)?.nome
             mDbRef.child("users").child(Database.getLoggedStudent().id).child(materiale.proprietario).setValue(
-                    User(materiale.proprietario,NomeProprietario)
+                    User(materiale.proprietario,nomeProprietario)
             )
             view.findNavController().navigate(R.id.action_materialeFragment_to_chatFragment)
         }

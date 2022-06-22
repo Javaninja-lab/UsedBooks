@@ -6,7 +6,7 @@
         <item name="shapeAppearanceOverlay">@style/shapeButton</item>
     </style>
     <style name="shapeButton">
-        <item name="cornerSize">100%</item>
+        <item name="cornerSize">30%</item>
     </style>
     <style name="primaryStyleButton" parent="styleButton">
         <item name="android:textColor">?attr/colorOnPrimary</item>
