@@ -217,14 +217,22 @@ class Database {
         return bitmap
     }
 
+    //
+
     private fun searchMateriale(corso: String): ArrayList<Materiale?> {
         val list: ArrayList<Materiale?> = ArrayList<Materiale?>()
-        val h =database.collection("Corso").whereEqualTo("nome",corso).get()
+        val h =database.collection("Corso").get()
         while (!h.isComplete);
         val u :MutableList<DocumentSnapshot> = h.result.documents
+        var idCorso=""
         if(u.isEmpty())
-            return list
-        val idCorso = u[0].id
+        {
+         return list
+        }
+        for(z in u){
+            if(z["nome"].toString().contains(corso))
+                idCorso=z.id
+        }
         val i = database.collection("materiale").whereEqualTo("idCorso", idCorso).get()
         while (!i.isComplete);
         val k: MutableList<DocumentSnapshot> = i.result.documents
