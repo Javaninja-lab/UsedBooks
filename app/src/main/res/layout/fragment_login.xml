@@ -15,6 +15,7 @@
             android:id="@+id/image_logo"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_marginTop="60dp"
             android:src="?attr/logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginTop="60dp"
 
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="8dp"
