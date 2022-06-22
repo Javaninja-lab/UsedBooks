@@ -78,7 +78,7 @@
             android:id="@+id/mv_materiale"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="450dp"
             android:layout_marginTop="48dp"
             app:layout_constraintEnd_toEndOf="@+id/tv_nome_materiale"
             app:layout_constraintStart_toStartOf="@+id/tv_nome_materiale"

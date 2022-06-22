@@ -58,8 +58,8 @@ class MaterialeFragment : Fragment() {
         supportMapFragment?.getMapAsync {
             val position = LatLng(materiale.latitudine, materiale.longitudine)
             it.addMarker(MarkerOptions().title("Posizione Materiale").position(position))
-            it.moveCamera(CameraUpdateFactory.newLatLng(position))
             it.moveCamera(CameraUpdateFactory.zoomTo(13F))
+            it.moveCamera(CameraUpdateFactory.newLatLng(position))
         }
 
         val btnContact = view.findViewById<Button>(R.id.btn_contact)

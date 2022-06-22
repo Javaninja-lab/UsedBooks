@@ -30,7 +30,7 @@ open class MaterialeRecyclerAdapter(private val fragment: String, private val bu
             itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_material_complete, parent, false)
             MaterialeViewHolder(itemView)
         }
-        val pb_image = PersonalProgressBar(parent.context, itemView.findViewById(R.id.cl_image), "pb_image", 150)
+        PersonalProgressBar(parent.context, itemView.findViewById(R.id.cl_image), "pb_image", 150)
         return view
     }
 

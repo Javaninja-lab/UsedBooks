@@ -84,7 +84,7 @@ class SingleChat : AppCompatActivity() {
                             .setValue(messageObject)
                     }
 
-                mDbref.child("users").child(receiverid!!).child(senderid)
+                mDbref.child("users").child(receiverid).child(senderid)
                     .setValue(User(senderid, Database.getLoggedStudent().nome))
                 messageBox.setText("")
             }

@@ -15,22 +15,22 @@ class MessageAdapter (val context:Context,val messageList: ArrayList<Messaggio>)
     val ITEM_SENT = 2
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            if (viewType == 1) {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.receive,parent,false)
-                return ReceiveViewHolder(view)
-            } else {
-                val view: View = LayoutInflater.from(context).inflate(R.layout.sent,parent,false)
-                return SentViewHolder(view)
-            }
+        return if (viewType == 1) {
+            val view: View = LayoutInflater.from(context).inflate(R.layout.receive,parent,false)
+            ReceiveViewHolder(view)
+        } else {
+            val view: View = LayoutInflater.from(context).inflate(R.layout.sent,parent,false)
+            SentViewHolder(view)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentMessage = messageList[position]
         if (holder.javaClass == SentViewHolder::class.java) {
-            val viewHolder = holder as SentViewHolder
+            holder as SentViewHolder
             holder.sentMessage.text= currentMessage.message
         } else {
-            val viewHolder = holder as ReceiveViewHolder
+            holder as ReceiveViewHolder
             holder.receiveMessage.text=currentMessage.message
         }
 

@@ -64,4 +64,5 @@
     <string name="announcement">Announcement</string>
     <string name="no_chats">There are no chats</string>
     <string name="action_sign_in">Sing in or register</string>
+    <string name="no_message">There are no messages yet</string>
 </resources>

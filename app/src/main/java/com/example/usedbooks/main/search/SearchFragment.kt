@@ -1,6 +1,7 @@
 package com.example.usedbooks.main.search
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,17 +67,22 @@ class SearchFragment : Fragment() {
             response.clear()
 
             pb_caricamento.caricamento {
-                for (materiale in Database.searchMateriale(search)){
-                    if(materiale!=null)
+                if(search == "") {
+                    for(materiale in Database.getMateriali()){
                         response.add(materiale)
+                    }
+                } else {
+                    for (materiale in Database.searchMateriale(search)) {
+                        if (materiale != null)
+                            response.add(materiale)
+                    }
                 }
                 recyclerView.post {
                     pb_caricamento.visibility = View.GONE
-                    if(response.isEmpty()) {
+                    if (response.isEmpty()) {
                         tv_nessun_materiale.visibility = View.VISIBLE
                         Toast.makeText(context, "Nessun risultato", Toast.LENGTH_LONG).show()
-                    }
-                    else {
+                    } else {
                         recyclerView.visibility = View.VISIBLE
                         pb_caricamento.visibility = View.GONE
                         adapter.notifyDataSetChanged()

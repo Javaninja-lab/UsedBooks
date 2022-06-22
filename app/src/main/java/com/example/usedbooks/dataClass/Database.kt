@@ -315,7 +315,7 @@ class Database {
             "stato" to stato,
             "tipologia" to tipologia
         )
-        var id=""
+        var id : String
         val s= database.collection("materiale").add(materiale).addOnSuccessListener {
                 documentReference ->
             id=documentReference.id
