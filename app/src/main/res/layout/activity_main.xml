@@ -42,7 +42,8 @@
 
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="10dp">
+            app:fabCradleVerticalOffset="10dp"
+            app:logo="@drawable/bg_new_notification">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
