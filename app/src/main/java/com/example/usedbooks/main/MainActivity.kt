@@ -3,11 +3,6 @@ package com.example.usedbooks.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
-import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.usedbooks.R

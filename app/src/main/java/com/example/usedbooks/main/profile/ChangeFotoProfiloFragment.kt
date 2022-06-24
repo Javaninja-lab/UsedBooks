@@ -54,7 +54,7 @@ class ChangeFotoProfiloFragment : Fragment() {
             takePhoto(view.context)
         }
 
-        btn_image_confirm = view.findViewById<Button>(R.id.btn_image_confirm)
+        btn_image_confirm = view.findViewById(R.id.btn_image_confirm)
         btn_image_confirm.setOnClickListener {
             if(photos.isEmpty()) {
                 Toast.makeText(view.context, "Seleziona un'immagine", Toast.LENGTH_SHORT).show()
@@ -72,12 +72,12 @@ class ChangeFotoProfiloFragment : Fragment() {
         return view
     }
 
-    fun capturePhoto() {
+    private fun capturePhoto() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startCamera.launch(cameraIntent)
     }
 
-    val startCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val startCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
@@ -91,7 +91,7 @@ class ChangeFotoProfiloFragment : Fragment() {
         }
     }
 
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path =
@@ -99,7 +99,7 @@ class ChangeFotoProfiloFragment : Fragment() {
         return Uri.parse(path)
     }
 
-    val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         iv_foto_profilo_nuovo.setImageURI(it)
         val photo = Photo(localUri = it.toString())
         Log.i("uri", it.toString())
@@ -124,7 +124,7 @@ class ChangeFotoProfiloFragment : Fragment() {
         }
     }
 
-    fun takePhoto(context : Context){
+    private fun takePhoto(context : Context) {
         if(hasCameraPermission(context) == PackageManager.PERMISSION_GRANTED && hasExternalStoregaePermission(context)== PackageManager.PERMISSION_GRANTED) {
             capturePhoto()
         }
@@ -136,8 +136,8 @@ class ChangeFotoProfiloFragment : Fragment() {
         }
     }
 
-    fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-    fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+    private fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
     private fun saveImage(photos: ArrayList<Photo>) {

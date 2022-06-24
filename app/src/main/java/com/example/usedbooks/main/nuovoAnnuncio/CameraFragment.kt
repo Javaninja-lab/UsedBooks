@@ -1,22 +1,14 @@
 package com.example.usedbooks.main.nuovoAnnuncio
 
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,27 +27,17 @@ import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 import com.example.usedbooks.dataClass.Photo
 import com.example.usedbooks.main.MainActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.util.ArrayList
-import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 class CameraFragment : Fragment() {
 
-    val args : CameraFragmentArgs by navArgs()
-    lateinit var materialeDaAggiungere: MaterialeDaAggiungere
+    private val args : CameraFragmentArgs by navArgs()
+    private lateinit var materialeDaAggiungere: MaterialeDaAggiungere
 
-    //TODO chiamare saveimage quando si inviano tutti i dati
-    var strUri :String=""
-    var photos: ArrayList<Photo> = ArrayList<Photo>()
+    private var photos: ArrayList<Photo> = ArrayList<Photo>()
     private lateinit var immagineTest : ImageView
-
-    private  var firestore= Firebase.firestore
-    private var storageReference = FirebaseStorage.getInstance().getReference()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,12 +90,12 @@ class CameraFragment : Fragment() {
         return view
     }
 
-    fun capturePhoto() {
+    private fun capturePhoto() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startCamera.launch(cameraIntent)
     }
 
-    val startCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val startCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
@@ -121,7 +103,7 @@ class CameraFragment : Fragment() {
             if(data!=null) {
                 immagineTest.setImageBitmap(data.extras?.get("data") as Bitmap)
                 val uri= getImageUri(this.requireContext(),data.extras?.get("data") as Bitmap)
-                Log.i("uri","${uri}")
+                Log.i("uri","$uri")
                 val photo = Photo(localUri = uri.toString())
                 photos.add(photo)
                 saveImage(photos)
@@ -129,7 +111,7 @@ class CameraFragment : Fragment() {
         }
     }
 
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path =
@@ -137,19 +119,15 @@ class CameraFragment : Fragment() {
         return Uri.parse(path)
     }
 
-    val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
         image.setImageURI(it)
         val photo = Photo(localUri = it.toString())
-        Log.i("uri","${it.toString()}")
+        Log.i("uri", it.toString())
         photos.add(photo)
         saveImage(photos)
     }
 
-
-    private var uri: Uri?= null
-
-    private lateinit var currentImgepath: String
 
     private val requestMultiplePermissionLaucher= registerForActivityResult (ActivityResultContracts.RequestMultiplePermissions()) { resultsMap ->
         var permissionGranted = false
@@ -169,7 +147,7 @@ class CameraFragment : Fragment() {
         }
     }
 
-    fun takePhoto(context : Context){
+    private fun takePhoto(context : Context){
         if(hasCameraPermission(context) == PackageManager.PERMISSION_GRANTED && hasExternalStoregaePermission(context)== PackageManager.PERMISSION_GRANTED) {
             capturePhoto()
         }
@@ -181,8 +159,8 @@ class CameraFragment : Fragment() {
         }
     }
 
-    fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-    fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private fun hasCameraPermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+    private fun hasExternalStoregaePermission(context : Context)= ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
     private fun saveImage(photos: ArrayList<Photo>){

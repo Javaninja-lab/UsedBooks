@@ -1,6 +1,5 @@
 package com.example.usedbooks.dataClass
 
-import android.graphics.Bitmap
 import java.io.Serializable
 
 data class MaterialeDaAggiungere(val nome : String, val descrizione : String, val tipologia: String,

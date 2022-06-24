@@ -8,14 +8,13 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
-import com.example.usedbooks.dataClass.Corso
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.MaterialeDaAggiungere
 
 
 class DatiFragment : Fragment() {
 
-    lateinit var materialeDaInviare : MaterialeDaAggiungere
+    private lateinit var materialeDaInviare : MaterialeDaAggiungere
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,18 +38,16 @@ class DatiFragment : Fragment() {
             val descrizione : String = et_descrizione_new_annuncio.text.toString()
             val tipologia : String = et_tipologia_new_annuncio.text.toString()
             val corso : String = sp_corsi.selectedItem.toString()
-            val prezzo : Double = if (et_prezzo_new_annuncio.text.toString().isEmpty()) (-1.0) else (et_prezzo_new_annuncio.text.toString().toDouble());
+            val prezzo : Double = if (et_prezzo_new_annuncio.text.toString().isEmpty()) (-1.0) else (et_prezzo_new_annuncio.text.toString().toDouble())
 
-            if(!title.isEmpty() && !descrizione.isEmpty() && !tipologia.isEmpty() && !corso.isEmpty() && prezzo > 0) {
+            if(title.isNotEmpty() && descrizione.isNotEmpty() && tipologia.isNotEmpty() && corso.isNotEmpty() && prezzo > 0) {
                 materialeDaInviare = MaterialeDaAggiungere(title, descrizione, tipologia, corso, prezzo)
                 val action =
                     DatiFragmentDirections.actionDatiFragmentToMapsFragment(materialeDaInviare)
                 findNavController().navigate(action)
             } else {
-                Toast.makeText(view.context, "Error in submitted data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context, view.context.getText(R.string.no_data), Toast.LENGTH_SHORT).show()
             }
-
-            //findNavController().navigate(R.id.action_datiFragment_to_mapsFragment)
         }
 
         return view

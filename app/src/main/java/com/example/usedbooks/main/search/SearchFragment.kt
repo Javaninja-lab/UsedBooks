@@ -1,7 +1,6 @@
 package com.example.usedbooks.main.search
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,8 @@ import com.example.usedbooks.R
 import com.example.usedbooks.adapters.MaterialeRecyclerAdapter
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
-import kotlin.concurrent.thread
-
 
 class SearchFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

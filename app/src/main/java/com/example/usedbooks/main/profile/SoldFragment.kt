@@ -12,13 +12,11 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Materiale
 import com.example.usedbooks.dataClass.User
-import com.example.usedbooks.adapters.UserAdapter
 import com.example.usedbooks.adapters.UserSaleAdapter
-import com.google.firebase.database.*
 
 class SoldFragment : Fragment() {
 
-    val args : SoldFragmentArgs by navArgs()
+    private val args : SoldFragmentArgs by navArgs()
     lateinit var materiale: Materiale
 
     private lateinit var  userRecyclerView: RecyclerView
