@@ -9,13 +9,10 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.recyclerview.widget.RecyclerView
-import com.example.usedbooks.dataClass.Database
-import com.example.usedbooks.dataClass.Materiale
 import kotlin.concurrent.thread
 
 
-class PersonalProgressBar(contesto: Context, val layout : ConstraintLayout, tag : String? = null, dimension: Int = 500) : ProgressBar(contesto, null, android.R.attr.progressBarStyleLarge) {
+class PersonalProgressBar(contesto: Context, val layout : ConstraintLayout, dimension: Int = 500, tag : String? = null) : ProgressBar(contesto, null, android.R.attr.progressBarStyleLarge) {
     init {
         val progressDrawable: Drawable = this.indeterminateDrawable.mutate()
         val typedValue = TypedValue()
@@ -39,7 +36,7 @@ class PersonalProgressBar(contesto: Context, val layout : ConstraintLayout, tag 
         this.layoutParams.width = dimension
 
         if(tag != null) {
-            this.setTag(tag)
+            this.tag = tag
         }
 
         this.requestLayout()
@@ -49,12 +46,5 @@ class PersonalProgressBar(contesto: Context, val layout : ConstraintLayout, tag 
         thread(start = true) {
             runnable.run()
         }
-    }
-
-    fun setUpConstraintTop(view: View, margin : Int = 0){
-        val set = ConstraintSet()
-        set.clone(layout)
-        set.connect(this.id, ConstraintSet.TOP, view.id, ConstraintSet.BOTTOM, margin)
-        set.applyTo(layout)
     }
 }

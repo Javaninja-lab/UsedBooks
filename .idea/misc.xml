@@ -25,7 +25,7 @@
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_change_foto_profilo.xml" value="0.3786231884057971" />
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_chat.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_login.xml" value="0.67" />
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_nuovo_annuncio_dati.xml" value="0.41770833333333335" />
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_profile.xml" value="0.3319746376811594" />
         <entry key="..\:/Users/Lorenzo/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/fragment_search.xml" value="0.40896739130434784" />
@@ -48,8 +48,10 @@
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/ic_logout.xml" value="0.312" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/shape_edit_text.xml" value="0.312" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/shape_item_listview.xml" value="0.312" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/shape_spinner.xml" value="0.195" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/shape_text_view_receive.xml" value="0.312" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/shape_text_view_sent.xml" value="0.312" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/drawable/trasparent_background.xml" value="0.195" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_logic.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/activity_main.xml" value="0.2975630611372381" />
@@ -74,7 +76,7 @@
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/list_item_material_with_button.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/pollo.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/receive.xml" value="0.14578879863189398" />
-        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/sent.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/layout/sent.xml" value="0.25" />
         <entry key="..\:/Users/famig/AndroidStudioProjects/UsedBooks/app/src/main/res/menu/my_navigation_items.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/famig/Desktop/UsedBooks/app/src/main/res/layout/activity_login.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/famig/Desktop/UsedBooks/app/src/main/res/layout/activity_main.xml" value="0.1716485507246377" />

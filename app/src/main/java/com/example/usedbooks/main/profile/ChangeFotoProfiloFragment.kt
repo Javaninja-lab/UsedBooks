@@ -66,7 +66,7 @@ class ChangeFotoProfiloFragment : Fragment() {
         Gestore.getProfileImage(iv_foto_profilo_attuale, Database.getLoggedStudent().id)
 
         val cl_foto_profilo_nuovo = view.findViewById<ConstraintLayout>(R.id.cl_foto_profilo_nuovo)
-        pb_upload_foto = PersonalProgressBar(view.context, cl_foto_profilo_nuovo, null, 100)
+        pb_upload_foto = PersonalProgressBar(view.context, cl_foto_profilo_nuovo, 100)
         pb_upload_foto.visibility = View.GONE
 
         return view
