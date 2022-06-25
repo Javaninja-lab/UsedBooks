@@ -10,9 +10,9 @@ import com.example.usedbooks.R
 import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Messaggio
 
-class MessageAdapter (val context:Context,val messageList: ArrayList<Messaggio>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val ITEM_RECEIVE = 1
-    val ITEM_SENT = 2
+class MessageAdapter (val context:Context, private val messageList: ArrayList<Messaggio>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val ITEM_RECEIVE = 1
+    private val ITEM_SENT = 2
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 1) {
@@ -51,10 +51,10 @@ class MessageAdapter (val context:Context,val messageList: ArrayList<Messaggio>)
 
 
     class SentViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
-        val sentMessage= itemView.findViewById<TextView>(R.id.txt_sent_message)
+        val sentMessage: TextView = itemView.findViewById(R.id.txt_sent_message)
     }
     class ReceiveViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
-        val receiveMessage= itemView.findViewById<TextView>(R.id.txt_receive_message)
+        val receiveMessage: TextView = itemView.findViewById(R.id.txt_receive_message)
     }
 
 }

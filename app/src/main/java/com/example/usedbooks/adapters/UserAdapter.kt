@@ -8,18 +8,17 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.usedbooks.R
-import com.example.usedbooks.dataClass.Database
 import com.example.usedbooks.dataClass.Gestore
 import com.example.usedbooks.dataClass.User
 import com.example.usedbooks.main.chat.ListChatsFragmentDirections
 
-class UserAdapter(val userList: ArrayList<User>) :
+class UserAdapter(private val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val tv_nome_studente = itemView.findViewById<TextView>(R.id.tv_nome_studente)
-        val iv_foto_profilo = itemView.findViewById<ImageView>(R.id.iv_foto_profilo)
-        val tv_ultimo_messaggio = itemView.findViewById<TextView>(R.id.tv_ultimo_messaggio)
+        val tv_nome_studente : TextView = itemView.findViewById(R.id.tv_nome_studente)
+        val iv_foto_profilo : ImageView = itemView.findViewById(R.id.iv_foto_profilo)
+        val tv_ultimo_messaggio : TextView = itemView.findViewById(R.id.tv_ultimo_messaggio)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {

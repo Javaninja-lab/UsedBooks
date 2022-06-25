@@ -1,18 +1,13 @@
 package com.example.usedbooks.login
 
-import android.content.ContentValues
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.customView.PersonalProgressBar
@@ -37,19 +32,20 @@ class LoginFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        btn_SingIn = layout.findViewById<Button>(R.id.btn_SingIn)
+        btn_SingIn = layout.findViewById(R.id.btn_SingIn)
         btn_SingIn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         cl_login = layout.findViewById(R.id.cl_login)
 
-        pb_login = PersonalProgressBar(layout.context, cl_login, null, 100)
+        pb_login = PersonalProgressBar(layout.context, cl_login, 250)
         pb_login.visibility = View.GONE
-        pb_login.setUpConstraintTop(btn_SingIn, 50)
 
         btn_Login = layout.findViewById(R.id.btn_Login)
         btn_Login.setOnClickListener {
+            btn_Login.visibility = View.GONE
+            btn_SingIn.visibility = View.GONE
             btn_Login.isEnabled = false
             btn_SingIn.isEnabled = false
             pb_login.visibility = View.VISIBLE
@@ -57,16 +53,15 @@ class LoginFragment : Fragment() {
                 onLoginClick(layout)
             }
         }
-
         return layout
     }
 
     override fun onStart() {
         super.onStart()
-        /*val currentUser = auth.currentUser
+        val currentUser = auth.currentUser
         if (currentUser != null && view != null) {
             login(currentUser.email!!, requireView())
-        }*/
+        }
     }
 
     private fun onLoginClick(view : View) {
@@ -74,40 +69,57 @@ class LoginFragment : Fragment() {
         val passwordEditText = view.findViewById<EditText>(R.id.et_password_login)
         val email = emailEditText.text.toString().trim()
         val passwordNotHashed = passwordEditText.text.toString().trim()
+        var error = false
         if (email.isEmpty()) {
+            error = true
             val msg = "Enter email"
+            view.post {
             emailEditText.error = msg
-            Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-            btn_Login.isEnabled = true
-            btn_SingIn.isEnabled = true
-            pb_login.visibility = View.GONE
-            return
+                Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+                btn_Login.isEnabled = true
+                btn_SingIn.isEnabled = true
+                btn_Login.visibility = View.VISIBLE
+                btn_SingIn.visibility = View.VISIBLE
+                pb_login.visibility = View.GONE
+            }
         }
         if (passwordNotHashed.isEmpty()) {
+            error = true
             val msg = "Enter password"
+            view.post {
             passwordEditText.error = msg
-            Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
-            btn_Login.isEnabled = true
-            btn_SingIn.isEnabled = true
-            pb_login.visibility = View.GONE
-            return
-        }
-        val password = Gestore.getHash(passwordNotHashed)
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful) {
-                login(email, view)
-            } else {
-                Toast.makeText(view.context, "Credenziali errate", Toast.LENGTH_LONG).show()
+                Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+                btn_Login.isEnabled = true
+                btn_SingIn.isEnabled = true
+                btn_Login.visibility = View.VISIBLE
+                btn_SingIn.visibility = View.VISIBLE
+                pb_login.visibility = View.GONE
             }
-            btn_Login.isEnabled = true
-            btn_SingIn.isEnabled = true
-            pb_login.visibility = View.GONE
+        }
+        if(!error) {
+            val password = Gestore.getHash(passwordNotHashed)
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    login(email, view)
+                } else {
+                    view.post {
+                        Toast.makeText(view.context, "Credenziali errate", Toast.LENGTH_LONG).show()
+                    }
+                }
+                btn_Login.isEnabled = true
+                btn_SingIn.isEnabled = true
+                btn_Login.visibility = View.VISIBLE
+                btn_SingIn.visibility = View.VISIBLE
+                pb_login.visibility = View.GONE
+            }
         }
     }
 
     private fun login(email : String, view : View) {
         btn_Login.isEnabled = false
         btn_SingIn.isEnabled = false
+        btn_Login.visibility = View.GONE
+        btn_SingIn.visibility = View.GONE
         pb_login.visibility = View.VISIBLE
         pb_login.caricamento {
             Database.setLoggedStudent(Database.getStudente(email)!!)

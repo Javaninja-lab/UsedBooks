@@ -2,8 +2,6 @@ package com.example.usedbooks.main.nuovoAnnuncio
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
 import android.location.Location
@@ -16,9 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,15 +30,15 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapsFragment : Fragment() {
-    val args : MapsFragmentArgs by navArgs()
-    lateinit var materialeDaAggiungere: MaterialeDaAggiungere
+    private val args : MapsFragmentArgs by navArgs()
+    private lateinit var materialeDaAggiungere: MaterialeDaAggiungere
 
     var locationByGPS : Location? = null
     var locationByNetwork : Location? = null
-    lateinit var map : GoogleMap
-    var latitudine : Double = -34.0
-    var longitudine : Double = 151.0
-    var marker : Marker? = null
+    private lateinit var map : GoogleMap
+    private var latitudine : Double = -34.0
+    private var longitudine : Double = 151.0
+    private var marker : Marker? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -85,7 +81,7 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-    fun impostaCordinata() {
+    private fun impostaCordinata() {
         val position = LatLng(latitudine, longitudine)
         marker?.remove()
         marker = map.addMarker(MarkerOptions().position(position).title("Position of Material"))
@@ -133,10 +129,10 @@ class MapsFragment : Fragment() {
                 }
             } else {
                 if(locationByGPS != null || locationByNetwork != null){
-                    if(locationByGPS!=null){
-                        currentLocation = locationByGPS
+                    currentLocation = if(locationByGPS!=null){
+                        locationByGPS
                     } else {
-                        currentLocation = locationByNetwork
+                        locationByNetwork
                     }
                 }
             }
@@ -180,7 +176,7 @@ class MapsFragment : Fragment() {
         }
     }
 
-    val gpsLocationListener: LocationListener = object : LocationListener {
+    private val gpsLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             locationByGPS = location
         }

@@ -63,4 +63,9 @@
     <string name="new_image_profile">Nuova immagine profilo</string>
     <string name="logo_image">Immagine Logo</string>
     <string name="image_of_announcement">Immagine dell\'annuncio</string>
+    <string name="no_data">Errore nei dati inviati</string>
+    <string name="empty">Vuoto</string>
+    <string name="message_empty">Errore: ci sono alcune caselle di testo vuote</string>
+    <string name="error">Errore</string>
+    <string name="image_of_chosen_photo">Immagine della foto scelta</string>
 </resources>

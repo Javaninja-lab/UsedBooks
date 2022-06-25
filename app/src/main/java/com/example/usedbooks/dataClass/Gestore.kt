@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import com.example.usedbooks.R
 import com.example.usedbooks.adapters.UserAdapter
 import com.example.usedbooks.customView.PersonalProgressBar
-import com.example.usedbooks.main.chat.ListChatsFragmentDirections
 import com.example.usedbooks.main.profile.ProfileFragmentDirections
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
@@ -18,9 +17,9 @@ import kotlin.concurrent.thread
 abstract class Gestore {
 
     companion object {
-        val md = MessageDigest.getInstance("SHA-256")
+        private val md : MessageDigest = MessageDigest.getInstance("SHA-256")
 
-        fun ByteArray.toHex() = joinToString(separator = "") {
+        private fun ByteArray.toHex() = joinToString(separator = "") {
             "%02x".format(it)
         }
 
@@ -46,7 +45,7 @@ abstract class Gestore {
 
         fun getProfileImage(iv_foto_profilo: ImageView, userid: String) {
             val uriImageStudent = Database.getUriPhotosStudente(userid)
-            if (!uriImageStudent.equals(""))
+            if (uriImageStudent != "")
                 iv_foto_profilo.setImageBitmap(Database.getPhotoStudente(uriImageStudent))
             else {
                 iv_foto_profilo.setImageResource(R.drawable.placeholder)

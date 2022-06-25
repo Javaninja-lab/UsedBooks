@@ -1,6 +1,5 @@
 package com.example.usedbooks.main.chat
 
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -20,7 +19,7 @@ import com.google.firebase.database.*
 
 class SingleChat : AppCompatActivity() {
 
-    val args : SingleChatArgs by navArgs()
+    private val args : SingleChatArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

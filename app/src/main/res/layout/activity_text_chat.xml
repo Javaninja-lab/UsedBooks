@@ -64,7 +64,7 @@
             android:layout_weight="100"
             android:hint="@string/type_a_message"
             android:imeOptions="actionSend"
-            android:autofillHints="MESSAGE"
+            android:autofillHints="AUTOFILL_HINT_NOT_APPLICABLE"
             android:inputType="textAutoCorrect"
             />
 

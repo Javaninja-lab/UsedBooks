@@ -27,7 +27,7 @@ class ListChatsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
         userList = ArrayList()
-        mDbRef = FirebaseDatabase.getInstance().getReference()
+        mDbRef = FirebaseDatabase.getInstance().reference
         adapter = UserAdapter(userList)
 
         userRecyclerView = view.findViewById(R.id.rv_chats)
