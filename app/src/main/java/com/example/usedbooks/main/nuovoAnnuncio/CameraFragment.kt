@@ -121,11 +121,13 @@ class CameraFragment : Fragment() {
 
     private val startGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         val image = this.requireView().findViewById<ImageView>(R.id.iv_foto_scelta)
-        image.setImageURI(it)
-        val photo = Photo(localUri = it.toString())
-        Log.i("uri", it.toString())
-        photos.add(photo)
-        saveImage(photos)
+        if(it!=null){
+            image.setImageURI(it)
+            val photo = Photo(localUri = it.toString())
+            Log.i("uri", it.toString())
+            photos.add(photo)
+            saveImage(photos)
+        }
     }
 
 
