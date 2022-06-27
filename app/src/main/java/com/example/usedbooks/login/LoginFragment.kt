@@ -122,10 +122,21 @@ class LoginFragment : Fragment() {
         btn_SingIn.visibility = View.GONE
         pb_login.visibility = View.VISIBLE
         pb_login.caricamento {
-            Database.setLoggedStudent(Database.getStudente(email)!!)
-            val intent = Intent(view.context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            val studente = Database.getStudente(email)
+            if(studente!=null) {
+                Database.setLoggedStudent(studente)
+                val intent = Intent(view.context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                pb_login.post {
+                    btn_Login.isEnabled = true
+                    btn_SingIn.isEnabled = true
+                    btn_Login.visibility = View.VISIBLE
+                    btn_SingIn.visibility = View.VISIBLE
+                    pb_login.visibility = View.GONE
+                }
+            }
         }
 
     }

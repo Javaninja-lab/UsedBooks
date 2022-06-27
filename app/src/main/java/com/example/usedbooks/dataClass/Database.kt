@@ -35,7 +35,7 @@ class Database {
         val k: MutableList<DocumentSnapshot> = i.result.documents
         for(z in k)
         {
-            val  uri: ArrayList<String> = ArrayList()
+            val uri : ArrayList<String> = ArrayList()
             uri.add(getUriPhotosMateriale(z.id))
             val c= z.getGeoPoint("cordinate")
             val materiale : Materiale? =
@@ -216,27 +216,23 @@ class Database {
         return bitmap
     }
 
-    //
-
     private fun searchMateriale(corso: String): ArrayList<Materiale?> {
         val list: ArrayList<Materiale?> = ArrayList()
         val h =database.collection("Corso").get()
         while (!h.isComplete);
         val u :MutableList<DocumentSnapshot> = h.result.documents
         var idCorso=""
-        if(u.isEmpty())
-        {
-         return list
+        if(u.isEmpty()) {
+            return list
         }
-        for(z in u){
+        for(z in u) {
             if(z["nome"].toString().contains(corso))
                 idCorso=z.id
         }
         val i = database.collection("materiale").whereEqualTo("idCorso", idCorso).get()
         while (!i.isComplete);
         val k: MutableList<DocumentSnapshot> = i.result.documents
-        for(z in k)
-        {
+        for(z in k) {
             val  uri: ArrayList<String> = ArrayList()
             uri.add(getUriPhotosMateriale(z.id))
             val c= z.getGeoPoint("cordinate")
@@ -248,7 +244,7 @@ class Database {
             if(materiale!=null && materiale.stato != "venduto")
                 list.add(materiale)
         }
-        return  list
+        return list
     }
 
     //crea una funzione che restituisce lo studente dal database passando l'id dello studente

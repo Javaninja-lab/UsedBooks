@@ -9,16 +9,13 @@
         <item name="colorSecondary">@color/gray</item>
         <item name="colorSecondaryVariant">@color/blueTrasparent</item>
         <item name="colorOnSecondary">@color/blue</item>
-
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/primaryStyleEditText</item>
         <item name="logo">@drawable/logo</item>
     </style>
-
     <style name="primaryStyleEditText" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/shape_edit_text</item>
     </style>
-
 </resources>
